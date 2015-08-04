@@ -14,6 +14,7 @@ class Plant(db.Model):
 
 	# Make plant_id a column, that's a pk number which autoincrements
 	plant_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
+	# may make this foreignKey to a separate species table
 	plant_species = db.Column(db.String(75), nullable=False)
 	# may need to make nullable so I can *get* the lat/long when address entered
 	plant_lat = db.Column(db.Integer, nullable=False)
@@ -67,8 +68,29 @@ class Rating(db.Model):
 											self.rating_score)
 
 class Season(db.Model):
-	"""Seasons a plant is edible"""
+	"""Seasons a plant can have"""
 
 	__tablename__ = 'seasons'
 
-	
+	season_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
+	season_name = db.Column(db.String(10), nullable=False, unique=True)
+
+	def __repr__(self):
+	"""What to show when season printed"""
+
+		return '<%s, aka %s>' % (self.season_id, self.season_name)
+
+class Edible_time(db.Model):
+	"""Matches plants and seasons"""
+
+	__tablename__ = 'edible_times' 
+
+	edible_time_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
+	edible_plant_id = db.Column(db.Integer, db.ForeignKey('plants.plant_id'))
+	edible_season_id = db.Column(db.Integer, db.ForeignKey('season.season_id'))
+
+	def __repr__(self):
+	"""What to show when edible_time object printed"""
+
+		return '<%s is ripe in %s>' % (self.edible_plant_id, self.edible_season_id)
+
