@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>{% block title %}Title{% endblock %}</title>
+	</head>
+
+	<body>
+
+		<ul>
+			{% for messages in get_flashed_messages() %}
+				<li>{{ message }}</li>
+			{% endfor %}
+		</ul>
+
+		{% block content %}Content!{% endblock %}
+	</body>
+</html>
