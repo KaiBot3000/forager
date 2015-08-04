@@ -2,7 +2,9 @@ O server framework
 O base html
 	O flashed messages
 O db models file
-	O plants
-	O users
+	0 plants
+		O seasons?
+	0 users
 		O user messages?
-	O reviews
+	0 reviews
+

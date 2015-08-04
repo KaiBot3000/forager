@@ -65,3 +65,10 @@ class Rating(db.Model):
 		return '<%s rated plant %s a %s>' % (self.rating_user, 
 											self.rating_plant, 
 											self.rating_score)
+
+class Season(db.Model):
+	"""Seasons a plant is edible"""
+
+	__tablename__ = 'seasons'
+
+	
