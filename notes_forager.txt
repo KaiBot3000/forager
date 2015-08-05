@@ -1,5 +1,0 @@
-* Twilio won't work for sms- needs one number for however many folks a user can contact. 
-	- More info here... https://www.twilio.com/help/faq/sms/how-can-i-have-users-send text-messages-to-each-other-over-twilio
-
-	- Maybe do email instead?
-
