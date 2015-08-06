@@ -15,25 +15,32 @@ class Plant(db.Model):
 
 	# Make plant_id a column, that's a pk number which autoincrements
 	plant_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
-	# may make this foreignKey to a separate species table
-	plant_species = db.Column(db.String(75), nullable=False)
-	# may need to make nullable so I can *get* the lat/long when address entered
-	plant_lat = db.Column(db.Integer, nullable=False)
-	plant_long = db.Column(db.Integer, nullable=False)
+	plant_species = db.Column(db.String(75))
+	plant_name = db.Column(db.String(75))
+	
 	plant_category = db.Column(db.String(50))
-	plant_zipcode = db.Column(db.Integer)
-	# not sure the boolean will work
-	plant_private = db.Column(db.Boolean, default=False)
-	plant_address = db.Column(db.String(100))
 	plant_description = db.Column(db.String(250))
 	plant_owner = db.Column(db.Integer, db.ForeignKey('users.user_id'))
+	plant_private = db.Column(db.Boolean, default=False)
+
+	plant_address = db.Column(db.String(100))
+	plant_zipcode = db.Column(db.Integer)
+	plant_location = db.Column(db.String(100))
+	plant_lat = db.Column(db.Integer)
+	plant_lon = db.Column(db.Integer)
+
+	plant_spring = db.Column(db.Boolean, default=False)
+	plant_summer = db.Column(db.Boolean, default=False)
+	plant_fall = db.Column(db.Boolean, default=False)
+	plant_autumn = db.Column(db.Boolean, default=False)
+
 
 	def __repr__(self):
 		"""What to show when plant object printed"""
 
-		return '<Plant id: %s, species: %s, zipcode: %s>' % (self.plant_id, 
+		return '<Plant id: %s, species: %s, location: %s>' % (self.plant_id, 
 															self.plant_species, 
-															self.plant_zipcode)
+															self.location)
 
 
 class User(db.Model):
@@ -68,30 +75,30 @@ class Rating(db.Model):
 											self.rating_plant, 
 											self.rating_score)
 
-class Season(db.Model):
-	"""Seasons a plant can have"""
+# class Season(db.Model):
+# 	"""Seasons a plant can have"""
 
-	__tablename__ = 'seasons'
+# 	__tablename__ = 'seasons'
 
-	season_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
-	season_name = db.Column(db.String(10), nullable=False, unique=True)
+# 	season_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
+# 	season_name = db.Column(db.String(10), nullable=False, unique=True)
 
-	def __repr__(self):
-	"""What to show when season printed"""
+# 	def __repr__(self):
+# 	"""What to show when season printed"""
 
-		return '<%s, aka %s>' % (self.season_id, self.season_name)
+# 		return '<%s, aka %s>' % (self.season_id, self.season_name)
 
-class Edible_time(db.Model):
-	"""Matches plants and seasons"""
+# class Edible_time(db.Model):
+# 	"""Matches plants and seasons"""
 
-	__tablename__ = 'edible_times' 
+# 	__tablename__ = 'edible_times' 
 
-	edible_time_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
-	edible_plant_id = db.Column(db.Integer, db.ForeignKey('plants.plant_id'))
-	edible_season_id = db.Column(db.Integer, db.ForeignKey('season.season_id'))
+# 	edible_time_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
+# 	edible_plant_id = db.Column(db.Integer, db.ForeignKey('plants.plant_id'))
+# 	edible_season_id = db.Column(db.Integer, db.ForeignKey('season.season_id'))
 
-	def __repr__(self):
-	"""What to show when edible_time object printed"""
+# 	def __repr__(self):
+# 	"""What to show when edible_time object printed"""
 
-		return '<%s is ripe in %s>' % (self.edible_plant_id, self.edible_season_id)
+# 		return '<%s is ripe in %s>' % (self.edible_plant_id, self.edible_season_id)
 
