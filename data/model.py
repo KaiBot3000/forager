@@ -32,7 +32,7 @@ class Plant(db.Model):
 	plant_spring = db.Column(db.Boolean, default=False)
 	plant_summer = db.Column(db.Boolean, default=False)
 	plant_fall = db.Column(db.Boolean, default=False)
-	plant_autumn = db.Column(db.Boolean, default=False)
+	plant_winter = db.Column(db.Boolean, default=False)
 
 
 	def __repr__(self):
@@ -102,3 +102,17 @@ class Rating(db.Model):
 
 # 		return '<%s is ripe in %s>' % (self.edible_plant_id, self.edible_season_id)
 
+
+def connect_to_db(app):
+	"""COnnects the db to flask app"""
+
+	app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///forager.db'
+	db.app = app
+	db.init_app(app)
+
+
+if __name__ == "__main__":
+
+	from server import app
+	connect_to_db(app)
+	print "Connected to DB."
