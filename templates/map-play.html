@@ -27,30 +27,29 @@
 
 
 		// manually assign map location and produce map
-	 //  	var map_location = [37.772849, -122.411227];	
+	 	// var map_location = [37.772849, -122.411227];	
 		// var map = L.mapbox.map('map', 'mapbox.streets').setView(map_location, 20);
 
+	// Apparently Chrome won't let //file use geolocate, so I'll have to run it on a web server. That should work, according to the internet :)	
 
 		function getLocation() {
-			if ("geolocation" in navigator) {
+			if (navigator.geolocation) {
 	  			/* geolocation is available */
 	  			console.log("I'm trying to geolocate");
 			  	navigator.geolocation.getCurrentPosition(function(position) {
 					console.log("in geolocate");
 					map_location = [position.coords.latitude, position.coords.longitude];
 					console.log("Your location is: " + map_location);
-					map = L.mapbox.map('map', 'mapbox.streets').setView(map_location, 20);
+					map = L.mapbox.map('map', 'mapbox.streets').setView(map_location, 12);
 					makeMarkers();
 				});
-
-				// It's never getting into the function- it prints "trying" then "out". 
-				console.log("out of function");
 			} else {
 	  		/* geolocation IS NOT available */
 	  			map_location = "not available :(";
 	  		  	console.log("user isn't allowing location tracking");
 	  		  	map_location = [37.772849, -122.411227];	
-				map = L.mapbox.map('map', 'mapbox.streets').setView(map_location, 10);
+				map = L.mapbox.map('map', 'mapbox.streets').setView(map_location, 12);
+				makeMarkers();
 			};
 		};
 
