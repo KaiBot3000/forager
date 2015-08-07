@@ -25,8 +25,33 @@
 
 		L.mapbox.accessToken = 'pk.eyJ1IjoicmlzZWxpa2V0aGVtb29uIiwiYSI6IjI4MjczOTIwNzE5MTY1ODI4YmYxZGVlZGZmYjc4NmI0In0.fiUOgIDwB_ByzxT63VWP-g';
 
+
+	  	var latitude, longitude;
+	  	var map_location = [37.772849,-122.411227];
+
+		if ("geolocation" in navigator) {
+  		/* geolocation is available */
+  			console.log("I'm trying!");
+		  	navigator.geolocation.getCurrentPosition(function(position) {
+			  // latitude = position.coords.latitude;
+			  // longitude = position.coords.longitude;
+			  console.log("in function");
+			  console.log(position.coords.latitude);
+			  map_location = [position.coords.latitude, position.coords.longitude];
+			});
+			// It's never getting into the function- it prints "trying" then "out". 
+			console.log("out of function");
+		} else {
+  		/* geolocation IS NOT available */
+  		 //  	latitude = ;
+  			// longitude = ;
+  			map_location = [37.772849, -122.411227];
+  			console.log("user isn't allowing location tracking");
+		}
+
+		console.log(map_location);
 		var map = L.mapbox.map('map', 'mapbox.streets')
-		    .setView([37.772849, -122.411227], 20);
+		    .setView(map_location, 20);
 
 		var myHouse = [
 		{
