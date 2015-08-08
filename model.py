@@ -40,7 +40,7 @@ class Plant(db.Model):
 
 		return '<Plant id: %s, species: %s, location: %s>' % (self.plant_id, 
 															self.plant_species, 
-															self.location)
+															self.plant_location)
 
 
 class User(db.Model):
@@ -104,7 +104,7 @@ class Rating(db.Model):
 
 
 def connect_to_db(app):
-	"""COnnects the db to flask app"""
+	"""Connects the db to flask app"""
 
 	app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///forager.db'
 	db.app = app

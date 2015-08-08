@@ -3,7 +3,7 @@
 <head>
 	
 	<meta charset=utf-8 />
-		<title>Forager Maptest</title>
+		<title>Forager Markers</title>
 	<meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
 	
 	<script src='https://api.mapbox.com/mapbox.js/v2.2.1/mapbox.js'></script>
@@ -31,10 +31,14 @@
 		var myLayer = L.mapbox.featureLayer().addTo(map);
 
 		function makeMarkers() {
-			'''Takes plant objects, cycles through. For each plant, makes geoJSON object and adds its marker to the map '''
-			
+			// Takes plant objects, cycles through. For each plant, makes geoJSON object and adds its marker to the map
+
 			console.log("making markers");
-			var myHouse = [
+
+
+
+			// make new geoJSON object
+			var newPlant = [
 			{
 				'type': 'FeatureCollection',
 				'features': [
@@ -48,18 +52,18 @@
 						]
 					},
 				'properties': {
-					'title': 'Home!',
-					'description': 'This is not really my house.',
+					'title': 'Houseplants',
+					'description': 'this is a marker!',
 					'marker-size': 'large',
-					'marker-symbol': 'warehouse',
+					'marker-symbol': 'park2',
 					'marker-color': '360'
 				}
 					}
 				]
 			}	
 			];
-
-				myLayer.setGeoJSON(myHouse);
+				// add new geoJSON to layer as marker marker
+				myLayer.setGeoJSON(newPlant);
 		};
 
 		makeMarkers();
