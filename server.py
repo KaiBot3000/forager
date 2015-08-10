@@ -1,10 +1,27 @@
 from flask import Flask, render_template, flash, request, redirect, jsonify, flash, session
 from flask_debugtoolbar import DebugToolbarExtension
-from model import connect_to_db, db, Plant, User, Rating, Marker
+from model import connect_to_db, db, Plant, User, Rating
+from jinja2 import StrictUndefined
+import geojson
 
 app=Flask(__name__)
 
 app.secret_key = 'forage_the_things'
+
+
+class Marker():
+
+	def __init__(self, lat, lon, title, description, symbol):
+		self.lat = lat
+		self.lon = lon
+		self.title = title
+		self.description = description
+		self.symbol = symbol
+	@property
+	def __geo_interface__(self):
+		# return '{"type": "Feature", "geometry": {"type": "Point", "coordinates": [self.lat, self.lon]}, "properties": {"title": self.title, "description": self.description, "marker-size": "small", "marker-symbol": self.symbol}}'
+		return {'type': 'Feature', 'geometry': {'type': 'Point', 'coordinates': [self.lat, self.lon]}, 'properties': {'title': self.title, 'description': self.description, 'marker-size': 'small', 'marker-symbol': self.symbol}}
+
 
 
 @app.route('/')
@@ -21,8 +38,15 @@ def markers():
 	# print "got plants!"
 	# print plants
 
+	new_marker = Marker(37.772849, -122.411227, 'plant', 'plant from marker class!', 'park2')
 
-	return render_template('marker-play.html')
+	print type(new_marker)
+	plant = geojson.dumps(new_marker, sort_keys=True)
+	print plant
+	print 'string'
+	print type(plant)
+
+	return render_template('marker-play.html', plant=plant)
 
 
 
