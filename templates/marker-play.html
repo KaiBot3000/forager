@@ -43,30 +43,70 @@
 				'type': 'FeatureCollection',
 				'features': [
 					{
-					'type': 'Feature',
-					'geometry': {
-						'type': 'Point',
-						'coordinates': [
-						-122.411227,
-						37.772849,
-						]
+						'type': 'Feature',
+						'geometry': {
+							'type': 'Point',
+							'coordinates': [
+							-122.411227,
+							37.772849,
+							],
+						  },
+						'properties': {
+							'title': 'herb',
+							'description': 'this is an herb!',
+							'marker-size': 'small',
+							'marker-symbol': 'park'
+						  },
 					},
-				'properties': {
-					'title': 'Houseplants',
-					'description': 'this is a marker!',
-					'marker-size': 'large',
-					'marker-symbol': 'park2',
-					'marker-color': '360'
-				}
+					{
+						'type': 'Feature',
+						'coordinates': [
+								-122.39,
+								37.777,
+								],
+						'properties': {
+							'title': 'Houseplants',
+							'description': 'this is a marker!',
+							'marker-size': 'small',
+							'marker-symbol': 'park2',
+							'marker-color': '360'
+						  },
 					}
-				]
-			}	
+				],
+				// 'properties': {
+				// 	'title': 'Houseplants',
+				// 	'description': 'this is a marker!',
+				// 	'marker-size': 'large',
+				// 	'marker-symbol': 'park2',
+				// 	'marker-color': '360'
+				//   }
+			}
 			];
+	
+
+			// var simplePlant = {
+			// 	'type': 'Point',
+			// 	'coordinates': [
+			// 			-122.39,
+			// 			37.777,
+			// 			],
+			// 	'properties': {
+			// 		'title': 'Houseplants',
+			// 		'description': 'this is a marker!',
+			// 		'marker-size': 'small',
+			// 		'marker-symbol': 'park2',
+			// 		'marker-color': '360'
+			// 	}
+			// };
+
+
 				// add new geoJSON to layer as marker marker
 				myLayer.setGeoJSON(newPlant);
+				// myLayer.setGeoJSON(simplePlant, newPlant);
 		};
 
 		makeMarkers();
+		
 
 	</script>
 

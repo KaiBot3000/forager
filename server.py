@@ -1,6 +1,6 @@
 from flask import Flask, render_template, flash, request, redirect, jsonify, flash, session
 from flask_debugtoolbar import DebugToolbarExtension
-from model import connect_to_db, db, Plant, User, Rating
+from model import connect_to_db, db, Plant, User, Rating, Marker
 
 app=Flask(__name__)
 
@@ -16,11 +16,13 @@ def index_page():
 def markers():
 	# get plant objects
 	# plants = Plant.query.all()
-	plants = Plant.query.get(1)
-	print "got plants!"
-	print plants
 
-	return render_template('marker-play.html', plants=plants)
+	# plants = Plant.query.get(1)
+	# print "got plants!"
+	# print plants
+
+
+	return render_template('marker-play.html')
 
 
 

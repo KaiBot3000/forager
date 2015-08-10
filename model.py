@@ -1,5 +1,8 @@
 """Models and database functions for Forager"""
 
+# import geoJSON for marker class
+import geojson
+
 # import sqla
 from flask_sqlalchemy import SQLAlchemy
 
@@ -75,6 +78,26 @@ class Rating(db.Model):
 											self.rating_plant, 
 											self.rating_score)
 
+
+def connect_to_db(app):
+	"""Connects the db to flask app"""
+
+	app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///forager.db'
+	db.app = app
+	db.init_app(app)
+
+
+if __name__ == "__main__":
+
+	from server import app
+	connect_to_db(app)
+	print "Connected to DB."
+
+
+
+# Class Graveyard
+
+
 # class Season(db.Model):
 # 	"""Seasons a plant can have"""
 
@@ -101,18 +124,3 @@ class Rating(db.Model):
 # 	"""What to show when edible_time object printed"""
 
 # 		return '<%s is ripe in %s>' % (self.edible_plant_id, self.edible_season_id)
-
-
-def connect_to_db(app):
-	"""Connects the db to flask app"""
-
-	app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///forager.db'
-	db.app = app
-	db.init_app(app)
-
-
-if __name__ == "__main__":
-
-	from server import app
-	connect_to_db(app)
-	print "Connected to DB."
