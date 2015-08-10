@@ -38,7 +38,7 @@ def markers():
 	# print "got plants!"
 	# print plants
 
-	new_marker = Marker(37.772849, -122.411227, 'plant', 'plant from marker class!', 'park2')
+	new_marker = Marker(-122.411227, 37.772849, 'plant', 'plant from marker class!', 'park2')
 
 	print type(new_marker)
 	plant = geojson.dumps(new_marker, sort_keys=True)
