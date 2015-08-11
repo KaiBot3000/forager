@@ -1,2 +1,5 @@
 /envf
 secrets.sh
+data/server.pyc
+model.pyc
+server.pyc

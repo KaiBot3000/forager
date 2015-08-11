@@ -19,19 +19,3 @@ class Marker():
 
 
 
-
-
-
-
-
-
-
-
-print 'making new marker class object!'
-
-new_marker = Marker(37.772849, -122.411227, 'plant', 'plant from marker class!', 'park2')
-print 'marker object'
-print new_marker
-print 'printing marker!'
-plant = geojson.dumps(new_marker, sort_keys=True)
-print plant
