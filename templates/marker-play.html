@@ -30,12 +30,58 @@
 
 		var myLayer = L.mapbox.featureLayer().addTo(map);
 		// '| safe' tells jinja to leave in the ' and " marks.
-		var newMarker = {{ plant | safe}}
-		console.log({{ plant | safe }});
-		myLayer.setGeoJSON(newMarker);
+		// var newMarker = {{ plant | safe}}
+		// console.log({{ plant | safe }});
+		myLayer.setGeoJSON({{ marker_collection | safe }});
 
+		console.log({{ marker_collection | safe }});
+
+		// map.addSource("markers", {{ marker_collection | safe }});
+
+	 //    map.addLayer({
+		//     "id": "markers",
+		//     "type": "symbol",
+		//     "source": "markers",
+		//     "layout": {
+		//       "icon-image": "{marker-symbol}-12",
+		//       "text-field": "{title}",
+		//       "text-font": "Open Sans Semibold, Arial Unicode MS Bold",
+		//       "text-offset": [0, 0.6],
+		//       "text-anchor": "top"
+		//     },
+		//     "paint": {
+		//       "text-size": 12
+		//     }
+		//   });
+		// });
 
 	</script>
 
 </body>
 </html>
+
+
+
+<!-- 
+{"features": [{
+	"geometry": {
+		"coordinates": [37.72058451344048, -122.40085125402247], 
+		"type": "Point"
+		}, 
+	"properties": {
+		"description": null, 
+		"marker-size": "small", 
+		"marker-symbol": "park2", 
+		"title": "Anna apple"
+		}, 
+	"type": "Feature"}], 
+"type": "FeatureCollection"
+} -->
+
+
+
+
+
+
+
+
