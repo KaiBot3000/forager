@@ -121,7 +121,7 @@ class Marker():
 
 	@property
 	def __geo_interface__(self):
-		# return '{"type": "Feature", "geometry": {"type": "Point", "coordinates": [self.lat, self.lon]}, "properties": {"title": self.title, "description": self.description, "marker-size": "small", "marker-symbol": self.symbol}}'
+		
 		return {'type': 'Feature', 'geometry': {'type': 'Point', 'coordinates': \
 				[self.lon, self.lat]}, 'properties': {'title': self.title, 'description': \
 				self.description, 'marker-size': 'small', 'marker-symbol': self.symbol}}

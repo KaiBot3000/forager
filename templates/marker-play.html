@@ -9,6 +9,12 @@
 	<script src='https://api.mapbox.com/mapbox.js/v2.2.1/mapbox.js'></script>
 	
 	<link href='https://api.mapbox.com/mapbox.js/v2.2.1/mapbox.css' rel='stylesheet' />
+
+	<script src='https://api.mapbox.com/mapbox.js/plugins/leaflet-markercluster/v0.4.0/leaflet.markercluster.js'></script>
+
+	<link href='https://api.mapbox.com/mapbox.js/plugins/leaflet-markercluster/v0.4.0/MarkerCluster.css' rel='stylesheet' />
+
+	<link href='https://api.mapbox.com/mapbox.js/plugins/leaflet-markercluster/v0.4.0/MarkerCluster.Default.css' rel='stylesheet' />
 	
 	<style>
 	  body { margin:0; padding:0; }
@@ -26,34 +32,31 @@
 		L.mapbox.accessToken = 'pk.eyJ1IjoicmlzZWxpa2V0aGVtb29uIiwiYSI6IjI4MjczOTIwNzE5MTY1ODI4YmYxZGVlZGZmYjc4NmI0In0.fiUOgIDwB_ByzxT63VWP-g';
 
 		map_location = [37.772849, -122.411227];	
-		map = L.mapbox.map('map', 'mapbox.streets').setView(map_location, 12);
+		var map = L.mapbox.map('map')
+			.setView(map_location, 12)
+			.addLayer(L.mapbox.tileLayer('mapbox.streets'));
 
-		var myLayer = L.mapbox.featureLayer().addTo(map);
-		// '| safe' tells jinja to leave in the ' and " marks.
-		// var newMarker = {{ plant | safe}}
-		// console.log({{ plant | safe }});
-		myLayer.setGeoJSON({{ marker_collection | safe }});
+		// var myLayer = L.mapbox.featureLayer().addTo(map);
+		// myLayer.setGeoJSON({{ marker_collection | safe }});
 
-		console.log({{ marker_collection | safe }});
+		L.mapbox.featureLayer('examples.map-h61e8o8e').on('ready', function(e) {
+			// The clusterGroup gets each marker in the group added to it
+    		// once loaded, and then is added to the map
+    		var markers = new L.MarkerClusterGroup();
+    		var markerCollection = {{ marker_collection | safe }};
 
-		// map.addSource("markers", {{ marker_collection | safe }});
+    		var markerLayer = L.geoJson(markerCollection);
 
-	 //    map.addLayer({
-		//     "id": "markers",
-		//     "type": "symbol",
-		//     "source": "markers",
-		//     "layout": {
-		//       "icon-image": "{marker-symbol}-12",
-		//       "text-field": "{title}",
-		//       "text-font": "Open Sans Semibold, Arial Unicode MS Bold",
-		//       "text-offset": [0, 0.6],
-		//       "text-anchor": "top"
-		//     },
-		//     "paint": {
-		//       "text-size": 12
-		//     }
-		//   });
-		// });
+    		markers.addLayer(markerLayer);
+    		map.addLayer(markers);
+
+			// var clusterGroup = new L.MarkerClusterGroup();
+			// e.target.eachLayer(function(layer) {
+			// 	clusterGroup.addLayer(layer);
+			// });
+			// map.addLayer(clusterGroup);
+		});
+
 
 	</script>
 
