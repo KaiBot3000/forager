@@ -45,6 +45,33 @@ class Plant(db.Model):
 															self.plant_species, 
 															self.plant_location)
 
+	def wkt_to_latlon(self):
+		'''Converts wkt format coordinates to a latitude and longitude
+			Takes plant object, reads its wkt, converts, and adds that to lat and lon fields. 
+			Returns updated object.
+		'''
+		# wkt = plant # test line- feed it a location string directly
+		# print plant
+		wkt = self.plant_location
+
+		#wkt is 'POINT (xxxxxx xxxxxx)'
+		wkt_trim = wkt.replace('POINT (', '')
+		#wkt is 'xxxxxx xxxxxx)'
+		wkt_final = wkt_trim.replace(')', '')
+		#wkt is 'xxxxxx xxxxxx'
+		latlon_list = wkt_final.split(' ')
+		# latlon_list = ['xxxxxx', 'xxxxxx']
+		lon, lat = latlon_list
+		session.commit()
+		
+		self.plant_lon = lon
+		self.plant_lat = lat
+		print "Latitude: %s" % lat
+		print "Longitude: %s" % lon
+
+	def address_to_latlon(address):
+		'''Converts wkt format coordinates to a latitude and longitude via api call'''
+
 
 class User(db.Model):
 	"""Forager registered users"""

@@ -23,12 +23,6 @@ def index_page():
 
 @app.route('/map')
 def markers():
-	# get plant objects
-	# plants = Plant.query.all()
-
-	# plants = Plant.query.get(1)
-	# print "got plants!"
-	# print plants
 
 	marker_list = []
 
@@ -65,37 +59,6 @@ class Marker():
 				[self.lat, self.lon]}, 'properties': {'title': self.title, 'description': \
 				self.description, 'marker-size': 'small', 'marker-symbol': self.symbol}}
  
-####################### Function zone (will be moved to separate file)#########
-# Should I make each function take an object and reassign it in the function, or handle that 
-# part in a different function?
-
-def wkt_to_latlon(plant):
-	'''Converts wkt format coordinates to a latitude and longitude
-		Takes plant object, reads its wkt, converts, and adds that to lat and lon fields. 
-		Returns updated object.
-	'''
-	# wkt = plant # test line- feed it a location string directly
-	# print plant
-	wkt = plant.plant_location
-
-	#wkt is 'POINT (xxxxxx xxxxxx)'
-	wkt_trim = wkt.replace('POINT (', '')
-	#wkt is 'xxxxxx xxxxxx)'
-	wkt_final = wkt_trim.replace(')', '')
-	#wkt is 'xxxxxx xxxxxx'
-	latlon_list = wkt_final.split(' ')
-	# latlon_list = ['xxxxxx', 'xxxxxx']
-	lat, lon = latlon_list
-	print "Latitude: %s" % lat
-	print "Longitude: %s" % lon
-
-	
-
-
-def address_to_latlon(address):
-	'''Converts wkt format coordinates to a latitude and longitude via api call'''
-
-####################### </Function zone>
 
 
 if __name__ == "__main__":
@@ -106,7 +69,3 @@ if __name__ == "__main__":
 
 	DebugToolbarExtension(app)
 
-	plant = Plant.query.get(1)
-	print plant
-
-	wkt_to_latlon(plant)
