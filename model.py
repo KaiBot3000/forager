@@ -41,33 +41,36 @@ class Plant(db.Model):
 	def __repr__(self):
 		"""What to show when plant object printed"""
 
-		return '<Plant id: %s, species: %s, location: %s>' % (self.plant_id, 
+		return '<Plant id: %s, species: %s, location: %s, lat: %s, lon: %s>' % (self.plant_id, 
 															self.plant_species, 
-															self.plant_location)
+															self.plant_location,
+															self.plant_lat,
+															self.plant_lon)
 
-	def wkt_to_latlon(self):
+	def wkt_to_lonlat(self):
 		'''Converts wkt format coordinates to a latitude and longitude
 			Takes plant object, reads its wkt, converts, and adds that to lat and lon fields. 
-			Returns updated object.
+			Updates plant. Ot returns lonlat_list
 		'''
-		# wkt = plant # test line- feed it a location string directly
-		# print plant
+
 		wkt = self.plant_location
 
-		#wkt is 'POINT (xxxxxx xxxxxx)'
-		wkt_trim = wkt.replace('POINT (', '')
-		#wkt is 'xxxxxx xxxxxx)'
-		wkt_final = wkt_trim.replace(')', '')
-		#wkt is 'xxxxxx xxxxxx'
-		latlon_list = wkt_final.split(' ')
-		# latlon_list = ['xxxxxx', 'xxxxxx']
-		lon, lat = latlon_list
-		session.commit()
-		
+			#wkt is 'POINT (xxxxxx xxxxxx)'
+		wkt_initialtrim = wkt.replace('POINT (', '')
+			#wkt is 'xxxxxx xxxxxx)'
+		wkt_finaltrim = wkt_initialtrim.replace(')', '')
+			#wkt is 'xxxxxx xxxxxx'
+		lonlat_list = wkt_finaltrim.split(' ')
+			# latlon_list = ['xxxxxx', 'xxxxxx']
+
+		lon, lat = lonlat_list
 		self.plant_lon = lon
 		self.plant_lat = lat
 		print "Latitude: %s" % lat
 		print "Longitude: %s" % lon
+		db.session.commit()
+
+		# return lonlat_list
 
 	def address_to_latlon(address):
 		'''Converts wkt format coordinates to a latitude and longitude via api call'''
@@ -104,6 +107,25 @@ class Rating(db.Model):
 		return '<%s rated plant %s a %s>' % (self.rating_user, 
 											self.rating_plant, 
 											self.rating_score)
+
+
+# converts plant objects into geoJSON string for marker
+class Marker():
+
+	def __init__(self, lat, lon, title, description, symbol):
+		self.lat = lat
+		self.lon = lon
+		self.title = title
+		self.description = description
+		self.symbol = symbol
+
+	@property
+	def __geo_interface__(self):
+		# return '{"type": "Feature", "geometry": {"type": "Point", "coordinates": [self.lat, self.lon]}, "properties": {"title": self.title, "description": self.description, "marker-size": "small", "marker-symbol": self.symbol}}'
+		return {'type': 'Feature', 'geometry': {'type': 'Point', 'coordinates': \
+				[self.lat, self.lon]}, 'properties': {'title': self.title, 'description': \
+				self.description, 'marker-size': 'small', 'marker-symbol': self.symbol}}
+ 
 
 
 def connect_to_db(app):

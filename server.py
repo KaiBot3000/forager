@@ -1,8 +1,7 @@
 from flask import Flask, render_template, flash, request, redirect, jsonify, flash, session
 from flask_debugtoolbar import DebugToolbarExtension
-from model import connect_to_db, db, Plant, User, Rating
+from model import connect_to_db, db, Plant, User, Rating, Marker
 from jinja2 import StrictUndefined
-import geoconvert
 import geojson
 
 app=Flask(__name__)
@@ -28,37 +27,16 @@ def markers():
 
 	for id in range(2):
 		plant = Plant.query.get(id)
-		# changed reference for class, not toally sure it still works
-		marker = geoconvert.Marker(-10, 30, plant.plant_name, plant.plant_description, 'park2')
+		marker = Marker(-10, 30, plant.plant_name, plant.plant_description, 'park2')
 		marker_list.append(marker)
 
 	marker_collection = geojson.FeatureCollection(marker_list)
 	print marker_collection	
-	# new_marker = Marker(-122.411227, 37.772849, 'plant', 'plant from marker class!', 'park2')
 
+	# new_marker = Marker(-122.411227, 37.772849, 'plant', 'plant from marker class!', 'park2')
 	# plant = geojson.dumps(new_marker, sort_keys=True)
 
-
-	return render_template('marker-play.html', plant=plant)
-
-
-# converts plant objects into geoJSON string for marker
-class Marker():
-
-	def __init__(self, lat, lon, title, description, symbol):
-		self.lat = lat
-		self.lon = lon
-		self.title = title
-		self.description = description
-		self.symbol = symbol
-
-	@property
-	def __geo_interface__(self):
-		# return '{"type": "Feature", "geometry": {"type": "Point", "coordinates": [self.lat, self.lon]}, "properties": {"title": self.title, "description": self.description, "marker-size": "small", "marker-symbol": self.symbol}}'
-		return {'type': 'Feature', 'geometry': {'type': 'Point', 'coordinates': \
-				[self.lat, self.lon]}, 'properties': {'title': self.title, 'description': \
-				self.description, 'marker-size': 'small', 'marker-symbol': self.symbol}}
- 
+	return render_template('marker-play.html', marker_collection=marker_collection)
 
 
 if __name__ == "__main__":
@@ -68,4 +46,3 @@ if __name__ == "__main__":
 	app.run(debug=True)
 
 	DebugToolbarExtension(app)
-
