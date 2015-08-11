@@ -2,6 +2,7 @@ from flask import Flask, render_template, flash, request, redirect, jsonify, fla
 from flask_debugtoolbar import DebugToolbarExtension
 from model import connect_to_db, db, Plant, User, Rating
 from jinja2 import StrictUndefined
+import geoconvert
 import geojson
 
 app=Flask(__name__)
@@ -13,20 +14,7 @@ app.secret_key = 'forage_the_things'
 # collect markers in feature collection via geojson
 # pass feature collection to map
 
-class Marker():
 
-	def __init__(self, lat, lon, title, description, symbol):
-		self.lat = lat
-		self.lon = lon
-		self.title = title
-		self.description = description
-		self.symbol = symbol
-
-	@property
-	def __geo_interface__(self):
-		# return '{"type": "Feature", "geometry": {"type": "Point", "coordinates": [self.lat, self.lon]}, "properties": {"title": self.title, "description": self.description, "marker-size": "small", "marker-symbol": self.symbol}}'
-		return {'type': 'Feature', 'geometry': {'type': 'Point', 'coordinates': [self.lat, self.lon]}, 'properties': {'title': self.title, 'description': self.description, 'marker-size': 'small', 'marker-symbol': self.symbol}}
- 
 
 @app.route('/')
 def index_page():
@@ -45,8 +33,9 @@ def markers():
 	marker_list = []
 
 	for id in range(2):
-		plant = Plant.query.get(1)
-		marker = Marker(-10, 30, plant.plant_name, plant.plant_description, 'park2')
+		plant = Plant.query.get(id)
+		# changed reference for class, not toally sure it still works
+		marker = geoconvert.Marker(-10, 30, plant.plant_name, plant.plant_description, 'park2')
 		marker_list.append(marker)
 
 	marker_collection = geojson.FeatureCollection(marker_list)
@@ -59,6 +48,55 @@ def markers():
 	return render_template('marker-play.html', plant=plant)
 
 
+# converts plant objects into geoJSON string for marker
+class Marker():
+
+	def __init__(self, lat, lon, title, description, symbol):
+		self.lat = lat
+		self.lon = lon
+		self.title = title
+		self.description = description
+		self.symbol = symbol
+
+	@property
+	def __geo_interface__(self):
+		# return '{"type": "Feature", "geometry": {"type": "Point", "coordinates": [self.lat, self.lon]}, "properties": {"title": self.title, "description": self.description, "marker-size": "small", "marker-symbol": self.symbol}}'
+		return {'type': 'Feature', 'geometry': {'type': 'Point', 'coordinates': \
+				[self.lat, self.lon]}, 'properties': {'title': self.title, 'description': \
+				self.description, 'marker-size': 'small', 'marker-symbol': self.symbol}}
+ 
+####################### Function zone (will be moved to separate file)#########
+# Should I make each function take an object and reassign it in the function, or handle that 
+# part in a different function?
+
+def wkt_to_latlon(plant):
+	'''Converts wkt format coordinates to a latitude and longitude
+		Takes plant object, reads its wkt, converts, and adds that to lat and lon fields. 
+		Returns updated object.
+	'''
+	# wkt = plant # test line- feed it a location string directly
+	# print plant
+	wkt = plant.plant_location
+
+	#wkt is 'POINT (xxxxxx xxxxxx)'
+	wkt_trim = wkt.replace('POINT (', '')
+	#wkt is 'xxxxxx xxxxxx)'
+	wkt_final = wkt_trim.replace(')', '')
+	#wkt is 'xxxxxx xxxxxx'
+	latlon_list = wkt_final.split(' ')
+	# latlon_list = ['xxxxxx', 'xxxxxx']
+	lat, lon = latlon_list
+	print "Latitude: %s" % lat
+	print "Longitude: %s" % lon
+
+	
+
+
+def address_to_latlon(address):
+	'''Converts wkt format coordinates to a latitude and longitude via api call'''
+
+####################### </Function zone>
+
 
 if __name__ == "__main__":
 
@@ -66,6 +104,9 @@ if __name__ == "__main__":
 
 	app.run(debug=True)
 
-	connect_to_db(app)
-
 	DebugToolbarExtension(app)
+
+	plant = Plant.query.get(1)
+	print plant
+
+	wkt_to_latlon(plant)
