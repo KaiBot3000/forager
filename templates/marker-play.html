@@ -49,17 +49,25 @@
 
     		var markerLayer = L.geoJson(markerCollection);
 
+    		// for each marker (layer) in the cluster, add custom popup
     		markerLayer.eachLayer(function(layer) {
-		            // See the `.bindPopup` documentation for full details. This
-		            // dataset has a property called `name`: your dataset might not,
-		            // so inspect it and customize to taste.
-		            // layer.feature.properties.title
-		    	layer.bindPopup('<b>' + layer.feature.properties.title + '</b>' + '<br>' + layer.feature.description);
+		       
+		        // Doesn't work to change icon details
+		        // L.mapbox.marker.icon({'marker-symbol': 'park', 'marker-color': '0044FF'});
+
+		        var popupContent = '<b>' + layer.feature.properties.title + '</b>' + '<br>' + layer.feature.description;
+
+		        // can modify based on properties of feature! Will use to handle undefined features.
+		        if (layer.feature.properties.title === 'Olive') {
+		        	popupContent = '<b>' + layer.feature.properties.title + '</b>' + '<br>' + 'Surprise! An olive tree!!';
+		        }
+
+		    	layer.bindPopup(popupContent, 
+		    		className = 'markerPopup'); // can add other options
 		    });
 
     		markers.addLayer(markerLayer);
     		map.addLayer(markers);
-    		console.log('the end.');
     	});
 
 
