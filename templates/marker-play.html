@@ -53,7 +53,8 @@
 		            // See the `.bindPopup` documentation for full details. This
 		            // dataset has a property called `name`: your dataset might not,
 		            // so inspect it and customize to taste.
-		    	layer.bindPopup(layer.feature.properties.name);
+		            // layer.feature.properties.title
+		    	layer.bindPopup('<b>' + layer.feature.properties.title + '</b>' + '<br>' + layer.feature.description);
 		    });
 
     		markers.addLayer(markerLayer);
