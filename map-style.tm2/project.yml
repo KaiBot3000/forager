@@ -1,0 +1,27 @@
+_prefs: 
+  mapid: riselikethemoon.4b711c00
+  saveCenter: true
+_properties: {}
+attribution: "<a href='http://mapbox.com/about/maps' target='_blank'>Terms & Feedback</a>"
+bounds: 
+  - -180
+  - -85.0511
+  - 180
+  - 85.0511
+center: 
+  - -122.4221
+  - 37.7651
+  - 15
+description: Map template for forager data
+format: "png8:m=h"
+interactivity_layer: ''
+layers: null
+maxzoom: 21
+minzoom: 0
+name: Forager
+source: "mapbox:///mapbox.mapbox-streets-v4"
+styles: 
+  - style.mss
+  - labels.mss
+  - illustrations.mss
+template: ''

@@ -29,6 +29,8 @@
 
 	<script>
 
+		//console.log('the beginning');
+
 		L.mapbox.accessToken = 'pk.eyJ1IjoicmlzZWxpa2V0aGVtb29uIiwiYSI6IjI4MjczOTIwNzE5MTY1ODI4YmYxZGVlZGZmYjc4NmI0In0.fiUOgIDwB_ByzxT63VWP-g';
 
 		map_location = [37.772849, -122.411227];	
@@ -47,15 +49,45 @@
 
     		var markerLayer = L.geoJson(markerCollection);
 
+    		markerLayer.eachLayer(function(layer) {
+		            // See the `.bindPopup` documentation for full details. This
+		            // dataset has a property called `name`: your dataset might not,
+		            // so inspect it and customize to taste.
+		    	layer.bindPopup(layer.feature.properties.name);
+		    });
+
     		markers.addLayer(markerLayer);
     		map.addLayer(markers);
+    		console.log('the end.');
+    	});
 
-			// var clusterGroup = new L.MarkerClusterGroup();
-			// e.target.eachLayer(function(layer) {
-			// 	clusterGroup.addLayer(layer);
-			// });
-			// map.addLayer(clusterGroup);
-		});
+
+		// omnivore will AJAX-request this file behind the scenes and parse it:
+		// note that there are considerations:
+		// - The file must either be on the same domain as the page that requests it,
+		//   or both the server it is requested from and the user's browser must
+		//   support CORS.
+		// var runLayer = omnivore.kml('/mapbox.js/assets/data/line.kml')
+		//     .on('ready', function() {
+		//         map.fitBounds(markerLayer.getBounds());
+
+		//         // After the 'ready' event fires, the GeoJSON contents are accessible
+		//         // and you can iterate through layers to bind custom popups.
+		//         markerLayer.eachLayer(function(layer) {
+		//             // See the `.bindPopup` documentation for full details. This
+		//             // dataset has a property called `name`: your dataset might not,
+		//             // so inspect it and customize to taste.
+		//             layer.bindPopup(layer.feature.properties.name);
+		//         });
+		//     })
+		//     //.addTo(map);
+
+		// 	// var clusterGroup = new L.MarkerClusterGroup();
+		// 	// e.target.eachLayer(function(layer) {
+		// 	// 	clusterGroup.addLayer(layer);
+		// 	// });
+		// 	// map.addLayer(clusterGroup);
+		// });
 
 
 	</script>
