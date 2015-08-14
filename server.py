@@ -28,7 +28,7 @@ def markers():
 
 	plants = Plant.query.all()
 	for plant in plants:
-		marker = Marker(plant.plant_lat, plant.plant_lon, plant.plant_name, plant.plant_description, 'park2')
+		marker = Marker(plant.plant_lat, plant.plant_lon, plant.plant_id, plant.plant_name, plant.plant_description, 'park2')
 		marker_list.append(marker)
 
 	marker_collection = geojson.FeatureCollection(marker_list)
@@ -36,7 +36,8 @@ def markers():
 	# new_marker = Marker(-122.411227, 37.772849, 'plant', 'plant from marker class!', 'park2')
 	# plant = geojson.dumps(new_marker, sort_keys=True)
 
-	return render_template('marker-play.html', marker_collection=marker_collection)
+	return render_template('detail-play.html', marker_collection=marker_collection)
+
 
 
 if __name__ == "__main__":

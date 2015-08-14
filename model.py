@@ -112,9 +112,10 @@ class Rating(db.Model):
 # converts plant objects into geoJSON string for marker
 class Marker():
 
-	def __init__(self, lat, lon, title, description, symbol):
+	def __init__(self, lat, lon, plant_id, title, description, symbol):
 		self.lat = lat
 		self.lon = lon
+		self.plant_id = plant_id
 		self.title = title
 		self.description = description
 		self.symbol = symbol
@@ -123,8 +124,8 @@ class Marker():
 	def __geo_interface__(self):
 		
 		return {'type': 'Feature', 'geometry': {'type': 'Point', 'coordinates': \
-				[self.lon, self.lat]}, 'properties': {'title': self.title, 'description': \
-				self.description, 'marker-size': 'small', 'marker-symbol': self.symbol}}
+				[self.lon, self.lat]}, 'id': self.plant_id, 'properties': {'title': self.title, 'description': \
+				self.description, 'marker-size': 'small', 'marker-ssymbol': self.symbol}}
  
 
 
