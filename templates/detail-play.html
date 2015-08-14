@@ -57,13 +57,13 @@
     		// for each marker (layer) in the cluster, add custom popup and change icon
     		markerLayer.eachLayer(function(layer) {
 
-		        var popupContent = '<b>' + layer.feature.properties.title + '</b>' + '<br>' + layer.feature.id + '<br>' + '<button class="detailsBtn">Details</button>';
+		        var popupContent = '<b>' + layer.feature.properties.title + '</b><br>' + layer.feature.id + '<br><button class="detailsBtn">Details</button>';
 
 		        //" <button type='button' value='plants!' id='detailButton' class='trigger'>Details</button> ";
 
 		        // can modify based on properties of feature! Will use to handle undefined features?
 		        if (layer.feature.properties.title === 'Olive') {
-		        	popupContent = '<b>' + layer.feature.properties.title + '</b>' + '<br>' + 'Surprise! An olive tree!!';
+		        	popupContent ='<b>' + layer.feature.properties.title + '</b><br>' + layer.feature.id + '<br><button class="detailsBtn">Details</button><br>Surprise! An olive tree!!';
 
 		        	// Changes olive trees to park icon :)
 		        	layer.setIcon(L.mapbox.marker.icon({
@@ -87,18 +87,18 @@
 	<script>
 		// javascript zone
 
-		// var details = document.getElementById('detailDiv');
-		// $(details).hide();
-
-		// $('#map').on('click', '#detailButton', displayDetails);
-
-		// function displayDetails() {
-		// 	console.log('clicked!');
-		// 	$(details).show();
-		// }
+		// hidden form submits with id as value
+		// event handler catches submit and calls function
+		// 		function 
+					//prevents default 
+					// reformat form info into url
+					// $ pass info to server, get details back, feed to function
+							// function
+									// changes html to formatted details
 
 		console.log('in js');
 
+		// so far, I can just register clicks on that button
 		$('#map').on('click', '.detailsBtn', seeNote);
 
 		function seeNote() {
@@ -117,6 +117,7 @@
 
 <!-- 
 {"features": [{
+	"id": "832",
 	"geometry": {
 		"coordinates": [37.72058451344048, -122.40085125402247], 
 		"type": "Point"
@@ -125,8 +126,7 @@
 		"description": null, 
 		"marker-size": "small", 
 		"marker-symbol": "park2", 
-		"title": "Anna apple",
-		"plantId": "0000"
+		"title": "Anna apple"
 		}, 
 	"type": "Feature"}], 
 "type": "FeatureCollection"

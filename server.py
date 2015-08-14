@@ -38,6 +38,12 @@ def markers():
 
 	return render_template('detail-play.html', marker_collection=marker_collection)
 
+@app.route('/plant-detail/<int:plant_id>')
+def plant_details(plant_id):
+	plant = Plant.query.get(plant_id)
+
+	return # JSON plant object for jinja to eat, or just needed info
+
 
 
 if __name__ == "__main__":
