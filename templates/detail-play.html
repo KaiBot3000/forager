@@ -57,9 +57,12 @@
     		// for each marker (layer) in the cluster, add custom popup and change icon
     		markerLayer.eachLayer(function(layer) {
 
-		        var popupContent = '<b>' + layer.feature.properties.title + '</b><br>' + layer.feature.id + '<br><button class="detailsBtn">Details</button>';
+		        var popupContent = '<b>' + layer.feature.properties.title + '</b><br>' + layer.feature.id + "<br><button type='button' value='plants!' class='detailsForm'> Details </button> ";
 
-		        //" <button type='button' value='plants!' id='detailButton' class='trigger'>Details</button> ";
+		        // hidden form for popup
+		        // '</b><br> <form name="detailsForm" class=detailsForm action="/" method="GET"> <input type="hidden" name="id" value=' + layer.feature.id + '> <input type="submit" value="Submit"> </form>';
+
+		        
 
 		        // can modify based on properties of feature! Will use to handle undefined features?
 		        if (layer.feature.properties.title === 'Olive') {
@@ -95,17 +98,59 @@
 					// $ pass info to server, get details back, feed to function
 							// function
 									// changes html to formatted details
+		// Another way
+		// http://stackoverflow.com/questions/17423261/how-to-pass-data-with-marker-in-leaflet-js
+		// console.log('in js');
+		// function onMarkerClick(evt) {
+		//     console.log("You clicked the marker " + evt.target.layer.feature.id);
+		// }
+		// marker.on('click', onMarkerClick);
 
-		console.log('in js');
+
+		// can I use jquery in the popup?
 
 		// so far, I can just register clicks on that button
-		$('#map').on('click', '.detailsBtn', seeNote);
+		// $('#map').on('click', '.detailsForm', seeNote);
 
-		function seeNote() {
-			// var note = document.getElementsByClassName('detailButton').value;
-			// console.log(note);
-			console.log('in function');
-		};
+		// function seeNote(evt) {
+		// 	// var note = document.getElementsByClassName('detailButton').value;
+		// 	// console.log(note);
+		// 	evt.preventDefault();
+		// 	console.log('in function');
+		// };
+
+		// opens as soon as popup pops, passes info!!!!
+		map.on('popupopen', function(e) {
+		  var marker = e.popup._source.feature.id;
+		  console.log('works!');
+		  console.log(marker);
+		});
+
+
+
+
+		// 	var url = '/plant-detail?' + $('detailsForm').serialize();
+		// 	console.log(url);
+		// 	// SHOULD pass url to server, then call makeChirps() on resulting info. Doesn't recognize results?
+		// 	//$.get(url, makeChirps(results));
+		// 	// Using an anonymous function that calls makeChirp works. Hm.
+		// 	$.get(url, function (results) {
+		// 		display(results);
+		// 	});
+		// };
+
+		// function display(thing) {
+		// 	console.log(thing);
+		// };
+
+
+
+		// It looks like Leaflet muffles the events from propagating outside the popup.
+		// One way I have gotten this to work is to trap the content in a jQuery object before binding to the popup.
+		// var popupContent = $('<div>').html('<div>Your content</div>');
+		// var marker.bindPopup( popupContent[0] );
+
+
 
 
 	</script>

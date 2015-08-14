@@ -38,11 +38,15 @@ def markers():
 
 	return render_template('detail-play.html', marker_collection=marker_collection)
 
-@app.route('/plant-detail/<int:plant_id>')
+@app.route('/plant-detail')
 def plant_details(plant_id):
-	plant = Plant.query.get(plant_id)
+	# plant = Plant.query.get(plant_id)
 
-	return # JSON plant object for jinja to eat, or just needed info
+	plant_id = request.args.get('plantId')
+
+	print plant_id
+
+	return 'plant id is: %s' % plant_id # JSON plant object for jinja to eat, or just needed info
 
 
 
