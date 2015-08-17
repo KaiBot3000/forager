@@ -40,6 +40,7 @@ def markers():
 
 @app.route('/plant-detail')
 def plant_details(plant_id):
+	'''Gets marker/plant id from js, returns proper plant object.'''
 	# plant = Plant.query.get(plant_id)
 
 	plant_id = request.args.get('plantId')

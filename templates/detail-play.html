@@ -57,7 +57,7 @@
     		// for each marker (layer) in the cluster, add custom popup and change icon
     		markerLayer.eachLayer(function(layer) {
 
-		        var popupContent = '<b>' + layer.feature.properties.title + '</b><br>' + layer.feature.id + "<br><button type='button' value='plants!' class='detailsForm'> Details </button> ";
+		        var popupContent = '<b>' + layer.feature.properties.title + "</b><br><button type='button' value='plants!' class='detailsBtn'> Details </button> ";
 
 		        // hidden form for popup
 		        // '</b><br> <form name="detailsForm" class=detailsForm action="/" method="GET"> <input type="hidden" name="id" value=' + layer.feature.id + '> <input type="submit" value="Submit"> </form>';
@@ -66,7 +66,7 @@
 
 		        // can modify based on properties of feature! Will use to handle undefined features?
 		        if (layer.feature.properties.title === 'Olive') {
-		        	popupContent ='<b>' + layer.feature.properties.title + '</b><br>' + layer.feature.id + '<br><button class="detailsBtn">Details</button><br>Surprise! An olive tree!!';
+		        	popupContent ='<div class=detail><b>' + layer.feature.properties.title + '</b><br><button class="detailsBtn">Details</button><br>Surprise! An olive tree!!</div>';
 
 		        	// Changes olive trees to park icon :)
 		        	layer.setIcon(L.mapbox.marker.icon({
@@ -116,22 +116,31 @@
 
 		// can I use jquery in the popup?
 
-		// so far, I can just register clicks on that button
+		var marker;
+
+				// opens as soon as popup pops, passes info, saves as marker
+		map.on('popupopen', function(e) {
+		  marker = e.popup._source.feature.id;
+		  console.log('marker is: ' + marker);
+		});
+
+		// Why doesn't this work when the above does?
+		// $('#map').on('popupopen', function(e) {
+		//   var marker = e.popup._source.feature.id;
+		//   console.log('works!');
+		//   console.log(marker);
+		// });
+
+		// When clicked, use marker
 		$('#map').on('click', '.detailsBtn', seeNote);
 
+		// fetches plant object from server using Ajax, display in div with jinja
 		function seeNote(evt) {
-			// var note = document.getElementsByClassName('detailButton').value;
-			// console.log(note);
-			// evt.preventDefault();
-			console.log('in function');
+			console.log('in function, ready to handle: ' + marker);
+			//var marker = evt.target.feature.id; // doesn't work
+			
 		};
 
-		// opens as soon as popup pops, passes info!!!!
-		map.on('popupopen', function(e) {
-		  var marker = e.popup._source.feature.id;
-		  console.log('works!');
-		  console.log(marker);
-		});
 
 
 
@@ -152,10 +161,7 @@
 
 
 
-		// It looks like Leaflet muffles the events from propagating outside the popup.
-		// One way I have gotten this to work is to trap the content in a jQuery object before binding to the popup.
-		// var popupContent = $('<div>').html('<div>Your content</div>');
-		// var marker.bindPopup( popupContent[0] );
+
 
 
 
