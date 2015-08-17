@@ -30,7 +30,6 @@
 
 	<div id='map'> Hay, I'm a map </div>
 
-
 	<div id='detailsDiv'>Plant Details!</div>
 
 
@@ -42,7 +41,7 @@
 		map_location = [37.772849, -122.411227];	
 		var map = L.mapbox.map('map', 'riselikethemoon.4b711c00')
 			.setView(map_location, 15) 
-			//12 is ideal, but this shows markers
+			//12 is ideal, but this shows markers for testing
 			.addLayer(L.mapbox.tileLayer('riselikethemoon.4b711c00'));
 
 
@@ -88,7 +87,6 @@
 		        	}));
 		        };
 
-
 		    	layer.bindPopup(popupContent, 
 		    		className = 'markerPopup'); // can add other options
 		    });
@@ -104,25 +102,6 @@
 
 	<script>
 		// javascript zone
-
-		// hidden form submits with id as value
-		// event handler catches submit and calls function
-		// 		function 
-					//prevents default 
-					// reformat form info into url
-					// $ pass info to server, get details back, feed to function
-							// function
-									// changes html to formatted details
-		// Another way
-		// http://stackoverflow.com/questions/17423261/how-to-pass-data-with-marker-in-leaflet-js
-		// console.log('in js');
-		// function onMarkerClick(evt) {
-		//     console.log("You clicked the marker " + evt.target.layer.feature.id);
-		// }
-		// marker.on('click', onMarkerClick);
-
-
-
 
 		var marker;
 
@@ -142,9 +121,6 @@
 		// When clicked, use marker
 		$('#map').on('click', '.detailsBtn', seeNote);
 
-
-
-		// fetches plant object from server using Ajax, display in div with jinja
 		function seeNote(evt) {
 			console.log('in function, ready to handle: ' + marker);
 			//var marker = evt.target.feature.id; // doesn't work
@@ -152,18 +128,10 @@
 			console.log(typeof marker);
 			// pass id to server, get data (this needs to wait until a marker is clicked)
 			$.get('/plant-detail', {'marker': marker}, function (results) {
-				// console.log(results);
-				// var plant = results;
-
-				// var title = plant.title;
-				// var description = plant.description;
-				// var address = plant.address;
-
-				// make new html string
-				var plantDetail = results;
-				//display new info in detail div
-				$('#detailsDiv').html(plantDetail);
-				console.log('updated div');
+				// get html from server
+				var plantNote = results;
+				//display new html in detail div
+				$('#detailsDiv').html(plantNote);
 			});
 		};
 
@@ -182,28 +150,12 @@
 		// };
 
 
-
-
-
-		// 	var url = '/plant-detail?' + $('detailsForm').serialize();
-		// 	console.log(url);
-		// 	// SHOULD pass url to server, then call makeChirps() on resulting info. Doesn't recognize results?
-		// 	//$.get(url, makeChirps(results));
-		// 	// Using an anonymous function that calls makeChirp works. Hm.
-		// 	$.get(url, function (results) {
-		// 		display(results);
-		// 	});
-		// };
-
-		// function display(thing) {
-		// 	console.log(thing);
-		// };
-
-
-
-
-
-
+		// http://stackoverflow.com/questions/17423261/how-to-pass-data-with-marker-in-leaflet-js
+		// console.log('in js');
+		// function onMarkerClick(evt) {
+		//     console.log("You clicked the marker " + evt.target.layer.feature.id);
+		// }
+		// marker.on('click', onMarkerClick);
 
 
 	</script>
