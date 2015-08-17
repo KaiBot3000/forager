@@ -39,15 +39,46 @@ def markers():
 	return render_template('detail-play.html', marker_collection=marker_collection)
 
 @app.route('/plant-detail')
-def plant_details(plant_id):
+def plant_details():
 	'''Gets marker/plant id from js, returns proper plant object.'''
 	# plant = Plant.query.get(plant_id)
 
-	plant_id = request.args.get('plantId')
+	plant_id = request.args.get('marker')
+
+	print 'In the server route. \n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n'
 
 	print plant_id
 
-	return 'plant id is: %s' % plant_id # JSON plant object for jinja to eat, or just needed info
+	plant = Plant.query.get(plant_id)
+	# need to make desired plant attributes into dictionary, then JSONify dict and pass it.
+	# OR, pass completed html. Yes.
+	# Passing the object itself will result in errors because it came from SQLAlchemy and has methods attached.
+
+	plant_dict = {
+		'id' :plant.plant_id,
+		'species': plant.plant_species,
+		'name': plant.plant_name,
+		
+		'category': plant.plant_category,
+		'description': plant.plant_description,
+		'owner': plant.plant_owner,
+		'private': plant.plant_private,
+
+		'address': plant.plant_address,
+		'zipcode': plant.plant_zipcode,
+		'location': plant.plant_location,
+		'lat': plant.plant_lat,
+		'lon': plant.plant_lon,
+
+		'spring': plant.plant_spring,
+		'summer': plant.plant_summer,
+		'fall': plant.plant_fall,
+		'winter': plant.plant_winter
+	}
+
+	# return jsonify(plant_dict)
+	return '<b> Hey, this came from the server! </b>'
+	# 'plant id is: %s' % plant_id # JSON plant object for jinja to eat, or just needed info
 
 
 

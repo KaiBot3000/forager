@@ -18,19 +18,20 @@
 	
 	<style>
 	  body { margin:0; padding:0; }
-	  #map { position:absolute; top:0; bottom:0; width:100%; }
+	  #map { 
+	  	width: 75%;
+	  	height: 300px;
+	  }
 	</style>
 
 </head>
 
 <body>
 
-<!-- 	<div id='map' style='width: 75%; height: 75%'> Hay, I'm a map </div> -->
+	<div id='map'> Hay, I'm a map </div>
 
-	Other stuff which is not a map
 
-	<div id='detailsDiv'>Plant Details!
-	</div>
+	<div id='detailsDiv'>Plant Details!</div>
 
 
 
@@ -121,11 +122,11 @@
 		// marker.on('click', onMarkerClick);
 
 
-		// can I use jquery in the popup?
+
 
 		var marker;
 
-				// opens as soon as popup pops, passes info, saves as marker
+		// opens as soon as popup pops, passes info, saves as marker
 		map.on('popupopen', function(e) {
 		  marker = e.popup._source.feature.id;
 		  console.log('marker is: ' + marker);
@@ -141,18 +142,44 @@
 		// When clicked, use marker
 		$('#map').on('click', '.detailsBtn', seeNote);
 
+
+
 		// fetches plant object from server using Ajax, display in div with jinja
 		function seeNote(evt) {
 			console.log('in function, ready to handle: ' + marker);
 			//var marker = evt.target.feature.id; // doesn't work
 
-			var plantDetail = '<b> Here is a detail!! </b>';
+			console.log(typeof marker);
+			// pass id to server, get data (this needs to wait until a marker is clicked)
+			$.get('/plant-detail', {'marker': marker}, function (results) {
+				// console.log(results);
+				// var plant = results;
 
-			//display new info in detail div
-			$('#detailsDiv').html(plantDetail);
-			console.log('updated div');
+				// var title = plant.title;
+				// var description = plant.description;
+				// var address = plant.address;
 
+				// make new html string
+				var plantDetail = results;
+				//display new info in detail div
+				$('#detailsDiv').html(plantDetail);
+				console.log('updated div');
+			});
 		};
+
+		// function displayDetails(plant) {
+		// 	console.log('in displayDetails');
+
+		// 	var title = plant.title;
+		// 	var description = plant.description;
+		// 	var address = plant.address;
+
+		// 	// make new html string
+		// 	var plantDetail = '<b> Here is a detail about ' + title + ' !!</b>';
+		// 	//display new info in detail div
+		// 	$('#detailsDiv').html(plantDetail);
+		// 	console.log('updated div');
+		// };
 
 
 
