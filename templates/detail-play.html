@@ -25,7 +25,7 @@
 
 <body>
 
-	<div id='map' style='width: 75%; height: 75%'> Hay, I'm a map </div>
+<!-- 	<div id='map' style='width: 75%; height: 75%'> Hay, I'm a map </div> -->
 
 	Other stuff which is not a map
 
@@ -44,6 +44,19 @@
 			//12 is ideal, but this shows markers
 			.addLayer(L.mapbox.tileLayer('riselikethemoon.4b711c00'));
 
+
+		// // using markercluster another way, from http://gis.stackexchange.com/questions/143099/use-mapbox-featurelayer-to-create-marker-clusters
+		// var markers = new L.MarkerClusterGroup();
+		// var geoJsonFeature = rodents1;
+		// var geoJsonLayer = L.geoJson(rodents1);
+
+		// var map = L.mapbox.map('map','mapbox.streets')
+		//     .setView([42.35,-71.08],13);
+
+		// markers.addLayer(geoJsonLayer);
+		// map.addLayer(markers);   
+
+
 		// examples.map-h61e8o8e
 		// riselikethemoon.4b711c00
 		L.mapbox.featureLayer('examples.map-h61e8o8e').on('ready', function(e) {
@@ -56,13 +69,7 @@
 
     		// for each marker (layer) in the cluster, add custom popup and change icon
     		markerLayer.eachLayer(function(layer) {
-
 		        var popupContent = '<b>' + layer.feature.properties.title + "</b><br><button type='button' value='plants!' class='detailsBtn'> Details </button> ";
-
-		        // hidden form for popup
-		        // '</b><br> <form name="detailsForm" class=detailsForm action="/" method="GET"> <input type="hidden" name="id" value=' + layer.feature.id + '> <input type="submit" value="Submit"> </form>';
-
-		        
 
 		        // can modify based on properties of feature! Will use to handle undefined features?
 		        if (layer.feature.properties.title === 'Olive') {
@@ -138,7 +145,13 @@
 		function seeNote(evt) {
 			console.log('in function, ready to handle: ' + marker);
 			//var marker = evt.target.feature.id; // doesn't work
-			
+
+			var plantDetail = '<b> Here is a detail!! </b>';
+
+			//display new info in detail div
+			$('#detailsDiv').html(plantDetail);
+			console.log('updated div');
+
 		};
 
 
