@@ -125,7 +125,7 @@ class Marker():
 		
 		return {'type': 'Feature', 'geometry': {'type': 'Point', 'coordinates': \
 				[self.lon, self.lat]}, 'id': self.plant_id, 'properties': {'title': self.title, 'description': \
-				self.description, 'marker-size': 'small', 'marker-ssymbol': self.symbol}}
+				self.description, 'marker-size': 'small', 'marker-symbol': self.symbol}}
  
 
 
