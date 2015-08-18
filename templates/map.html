@@ -162,17 +162,25 @@
 
 
 		// ########## set up event listeners to show/hide details
+
+		function clearDetails() {
+			$('#detailsDiv').html('Plant Details!');
+		};
+
 		var marker;
 
 		// opens as soon as popup pops, passes info, saves as marker
 		map.on('popupopen', function(e) {
-		  marker = e.popup._source.feature.id;
+			clearDetails();
+			marker = e.popup._source.feature.id;
 		});	
 
 		// Clears details when map clicked on blank space
 		map.on('click', function(e) {	
-			$('#detailsDiv').html('Plant Details!');
+			clearDetails();
 		});
+
+
 
 		// Why doesn't this work when the above does?
 		// $('#map').on('popupopen', function(e) {
