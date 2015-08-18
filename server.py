@@ -2,6 +2,7 @@ from flask import Flask, render_template, flash, request, redirect, jsonify, fla
 from flask_debugtoolbar import DebugToolbarExtension
 from model import connect_to_db, db, Plant, User, Rating, Marker
 from jinja2 import StrictUndefined
+import json
 import geojson
 import pprint
 
@@ -14,7 +15,7 @@ app.secret_key = 'forage_the_things'
 def index_page():
 
 	return render_template('home-forager.html')
-	
+
 
 @app.route('/map')
 def markers():
@@ -28,7 +29,7 @@ def markers():
 
 	marker_collection = geojson.FeatureCollection(marker_list)
 
-	return render_template('detail-play.html', marker_collection=marker_collection)
+	return render_template('map.html', marker_collection=marker_collection)
 
 
 @app.route('/plant-detail')
@@ -51,6 +52,39 @@ def plant_details():
 		plant.plant_category)
 
 	return detail_html
+
+
+@app.route('/list-fields')
+def list_fields():
+	'''Returns dictionary with list of possible fields for plant names and species.'''
+
+	# get possible names and species (returned as list of one-entry tuples)
+	names = db.session.query(Plant.plant_name).group_by(Plant.plant_name).all()
+	species = db.session.query(Plant.plant_species).group_by(Plant.plant_species).all()
+
+	# names_list = []
+
+	# for name in names:
+	# 	names_list.append(name[0])
+
+	# print names_list
+
+	# return json.dumps(names_list)
+
+	# combine
+	plants = names + species
+
+	# go through each and pull out of tuples
+	plants_formatted = []
+
+	for plant in plants:
+		plants_formatted.append(plant[0])
+
+	# sort alphabetically
+	sorted_plants = sorted(plants_formatted)
+
+	# make into json string, pass back
+	return json.dumps(sorted_plants)
 
 
 if __name__ == "__main__":
