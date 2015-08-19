@@ -67,77 +67,72 @@
 		</form>
 	</div>
 
-	<div id='detailsDiv'>Plant Details!</div>
+	<div id='detailsDiv'>
+		Plant Details!<br>
+		<button id='zoom' name='zoom'>Zoom!</button>
+	</div>
 
 
 
 	<script>
 
+		var mapLocation = [37.772849, -122.411227];
+		var mapZoom = 12; //12 is ideal, 15 shows markers for testing
+		var markerCollection = {{ marker_collection | safe }};
+
+
 		L.mapbox.accessToken = 'pk.eyJ1IjoicmlzZWxpa2V0aGVtb29uIiwiYSI6IjI4MjczOTIwNzE5MTY1ODI4YmYxZGVlZGZmYjc4NmI0In0.fiUOgIDwB_ByzxT63VWP-g';
 
-		map_location = [37.772849, -122.411227];	
 		var map = L.mapbox.map('map', 'riselikethemoon.4b711c00')
-			.setView(map_location, 12) 
-			//12 is ideal, but this shows markers for testing
+			.setView(mapLocation, mapZoom) 
 			.addLayer(L.mapbox.tileLayer('riselikethemoon.4b711c00'));
 
+		function makeMap(mapLocation, mapZoom, markerCollection) {
+			// clear old map
+			map.remove();
+			// draw new map	
+			map = L.mapbox.map('map', 'riselikethemoon.4b711c00')
+				.setView(mapLocation, mapZoom) 
+				.addLayer(L.mapbox.tileLayer('riselikethemoon.4b711c00'));
 
-		// // using markercluster another way, from http://gis.stackexchange.com/questions/143099/use-mapbox-featurelayer-to-create-marker-clusters
-		// var markers = new L.MarkerClusterGroup();
-		// var geoJsonFeature = rodents1;
-		// var geoJsonLayer = L.geoJson(rodents1);
+	    		var markers = new L.MarkerClusterGroup({
+	    			disableClusteringAtZoom: 16
+	    		});
+	    		var markerCollection = {{ marker_collection | safe }};
 
-		// var map = L.mapbox.map('map','mapbox.streets')
-		//     .setView([42.35,-71.08],13);
+	    		var markerLayer = L.geoJson(markerCollection);
 
-		// markers.addLayer(geoJsonLayer);
-		// map.addLayer(markers);   
+	    		// for each marker (layer) in the cluster, add custom popup and change icon
+	    		markerLayer.eachLayer(function(layer) {
+			        var popupContent = '<b>' + layer.feature.properties.title + "</b><br><button type='button' value='plants!' class='detailsBtn'> Details </button> ";
 
+			        // can modify based on properties of feature! Will use to handle undefined features?
+			        if (layer.feature.properties.title === 'Olive') {
+			        	popupContent ='<div class=detail><b>' + layer.feature.properties.title + '</b><br><button class="detailsBtn">Details</button><br>Surprise! An olive tree!!</div>';
 
-		// examples.map-h61e8o8e
-		// riselikethemoon.4b711c00
-		// L.mapbox.featureLayer('examples.map-h61e8o8e').on('ready', function(e) {
-		// 	// The clusterGroup gets each marker in the group added to it
-  //   		// once loaded, and then is added to the map
+			        	// Changes olive trees to park icon :)
+			        	layer.setIcon(L.mapbox.marker.icon({
+			        		'marker-symbol': 'park2',
+			        		'marker-color': '#00CC00'
+			        	}));
+			        } else {
+			        	layer.setIcon(L.mapbox.marker.icon({
+			        		'marker-symbol': 'park',
+			        		'marker-color': '#00CC00'
+			        	}));
+			        };
 
+			    	layer.bindPopup(popupContent, 
+			    		className = 'markerPopup'); // can add other options
+			    });
 
-      	var markerCollection = {{ marker_collection | safe }};
-    	
-  		//function makeMarkers(markerCollection) {
+	    		markers.addLayer(markerLayer);
+	    		map.addLayer(markers);
+	    };
 
-    		var markers = new L.MarkerClusterGroup({
-    			disableClusteringAtZoom: 16
-    		});
-    		var markerCollection = {{ marker_collection | safe }};
+		// Initialize map with markers!
+	    makeMap(mapLocation, mapZoom, markerCollection);
 
-    		var markerLayer = L.geoJson(markerCollection);
-
-    		// for each marker (layer) in the cluster, add custom popup and change icon
-    		markerLayer.eachLayer(function(layer) {
-		        var popupContent = '<b>' + layer.feature.properties.title + "</b><br><button type='button' value='plants!' class='detailsBtn'> Details </button> ";
-
-		        // can modify based on properties of feature! Will use to handle undefined features?
-		        if (layer.feature.properties.title === 'Olive') {
-		        	popupContent ='<div class=detail><b>' + layer.feature.properties.title + '</b><br><button class="detailsBtn">Details</button><br>Surprise! An olive tree!!</div>';
-
-		        	// Changes olive trees to park icon :)
-		        	layer.setIcon(L.mapbox.marker.icon({
-		        		'marker-symbol': 'park2',
-		        		'marker-color': '#00CC00'
-		        	}));
-		        } else {
-		        	layer.setIcon(L.mapbox.marker.icon({
-		        		'marker-symbol': 'park',
-		        		'marker-color': '#00CC00'
-		        	}));
-		        };
-
-		    	layer.bindPopup(popupContent, 
-		    		className = 'markerPopup'); // can add other options
-		    });
-
-    		markers.addLayer(markerLayer);
-    		map.addLayer(markers);
 
 
 	</script>
@@ -211,7 +206,10 @@
 			});
 		};
 
-		
+		// ########## change center, zoom, and markers of map on click (mostly to test before making AJAX)	
+		$('#zoom').on('click', function () {
+			makeMap(mapLocation, 5, markerCollection);
+		});
 
 		// function displayDetails(plant) {
 		// 	console.log('in displayDetails');
