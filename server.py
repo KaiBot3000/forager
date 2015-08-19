@@ -91,7 +91,7 @@ def search_plants():
 	# if no options selected, replace with list of all options possible
 
 	if plants == ['all']:
-		print 'changing plants\n\n\n\n\n\n\n\n\n\n\n\n\n\n'
+		# print 'changing plants\n\n\n\n\n\n\n\n\n\n\n\n\n\n'
 		names = db.session.query(Plant.plant_name).group_by(Plant.plant_name).all()
 		species = db.session.query(Plant.plant_species).group_by(Plant.plant_species).all()
 
@@ -135,7 +135,7 @@ def search_plants():
 	# print 'winter is: %s' % winter
 
 	marker_list = []
-	
+
 	# query for new plants
 	plant_objects = Plant.query.filter((Plant.plant_name.in_(plants)) | (Plant.plant_species.in_(plants))) \
 						.filter(Plant.plant_category.in_(categories)) \
