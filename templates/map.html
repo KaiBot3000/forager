@@ -69,7 +69,7 @@
 
 	<div id='detailsDiv'>
 		Plant Details!<br>
-		<button id='zoom' name='zoom'>Zoom!</button>
+		<button id='bang'>Bang!</button>
 	</div>
 
 
@@ -128,6 +128,8 @@
 
 	    		markers.addLayer(markerLayer);
 	    		map.addLayer(markers);
+	    		// centers and zooms the map around markers, with a small padding to show all of the northern markers
+	    		map.fitBounds(markerLayer.getBounds().pad(0.05));
 	    };
 
 		// Initialize map with markers!
@@ -175,6 +177,7 @@
 		map.on('popupopen', function(e) {
 			clearDetails();
 			marker = e.popup._source.feature.id;
+			console.log(marker);
 		});	
 
 		// Clears details when map clicked on blank space
@@ -207,8 +210,8 @@
 		};
 
 		// ########## change center, zoom, and markers of map on click (mostly to test before making AJAX)	
-		$('#zoom').on('click', function () {
-			makeMap(mapLocation, 5, markerCollection);
+		$('#bang').on('click', function () {
+			//makeMap(mapLocation, 5, markerCollection);
 		});
 
 		// function displayDetails(plant) {
