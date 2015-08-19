@@ -106,8 +106,10 @@
 		// L.mapbox.featureLayer('examples.map-h61e8o8e').on('ready', function(e) {
 		// 	// The clusterGroup gets each marker in the group added to it
   //   		// once loaded, and then is added to the map
+
+      	var markerCollection = {{ marker_collection | safe }};
     	
-  		function makeMarkers(markerCollection) {
+  		//function makeMarkers(markerCollection) {
     		var markers = new L.MarkerClusterGroup({
     			disableClusteringAtZoom: 16
     		});
@@ -139,14 +141,14 @@
 		    });
 
     		markers.addLayer(markerLayer);
-    		map.addLayer(markers);
-    	};
-    	mapZoom = 16
-    	remakeMap(mapLocation, mapZoom);
+    		map.addLayer(markerLayer);
+    	//};
+    	// mapZoom = 16
+    	// remakeMap(mapLocation, mapZoom);
     	
-    	var markerCollection = {{ marker_collection | safe }};
 
-    	makeMarkers(markerCollection);
+
+    	//makeMarkers(markerCollection);
 
 	</script>
 
