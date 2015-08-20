@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head> 
+</head>      
+
+<body>
+    <div>
+    <h1>Sign In</h1>
+
+    <form action='/signin' method='POST'>
+        <label>Username:
+            <input type='text' name='username' required>
+        </label><br><br>
+        <label>Password:
+            <input type='password' name='password' required>
+        </label><br><br>
+        <input type='submit' value='Sign In'>
+    </form>
+
+    <h1> Sign Up </h1>
+
+    <form action='/signup' method='POST'>
+        <label> Username:
+            <input type='text' name='username' required>
+        </label><br><br>
+        <label> Password:
+            <input type='password' name='password1' required>
+        </label><br><br>
+        <label> Confirm Password:
+            <input type='password' name='password2' required>
+        </label><br><br>
+        <input type='submit' value='Sign Up'>
+    </form>
+
+    <script src="https://code.jquery.com/jquery.js"> </script>
+
+    <script>
+        // ############## js zone
+
+        // ############# validate sign up info, or do this server side?
+            // username not taken
+            // email not taken
+            // email matches
+            // password matches
+
+    </script>
+
+</body>
+
