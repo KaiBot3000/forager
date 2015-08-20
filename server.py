@@ -17,7 +17,7 @@ def index_page():
 	return render_template('home-forager.html')
 
 
-@app.route('/map')
+@app.route('/map') # should combine this with /search?plants=all
 def markers():
 
 	marker_list = []
@@ -104,6 +104,7 @@ def search_plants():
 			plant_name = str(plant[0])
 			plants.append(plant_name)
 
+	# right now there are only 'tree's in db
 	if categories == []:
 		categories = ['FruitO', 'FruitT', 'OtherT', 'Herb', 'Vegetable', 'tree']
 
@@ -167,6 +168,7 @@ if __name__ == "__main__":
 
 ### Graveyard ###
 
+	# I thought about passing plants back this way, but opted to just send markers
 	# plant_dict = {
 	# 	'id' :plant.plant_id,
 	# 	'species': plant.plant_species,

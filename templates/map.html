@@ -80,7 +80,7 @@
 		var mapZoom = 12; //12 is ideal, 15 shows markers for testing
 		var markerCollection = {{ marker_collection | safe }};
 
-
+		// this is public on purpose
 		L.mapbox.accessToken = 'pk.eyJ1IjoicmlzZWxpa2V0aGVtb29uIiwiYSI6IjI4MjczOTIwNzE5MTY1ODI4YmYxZGVlZGZmYjc4NmI0In0.fiUOgIDwB_ByzxT63VWP-g';
 
 		var map = L.mapbox.map('map', 'riselikethemoon.4b711c00')
@@ -98,6 +98,7 @@
 	    		var markers = new L.MarkerClusterGroup({
 	    			disableClusteringAtZoom: 16
 	    		});
+
 	    		var markerCollection = {{ marker_collection | safe }};
 
 	    		var markerLayer = L.geoJson(markerCollection);
@@ -128,8 +129,11 @@
 
 	    		markers.addLayer(markerLayer);
 	    		map.addLayer(markers);
-	    		// centers and zooms the map around markers, with a small padding to show all of the northern markers
-	    		map.fitBounds(markerLayer.getBounds().pad(0.05));
+
+	    		//map.animate;
+	    		// centers and zooms the map around markers
+	    		map.fitBounds(markerLayer.getBounds()); 
+	    			// can add ', {padding: [25, 25]}' to pad results, but looks bad at low zoom. 
 	    };
 
 		// Initialize map with markers!
@@ -163,8 +167,6 @@
 		});
 
 
-
-
 		// ########## set up event listeners to show/hide details
 
 		function clearDetails() {
@@ -185,8 +187,6 @@
 			clearDetails();
 		});
 
-
-
 		// Why doesn't this work when the above does?
 		// $('#map').on('popupopen', function(e) {
 		//   var marker = e.popup._source.feature.id;
@@ -200,10 +200,8 @@
 		function seeNote(evt) {
 			//var marker = evt.target.feature.id; // doesn't work
 
-			// pass id to server, get data (this needs to wait until a marker is clicked)
+			// pass id to server, get data
 			$.get('/plant-detail', {'marker': marker}, function (results) {
-				// get html from server
-				var plantNote = results;
 				//display new html in detail div
 				$('#detailsDiv').html(results);
 			});
@@ -213,28 +211,6 @@
 		$('#bang').on('click', function () {
 			//makeMap(mapLocation, 5, markerCollection);
 		});
-
-		// function displayDetails(plant) {
-		// 	console.log('in displayDetails');
-
-		// 	var title = plant.title;
-		// 	var description = plant.description;
-		// 	var address = plant.address;
-
-		// 	// make new html string
-		// 	var plantDetail = '<b> Here is a detail about ' + title + ' !!</b>';
-		// 	//display new info in detail div
-		// 	$('#detailsDiv').html(plantDetail);
-		// 	console.log('updated div');
-		// };
-
-
-		// http://stackoverflow.com/questions/17423261/how-to-pass-data-with-marker-in-leaflet-js
-		// console.log('in js');
-		// function onMarkerClick(evt) {
-		//     console.log("You clicked the marker " + evt.target.layer.feature.id);
-		// }
-		// marker.on('click', onMarkerClick);
 
 	</script>
 </body>
@@ -258,12 +234,6 @@
 	"type": "Feature"}], 
 "type": "FeatureCollection"
 } -->
-
-
-
-<!-- MAPBOX NOTES
-
-use turf to chain together filters, using field of map get bounds. Add event listener for mapzoom, make it get bounds and redraw markers -->
 
 
 
