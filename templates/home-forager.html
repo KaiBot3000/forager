@@ -1,13 +1,10 @@
-<!DOCTYPE html>
-<html>
-<head>
-	
 
-		<title>Forager</title>
+{% extends 'base.html' %}
 
-</head>
+{% block title %}Forager{% endblock %}
 
-<body>
+{% block content %}
+		
 	<form action='/map'>
 		<input type='SUBMIT' value='See Map'></input>
 	</form>
@@ -15,6 +12,4 @@
 		<input type='SUBMIT' value='Sign In/Up'></input>
 	</form>
 
-
-</body>
-</html>
+{% endblock %}
