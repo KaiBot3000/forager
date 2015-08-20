@@ -14,7 +14,7 @@ app.secret_key = 'forage_the_things'
 @app.route('/')
 def index_page():
 
-	return render_template('home-forager.html')
+	return render_template('home.html')
 
 
 @app.route('/map') # should combine this with /search?plants=all

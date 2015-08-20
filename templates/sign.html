@@ -1,12 +1,12 @@
-<!DOCTYPE html>
-<html>
-<head> 
-</head>      
+{% extends 'base.html' %}
 
-<body>
+{% block title %}Sign In/Up{% endblock %}      
+
+{% block content %}
+
     <div>
     <h1>Sign In</h1>
-
+            
     <form action='/signin' method='POST'>
         <label>Username:
             <input type='text' name='username' required>
@@ -32,18 +32,5 @@
         <input type='submit' value='Sign Up'>
     </form>
 
-    <script src="https://code.jquery.com/jquery.js"> </script>
-
-    <script>
-        // ############## js zone
-
-        // ############# validate sign up info, or do this server side?
-            // username not taken
-            // email not taken
-            // email matches
-            // password matches
-
-    </script>
-
-</body>
+{% endblock %}
 

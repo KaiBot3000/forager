@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>{% block title %}Title{% endblock %}</title>
+
+
+	<style>
+		body { margin:0; padding:0; }
+			#map { 
+				float: left;
+				width: 75%;
+				height: 400px;
+			}
+			#search { 
+				width: 25%;
+				float: right;
+			}
+			#detailsDiv {
+				width: 50%;
+			}
+
+	</style>
+
+	<script src="https://code.jquery.com/jquery.js"> </script>
+	
+	</head>
+
+	<body>
+
+		<!-- navbar stuff will go here -->
+		
+		<div id="extending">
+			{% with messages = get_flashed_messages() %}
+			  {% if messages %}
+			    <ul class=flashes>
+			    {% for message in messages %}
+			      <li>{{ message }}</li>
+			    {% endfor %}
+			    </ul>
+			  {% endif %}
+			{% endwith %}
+
+			{% block content %}
+				Content!
+			{% endblock %}
+
+		</div>
+
+
+	
+	</body>
+</html>
