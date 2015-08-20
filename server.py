@@ -17,21 +17,6 @@ def index_page():
 	return render_template('home.html')
 
 
-@app.route('/map') # should combine this with /search?plants=all
-def markers():
-
-	marker_list = []
-
-	plants = Plant.query.all()
-
-	for plant in plants:
-		marker = Marker(plant.plant_lat, plant.plant_lon, plant.plant_id, plant.plant_name, plant.plant_description, 'park2')
-		marker_list.append(marker)
-
-	marker_collection = geojson.FeatureCollection(marker_list)
-
-	return render_template('search.html', marker_collection=marker_collection)
-
 @app.route('/sign', methods=['GET'])
 def sign():
 	'''Show sign in/up form'''
@@ -98,11 +83,13 @@ def sign_up():
 @app.route('/signout')
 def signout():
     '''Sign out.'''
+    if 'user_id' in session:
+    	del session['user_id']
+    	flash('Signed Out.')
+    else:
+    	flash('You need to sign in first')
 
-    del session['user_id']
-    flash('Signed Out.')
-
-    return redirect('/')
+	return redirect('/')
 
 
 @app.route('/plant-detail')
@@ -150,12 +137,28 @@ def list_fields():
 	return json.dumps(sorted_plants)
 
 
+@app.route('/map') # should combine this with /search?plants=all
+def markers():
+
+	marker_list = []
+
+	plants = Plant.query.all()
+
+	for plant in plants:
+		marker = Marker(plant.plant_lat, plant.plant_lon, plant.plant_id, plant.plant_name, plant.plant_description, 'park2')
+		marker_list.append(marker)
+
+	marker_collection = geojson.FeatureCollection(marker_list)
+
+	return render_template('search.html', marker_collection=marker_collection)
+
+
 @app.route('/search')
 def search_plants():
 	'''Takes search parameters, returns list of matching plants in geoJSON.
 	(may be able to combine this route with original /map route?)'''
 
-	# sample search string :/search?plants=all&category=FruitO&category=OtherT&season=Spring
+	# sample search string :/search?plant=all&category=FruitO&category=OtherT&season=Spring
 	plants = request.args.getlist('plant')
 	categories = request.args.getlist('category')
 	seasons = request.args.getlist('season')
@@ -240,26 +243,3 @@ if __name__ == "__main__":
 
 ### Graveyard ###
 
-	# I thought about passing plants back this way, but opted to just send markers
-	# plant_dict = {
-	# 	'id' :plant.plant_id,
-	# 	'species': plant.plant_species,
-	# 	'name': plant.plant_name,
-		
-	# 	'category': plant.plant_category,
-	# 	'description': plant.plant_description,
-	# 	'owner': plant.plant_owner,
-	# 	'private': plant.plant_private,
-
-	# 	'address': plant.plant_address,
-	# 	'zipcode': plant.plant_zipcode,
-	# 	'location': plant.plant_location,
-	# 	'lat': plant.plant_lat,
-	# 	'lon': plant.plant_lon,
-
-	# 	'spring': plant.plant_spring,
-	# 	'summer': plant.plant_summer,
-	# 	'fall': plant.plant_fall,
-	# 	'winter': plant.plant_winter
-	# }
-		# return jsonify(plant_dict)

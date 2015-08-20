@@ -28,6 +28,20 @@
 	<body>
 
 		<!-- navbar stuff will go here -->
+		<div id='navBar'>
+			<form action='/'>
+				<input type='SUBMIT' class='navBtn' value='Home'></input>
+			</form>
+			<form action='/sign'>
+				<input type='SUBMIT' class='navBtn' value='Sign In/Up'></input>
+			</form>
+			<form action='/signout'>
+				<input type='SUBMIT' class='navBtn' value='Sign Out'></input>
+			</form>
+			<form action='/search?plant=all'>
+				<input type='SUBMIT' class='navBtn' value='Search'></input>
+			</form>
+		</div>
 		
 		<div id="extending">
 			{% with messages = get_flashed_messages() %}
