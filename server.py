@@ -38,6 +38,7 @@ def sign():
 
 	return render_template('sign.html')
 
+
 @app.route('/signin', methods=['POST'])
 def sign_in():
 	'''Sign in registered users'''
@@ -45,21 +46,22 @@ def sign_in():
 	username = request.form['username']
 	password = request.form['password']
 
-	user = User.query.filter(username=username).first()
+	user = User.query.filter_by(username=username).first()
 
 	if not user:
 		flash('No such username! Please sign up or try again.')
-		return redirect('sign.html')
+		return redirect('/sign')
 
-	if user.password != password:
+	if user.user_password != password:
 		flash('Wrong password for that username! Please sign up or try again.')
-		return redirect('sign.html')
+		return redirect('/sign')
 
 	session['user_id'] = user.user_id
 
 	flash('Welcome back!')
 
-	return render_template('map.html')
+	return redirect('/map')
+
 
 @app.route('/signup', methods=['POST'])
 def sign_up():
@@ -71,7 +73,7 @@ def sign_up():
 
 	error = False
 
-	user = User.query.filter(username=username).first()
+	user = User.query.filter_by(username=username).first()
 
 	if user:
 		flash('That username is taken! Please try again')
@@ -82,15 +84,25 @@ def sign_up():
 		error = True
 
 	if error:
-		return redirect('sign.html')
+		return redirect('/sign')
 	else:
-		new_user = User(username=username, password=password1)
+		new_user = User(username=username, user_password=password1)
 		db.session.add(new_user)
-		db.commit
+		db.session.commit()
 
 		flash('Welcome to Forager!')
 
-		return render_template('map.html')
+		return redirect('/map')
+
+
+@app.route('/signout')
+def signout():
+    '''Sign out.'''
+
+    del session['user_id']
+    flash('Signed Out.')
+
+    return redirect('/')
 
 
 @app.route('/plant-detail')
@@ -136,73 +148,6 @@ def list_fields():
 
 	# make into json string, pass back
 	return json.dumps(sorted_plants)
-
-
-@app.route('/register', methods=['GET'])
-def register_form():
-    """Show form for user signup."""
-
-    return render_template("register_form.html")
-
-
-@app.route('/register', methods=['POST'])
-def register_process():
-    """Process registration."""
-
-    # Get form variables
-    email = request.form["email"]
-    password = request.form["password"]
-    age = int(request.form["age"])
-    zipcode = request.form["zipcode"]
-
-    new_user = User(email=email, password=password, age=age, zipcode=zipcode)
-
-    db.session.add(new_user)
-    db.session.commit()
-
-    flash("User %s added." % email)
-    return redirect("/")
-
-# pretty sure I can combine both log-in routes and just check methods
-@app.route('/login', methods=['GET'])
-def login_form():
-    """Show login form."""
-
-    return render_template("login_form.html")
-
-
-@app.route('/login', methods=['POST'])
-def login_process():
-    """Process login."""
-
-
-    # Get form variables
-    email = request.form["email"]
-    password = request.form["password"]
-
-    user = User.query.filter_by(email=email).first()
-
-    if not user:
-        flash("No such user")
-        return redirect("/login")
-
-    if user.password != password:
-        flash("Incorrect password")
-        return redirect("/login")
-
-    session["user_id"] = user.user_id
-
-    flash("Logged in")
-    return redirect("/users/%s" % user.user_id)
-
-
-@app.route('/logout')
-def logout():
-    """Log out."""
-
-    del session["user_id"]
-    flash("Logged Out.")
-    return redirect("/")
 
 
 @app.route('/search')
