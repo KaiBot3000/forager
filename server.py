@@ -30,7 +30,7 @@ def markers():
 
 	marker_collection = geojson.FeatureCollection(marker_list)
 
-	return render_template('map.html', marker_collection=marker_collection)
+	return render_template('search.html', marker_collection=marker_collection)
 
 @app.route('/sign', methods=['GET'])
 def sign():
@@ -58,7 +58,7 @@ def sign_in():
 
 	session['user_id'] = user.user_id
 
-	flash('Welcome back!')
+	flash('Welcome back, %s!' % username)
 
 	return redirect('/map')
 
@@ -90,9 +90,9 @@ def sign_up():
 		db.session.add(new_user)
 		db.session.commit()
 
-		flash('Welcome to Forager!')
+		flash('Welcome to Forager, %s!' % username)
 
-		return redirect('/map')
+		return redirect('/map', username=username)
 
 
 @app.route('/signout')
@@ -225,7 +225,7 @@ def search_plants():
 
 	marker_collection = geojson.FeatureCollection(marker_list)
 
-	return render_template('map.html', marker_collection=marker_collection)	
+	return render_template('search.html', marker_collection=marker_collection)	
 
 
 if __name__ == "__main__":
