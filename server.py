@@ -1,10 +1,13 @@
-from flask import Flask, render_template, flash, request, redirect, jsonify, flash, session
+from flask import Flask, render_template, flash, request, redirect, jsonify, flash, session, url_for
 from flask_debugtoolbar import DebugToolbarExtension
 from model import connect_to_db, db, Plant, User, Rating, Marker
 from jinja2 import StrictUndefined
 import json
 import geojson
 import pprint
+
+# import requests - makes it much easier to format requests for external api's
+# usaddress for getting addresses geocoded properly
 
 app=Flask(__name__)
 
@@ -45,7 +48,7 @@ def sign_in():
 
 	flash('Welcome back, %s!' % username)
 
-	return redirect('/map')
+	return redirect(url_for('search', plant='all'))
 
 
 @app.route('/signup', methods=['POST'])
@@ -77,12 +80,12 @@ def sign_up():
 
 		flash('Welcome to Forager, %s!' % username)
 
-		return redirect('/map', username=username)
-
+		return redirect(url_for('search', plant='all'))
 
 @app.route('/signout')
 def signout():
     '''Sign out.'''
+
     if 'user_id' in session:
     	del session['user_id']
     	flash('Signed Out.')
@@ -138,7 +141,7 @@ def list_fields():
 
 
 @app.route('/search', methods=['POST', 'GET'])
-def search_plants():
+def search():
 	'''Takes search parameters, returns list of matching plants in geoJSON.
 	(may be able to combine this route with original /map route?)'''
 
@@ -197,8 +200,6 @@ def search_plants():
 							.filter(Plant.plant_summer.in_(summer)) \
 							.filter(Plant.plant_fall.in_(fall)) \
 							.filter(Plant.plant_winter.in_(winter))
-
-		# plants = Plant.query.all()
 
 	for plant in plant_objects:
 		marker = Marker(plant.plant_lat, plant.plant_lon, plant.plant_id, plant.plant_name, plant.plant_description, 'park2')
