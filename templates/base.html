@@ -18,6 +18,9 @@
 			#detailsDiv {
 				width: 50%;
 			}
+			#navbar {
+				display: inline;
+			}
 
 	</style>
 
@@ -42,9 +45,13 @@
 				<input type='hidden' name='plant' value='all'></input>
 				<input type='SUBMIT' class='navBtn' value='Search'></input>
 			</form>
+			<form action='/describe'>
+				<input type='SUBMIT' class='navBtn' value='describe'></input>
+			</form>
 		</div>
-		
+
 		<div id="extending">
+
 			{% with messages = get_flashed_messages() %}
 			  {% if messages %}
 			    <ul class=flashes>

@@ -92,8 +92,8 @@ def signout():
     	return redirect('/')
     else:
     	flash('You need to sign in first')
-    	
-	return redirect('/sign')
+    	return redirect('/sign')
+
 
 
 @app.route('/plant-detail')
