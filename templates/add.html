@@ -12,7 +12,7 @@
                 <input type='text' name='name' maxlength='75' required>
             </label><br><br>
             <label><b>Plant species:</b>
-                <input type='text' maxlength='75' name='species'>
+                <input type='text' name='species' maxlength='75' name='species'>
             </label><br><br>
             <label><b>Plant Description:</b>
                 <input type='text' name='description' maxlength='250' required>
@@ -28,9 +28,18 @@
                 <input type='checkbox' name='season' value='Summer'>Summer</input><br>
                 <input type='checkbox' name='season' value='Fall'>Fall</input><br>
                 <input type='checkbox' name='season' value='Winter'>Winter</input><br><br>
+
+            <label><b>Test Autocomplete</b><br>
+            <input type='text' id='testText' list='autoList'>
+            <br>
+            <datalist id='autolist'>
+              <option value='apple'>
+            </datalist>
             <input type='submit' value='Add'>
         </form>
     </div>
+
+
 
     <div id='map'> Hay, I'm loading a map </div>
 
@@ -87,6 +96,21 @@
             plantLocation = marker.getLatLng();
             plantDragged = true;
             console.log('plant dragged to ' + plantLocation['lat'] + ', ' + plantLocation['lng']);
+        });
+
+        // ########## set up list for autocomplete of plant name/species
+        autoList = []
+
+        $.get('/list-fields', function (results) {
+                autoList = JSON.parse(results);
+                // var dropdown = document.getElementById('');
+
+                // for(var i = 0; i < autoList.length; i++) {
+                //     var opt = document.createElement('option');
+                //     opt.innerHTML = autoList[i];
+                //     opt.value = autoList[i];
+                //     dropdown.appendChild(opt);
+                // }
         });
 
     </script>
