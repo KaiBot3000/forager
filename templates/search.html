@@ -60,6 +60,10 @@
 		var centerLon = -122.44279861450195;
 		var mapLocation = [centerLat, centerLon]; 
 
+        var southWest = L.latLng(37.7, -122.541);
+        var northEast = L.latLng(37.815, -122.335);
+        var bounds = L.latLngBounds(southWest, northEast);
+
 		var markerCollection = {{ marker_collection | safe }};
 
 		var mapZoom = 12; //12 is ideal for showing SF, 15 shows markers for testing
@@ -67,9 +71,10 @@
 		// this is public on purpose
 		L.mapbox.accessToken = 'pk.eyJ1IjoicmlzZWxpa2V0aGVtb29uIiwiYSI6IjI4MjczOTIwNzE5MTY1ODI4YmYxZGVlZGZmYjc4NmI0In0.fiUOgIDwB_ByzxT63VWP-g';
 
-		var map = L.mapbox.map('map', 'riselikethemoon.4b711c00')
+		var map = L.mapbox.map('map', 'riselikethemoon.4b711c00', {maxBounds: bounds, minZoom: mapZoom})
 			.setView(mapLocation, mapZoom) 
-			.addLayer(L.mapbox.tileLayer('riselikethemoon.4b711c00'));
+			.addLayer(L.mapbox.tileLayer('riselikethemoon.4b711c00'))
+            .fitBounds(bounds);
 
 		function makeMap(mapLocation, markerCollection) { // used to take zoom, but I'm using fitbouds now.
 			// clear old map
@@ -78,9 +83,10 @@
 
 			var maxClusterZoom = 16; // When I want clustering to end
 
-			map = L.mapbox.map('map', 'riselikethemoon.4b711c00')
+			map = L.mapbox.map('map', 'riselikethemoon.4b711c00', {maxBounds: bounds, minZoom: mapZoom})
 				.setView(mapLocation, mapZoom) 
-				.addLayer(L.mapbox.tileLayer('riselikethemoon.4b711c00'));
+				.addLayer(L.mapbox.tileLayer('riselikethemoon.4b711c00'))
+            	.fitBounds(bounds);
 
 	    		var markers = new L.MarkerClusterGroup({
 	    			disableClusteringAtZoom: maxClusterZoom
