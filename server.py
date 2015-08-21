@@ -96,28 +96,6 @@ def signout():
 
 
 
-@app.route('/plant-detail')
-def plant_details():
-	'''Gets marker/plant id from js, returns proper plant object.'''
-
-	plant_id = request.args.get('marker')
-	print plant_id
-	plant = Plant.query.get(plant_id)
-
-	# need to make desired plant attributes into dictionary, then JSONify dict and pass it.
-	# OR, pass completed html. Yes.
-	# Passing the object itself will result in errors because it came from SQLAlchemy and has methods attached.
-
-	# Make series of if functions for attributes, appending new html onto string for each existing attr.
-	detail_html = '<div class="header"><b> %s <i> (%s)</i></b></div> <br> <p><b>Address:</b> %s <p class="description"> <b> Description:</b> %s </p> <p><b>Category:</b> %s' % (plant.plant_name, 
-		plant.plant_species, 
-		plant.plant_address, 
-		plant.plant_description, 
-		plant.plant_category)
-
-	return detail_html
-
-
 @app.route('/list-fields')
 def list_fields():
 	'''Returns dictionary with list of possible fields for plant names and species.'''
@@ -200,7 +178,36 @@ def search():
 
 	marker_collection = geojson.FeatureCollection(marker_list)
 
-	return render_template('search.html', marker_collection=marker_collection)	
+	return render_template('search.html', marker_collection=marker_collection)
+
+
+
+@app.route('/plant-detail')
+def plant_details():
+	'''Gets marker/plant id from js, returns html with plant details.'''
+
+	plant_id = request.args.get('marker')
+	print plant_id
+	plant = Plant.query.get(plant_id)
+
+	# need to make desired plant attributes into dictionary, then JSONify dict and pass it.
+	# OR, pass completed html. Yes.
+	# Passing the object itself will result in errors because it came from SQLAlchemy and has methods attached.
+
+	# Make series of if functions for attributes, appending new html onto string for each existing attr.
+	detail_html = '<div class="header"><b> %s <i> (%s)</i></b></div> <br> <p><b>Address:</b> %s <p class="description"> <b> Description:</b> %s </p> <p><b>Category:</b> %s' % (plant.plant_name, 
+		plant.plant_species, 
+		plant.plant_address, 
+		plant.plant_description, 
+		plant.plant_category)
+
+	return detail_html	
+
+@app.route('/add')
+def add():
+	'''Gets form information, adds plant to db'''
+
+	return render_template('add.html')
 
 
 if __name__ == "__main__":
