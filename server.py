@@ -210,45 +210,6 @@ def add():
 	return render_template('add.html')
 
 
-@app.route('/categorize')
-def categorize():
-	'''Changes categories of trees imported from fuf.'''
-
-
-	fruit = ['Anna apple', 'Apple', 'Avocado', 'Bartlett pear', 'Bearss lime', 
-			'Beverly Hills apple', 'Bing cherry', 'Black Mission fig', 'Brown Turkey fig', 'Callaway Apple', 'Citrus',
-			 'Clementine', 'Common fig', 'Common pear', 'Common plum', 'Date palm', 'Flowering crab apple', 
-			 'Fuji apple', 'Gala apple', 'Gordon apple', 'Grapefruit', 'Gravenstein apple', 'Green gage plum',
-			  'Hollyleaf cherry', 'Improved Meyer lemon', 'Jelly palm', 'Lemon', 'Lisbon lemon', 'Loquat', 
-			  'Marina arbutus', 'Olive', 'Oro Blanco grapefruit', 'Owari Satsuma', 'Persian lime', 
-			  'Pineapple guava', 'Stewart avocado', 'Strawberry tree']
-
-	nut = ['Beaked hazelnut', 'California walnut', 'Hinds black walnut', 'Sweet almond', 'Walnut', 
-			'White mulberry', 'Winter Banana apple']
-	herb = ['Carob', 'Chinese hackberry', 'European hackberry', 'Northern hackberry']
-
-
-	vegetable = []
-	
-	plant_objects = Plant.query.all()
-
-	for plant in plant_objects:
-		if plant.plant_name in fruit:
-			plant.plant_category = 'fruit'
-		elif plant.plant_name in nut:
-			plant.plant_category = 'nut'
-		elif plant.plant_name in herb:
-			plant.plant_category = 'herb'
-		else:
-			print plant.plant_name
-
-	print 'Done categorizing!'
-
-	db.session.commit()
-
-	return redirect(url_for('search', plant='all'))
-
-
 if __name__ == "__main__":
 
 	connect_to_db(app)
