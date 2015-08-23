@@ -218,6 +218,7 @@ def add():
 		season_list = request.form.getlist('seasons')
 		lat = request.form['formLat']
 		lon = request.form['formLon']
+		real = request.form.get('real')
 
 		spring_string = 'spring'
 		summer_string = 'summer'
@@ -257,7 +258,12 @@ def add():
 
 		print new_plant
 
-		flash('Thanks for adding a %s. Want to add another plant?' % name)
+		if real:
+			# db.session.add(new_plant)
+			# db.session.commit()
+			flash('Thanks for adding a %s. Want to add another plant?' % name)
+		else:
+			flash('Thanks for adding a fake %s. Want to add another plant?' % name)
 
 		return render_template('add.html')
 
