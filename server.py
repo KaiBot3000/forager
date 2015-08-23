@@ -219,14 +219,43 @@ def add():
 		lat = request.form['formLat']
 		lon = request.form['formLon']
 
-		print '%s, %s, %s, %s, %s, %s, %s' % (name, species, description, category, season_list, lat, lon)
+		spring_string = 'spring'
+		summer_string = 'summer'
+		fall_string = 'fall'
+		winter_string = 'winter'
 
-		new_plant = Plant()
+		spring = False
+		summer = False
+		fall = False
+		winter = False
 
-		new_plant.plant_name = name
-		new_plant.plant_species = species
-		new_plant.plant_description = description
+		if spring_string in season_list:
+			spring = True
+
+		if summer_string in season_list:
+			summer = True
 		
+		if fall_string in season_list:
+			fall = True
+
+		if winter_string in season_list:
+			winter = True		
+
+
+		print '%s, %s, %s, %s, %s, %s, %s' % (name, species, description, category, spring, lat, lon)
+
+		new_plant = Plant(name=name,
+						species=species,
+						description=description,
+						category=category,
+						spring=spring,
+						summer=summer,
+						fall=fall,
+						winter=winter,
+						lat=lat,
+						lon=lon)
+
+		print new_plant
 
 		flash('Thanks for adding a %s. Want to add another plant?' % name)
 
