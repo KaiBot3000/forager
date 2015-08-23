@@ -27,6 +27,8 @@
                 <input type='checkbox' name='seasons' value='Summer'>Summer</input><br>
                 <input type='checkbox' name='seasons' value='Fall'>Fall</input><br>
                 <input type='checkbox' name='seasons' value='Winter'>Winter</input><br><br>
+            <input type='hidden' name='formLat' id='formLat'</input>
+            <input type='hidden' name='formLon' id='formLon'</input>
 
 <!--             <label><b>Test Autocomplete</b><br>
             <input type='text' id='testText' list='autoList'>
@@ -94,6 +96,9 @@
         marker.on('dragend', function(evt){
             plantLocation = marker.getLatLng();
             plantDragged = true;
+            document.getElementById('formLat').value = plantLocation['lat']
+            document.getElementById('formLon').value = plantLocation['lng']
+
             console.log('plant dragged to ' + plantLocation['lat'] + ', ' + plantLocation['lng']);
         });
 

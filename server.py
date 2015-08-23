@@ -216,8 +216,10 @@ def add():
 		description = request.form['description']
 		category = request.form['category']
 		season_list = request.form.getlist('seasons')
+		lat = request.form['formLat']
+		lon = request.form['formLon']
 
-		print '%s, %s, %s, %s, %s' % (name, species, description, category, season_list)
+		print '%s, %s, %s, %s, %s, %s, %s' % (name, species, description, category, season_list, lat, lon)
 
 		flash('Thanks for adding a %s' % name)
 
