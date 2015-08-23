@@ -144,9 +144,8 @@ def search():
 			plant_name = str(plant[0])
 			plants.append(plant_name)
 
-	# right now there are only 'tree's in db
 	if categories == []:
-		categories = ['fruit', 'nut', 'herb', 'vegetable', 'tree']
+		categories = ['fruit', 'nut', 'herb', 'vegetable']
 
 	# Initialize defaults for seasons
 	spring = [0, 1]
@@ -203,11 +202,26 @@ def plant_details():
 	return detail_html	
 
 
-@app.route('/add')
+@app.route('/add', methods=['GET', 'POST'])
 def add():
 	'''Gets form information, adds plant to db'''
 
-	return render_template('add.html')
+	if request.method == 'GET':
+		return render_template('add.html')
+	else:
+		
+		# # new_plant
+		name = request.form['name']
+		species = request.form['species']
+		description = request.form['description']
+		category = request.form['category']
+		season_list = request.form.getlist('seasons')
+
+		print '%s, %s, %s, %s, %s' % (name, species, description, category, season_list)
+
+		flash('Thanks for adding a %s' % name)
+
+		return render_template('add.html')
 
 
 if __name__ == "__main__":
