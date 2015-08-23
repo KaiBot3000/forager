@@ -13,24 +13,24 @@ class Plant(db.Model):
 	__tablename__ = 'plants'
 
 	plant_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
+	plant_name = db.Column(db.String(75))	
 	plant_species = db.Column(db.String(75))
-	plant_name = db.Column(db.String(75))
 	
-	plant_category = db.Column(db.String(50))
 	plant_description = db.Column(db.String(250))
+	plant_category = db.Column(db.String(50))
 	plant_owner = db.Column(db.Integer, db.ForeignKey('users.user_id'))
 	plant_private = db.Column(db.Boolean, default=False)
+
+	plant_spring = db.Column(db.Boolean, default=False)
+	plant_summer = db.Column(db.Boolean, default=False)
+	plant_fall = db.Column(db.Boolean, default=False)
+	plant_winter = db.Column(db.Boolean, default=False)
 
 	plant_address = db.Column(db.String(100))
 	plant_zipcode = db.Column(db.Integer)
 	plant_location = db.Column(db.String(100))
 	plant_lat = db.Column(db.Integer)
 	plant_lon = db.Column(db.Integer)
-
-	plant_spring = db.Column(db.Boolean, default=False)
-	plant_summer = db.Column(db.Boolean, default=False)
-	plant_fall = db.Column(db.Boolean, default=False)
-	plant_winter = db.Column(db.Boolean, default=False)
 
 
 	def __repr__(self):
@@ -42,10 +42,25 @@ class Plant(db.Model):
 															self.plant_lat,
 															self.plant_lon)
 
+	def __init__(self, name, species, description, category, 
+				spring, summer, fall, winter, lat, lon):
+		self.plant_name = name
+		self.plant_species = species
+		self.plant_description = description
+		self.plant_category = category
+		self.plant_spring = spring
+		self.plant_summer = summer
+		self.plant_fall = fall
+		self.plant_winter = winter
+		self.plant_lat = lat
+		self.plant_lon = lon
+
+
+
 	def wkt_to_lonlat(self):
 		'''Converts wkt format coordinates to a latitude and longitude
 			Takes plant object, reads its wkt, converts, and adds that to lat and lon fields. 
-			Updates plant. Ot returns lonlat_list
+			Updates plant. 
 		'''
 
 		wkt = self.plant_location
@@ -68,7 +83,7 @@ class Plant(db.Model):
 		# return lonlat_list
 
 	def address_to_latlon(address):
-		'''Converts wkt format coordinates to a latitude and longitude via api call'''
+		'''Converts latitude and longitude to nearest address via api call'''
 		# I'll need this if users want to add a plant by address
 
 class User(db.Model):

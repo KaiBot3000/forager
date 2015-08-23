@@ -221,7 +221,14 @@ def add():
 
 		print '%s, %s, %s, %s, %s, %s, %s' % (name, species, description, category, season_list, lat, lon)
 
-		flash('Thanks for adding a %s' % name)
+		new_plant = Plant()
+
+		new_plant.plant_name = name
+		new_plant.plant_species = species
+		new_plant.plant_description = description
+		
+
+		flash('Thanks for adding a %s. Want to add another plant?' % name)
 
 		return render_template('add.html')
 
