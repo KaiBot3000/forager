@@ -13,24 +13,20 @@ class Plant(db.Model):
 	__tablename__ = 'plants'
 
 	plant_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
-	plant_name = db.Column(db.String(75))	
+	plant_name = db.Column(db.String(75), nullable=False)	
 	plant_species = db.Column(db.String(75))
 	
 	plant_description = db.Column(db.String(250))
-	plant_category = db.Column(db.String(50))
-	plant_owner = db.Column(db.Integer, db.ForeignKey('users.user_id'))
-	plant_private = db.Column(db.Boolean, default=False)
-
+	plant_category = db.Column(db.String(50), nullable=False)
+	
 	plant_spring = db.Column(db.Boolean, default=False)
 	plant_summer = db.Column(db.Boolean, default=False)
 	plant_fall = db.Column(db.Boolean, default=False)
 	plant_winter = db.Column(db.Boolean, default=False)
 
 	plant_address = db.Column(db.String(100))
-	plant_zipcode = db.Column(db.Integer)
-	plant_location = db.Column(db.String(100))
-	plant_lat = db.Column(db.Integer)
-	plant_lon = db.Column(db.Integer)
+	plant_lat = db.Column(db.Integer, nullable=False)
+	plant_lon = db.Column(db.Integer, nullable=False)
 
 
 	def __repr__(self):
@@ -55,6 +51,10 @@ class Plant(db.Model):
 		self.plant_lat = lat
 		self.plant_lon = lon
 
+	def make_marker(self):
+		
+		return {'type': 'Feature', 'geometry': {'type': 'Point', 'coordinates': \
+				[self.plant_lon, self.plant_lat]}, 'id': self.plant_id, 'properties': {'title': self.plant_name}}	
 
 
 	def wkt_to_lonlat(self):
@@ -86,6 +86,7 @@ class Plant(db.Model):
 		'''Converts latitude and longitude to nearest address via api call'''
 		# I'll need this if users want to add a plant by address
 
+
 class User(db.Model):
 	"""Forager registered users"""
 
@@ -101,8 +102,8 @@ class User(db.Model):
 		return '<User id:%s, username: %s>' % (self.user_id, self.username)
 
 
-class Reviews(db.Model):
-	"""User Reviewss for Plants"""
+class Review(db.Model):
+	"""User Reviews for Plants"""
 
 	__tablename__ = 'reviews'
 
@@ -110,6 +111,7 @@ class Reviews(db.Model):
 	review_user = db.Column(db.Integer, db.ForeignKey('users.user_id'))
 	review_plant = db.Column(db.Integer, db.ForeignKey('plants.plant_id'))
 	review_score = db.Column(db.Integer, nullable=False)
+	review_description = db.Column(db.String(250))
 
 	def __repr__(self):
 		"""What to show when review printed"""
@@ -120,22 +122,22 @@ class Reviews(db.Model):
 
 
 # converts plant objects into geoJSON string for marker
-class Marker():
+# class Marker():
 
-	def __init__(self, lat, lon, plant_id, title, description, symbol):
-		self.lat = lat
-		self.lon = lon
-		self.plant_id = plant_id
-		self.title = title
-		self.description = description
-		self.symbol = symbol
+# 	def __init__(self, lat, lon, plant_id, title, description, symbol):
+# 		self.lat = lat
+# 		self.lon = lon
+# 		self.plant_id = plant_id
+# 		self.title = title
+# 		self.description = description
+# 		self.symbol = symbol
 
-	@property
-	def __geo_interface__(self):
+# 	@property
+# 	def __geo_interface__(self):
 		
-		return {'type': 'Feature', 'geometry': {'type': 'Point', 'coordinates': \
-				[self.lon, self.lat]}, 'id': self.plant_id, 'properties': {'title': self.title, 'description': \
-				self.description, 'marker-size': 'small', 'marker-symbol': self.symbol}}
+# 		return {'type': 'Feature', 'geometry': {'type': 'Point', 'coordinates': \
+# 				[self.lon, self.lat]}, 'id': self.plant_id, 'properties': {'title': self.title, 'description': \
+# 				self.description, 'marker-size': 'small', 'marker-symbol': self.symbol}}
  
 
 def connect_to_db(app):

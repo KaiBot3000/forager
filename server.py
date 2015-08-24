@@ -1,6 +1,6 @@
 from flask import Flask, render_template, flash, request, redirect, jsonify, flash, session, url_for
 from flask_debugtoolbar import DebugToolbarExtension
-from model import connect_to_db, db, Plant, User, Rating, Marker
+from model import connect_to_db, db, Plant, User, Review #, Marker
 from jinja2 import StrictUndefined
 import json
 import geojson
