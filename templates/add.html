@@ -38,7 +38,7 @@
             <datalist id='autolist'>
               <option value='apple'>
             </datalist> -->
-            <input type='submit' value='Add'>
+            <input type='submit' id='addBtn' value='Add'>
         </form>
     </div>
 
@@ -118,6 +118,44 @@
                 //     dropdown.appendChild(opt);
                 // }
         });
+
+        // ########## Validate form before submission
+
+        //var addBtn = document.getElementById('addBtn')
+        // function validate(evt) {
+        //     evt.preventDefault();
+        //     console.log('validating');
+
+        //     // if a category isn't checked, alert to check it
+        //     // if season isn't checked, alert to check it
+
+        //     // if marker isn't dragged, alert to drag it
+        //     if (!plantDragged) {
+        //         console.log('plant not dragged yet');
+        //         alert('Please drag the marker to the plant\'s location');
+        //     };
+        //     // else, submit
+        // };
+
+        // this isn't grabbing the click like it should :(
+        console.log('click it!');
+        $('.addBtn').on('click', function(){
+            evt.preventDefault();
+            console.log('validating');
+
+            // if a category isn't checked, alert to check it
+            // if season isn't checked, alert to check it
+            // if marker isn't dragged, alert to drag it
+            if (!plantDragged) {
+                console.log('plant not dragged yet');
+                alert('Please drag the marker to the plant\'s location');
+            };
+            // else, submit
+        });
+
+
+
+
 
     </script>
 

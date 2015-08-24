@@ -225,22 +225,25 @@ def add():
 		fall_string = 'fall'
 		winter_string = 'winter'
 
-		spring = False
-		summer = False
-		fall = False
-		winter = False
-
 		if spring_string in season_list:
 			spring = True
+		else:
+			spring = False
 
 		if summer_string in season_list:
 			summer = True
+		else:
+			summer = False
 		
 		if fall_string in season_list:
 			fall = True
+		else:
+			fall = False
 
 		if winter_string in season_list:
-			winter = True		
+			winter = True
+		else:
+			winter = False		
 
 
 		print '%s, %s, %s, %s, %s, %s, %s' % (name, species, description, category, spring, lat, lon)
@@ -261,9 +264,9 @@ def add():
 		if real:
 			# db.session.add(new_plant)
 			# db.session.commit()
-			flash('Thanks for adding a %s. Want to add another plant?' % name)
+			flash('Thanks for adding a %s.' % name)
 		else:
-			flash('Thanks for adding a fake %s. Want to add another plant?' % name)
+			flash('Thanks for adding a fake %s.' % name)
 
 		return render_template('add.html')
 
