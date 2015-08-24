@@ -1,6 +1,6 @@
 from flask import Flask, render_template, flash, request, redirect, jsonify, flash, session, url_for
 from flask_debugtoolbar import DebugToolbarExtension
-from model import connect_to_db, db, Plant, User, Review #, Marker
+from model import connect_to_db, db, Plant, User, Review, Marker
 from jinja2 import StrictUndefined
 import json
 import geojson
@@ -102,9 +102,9 @@ def list_fields():
 
 	# get possible names and species (returned as list of one-entry tuples)
 	names = db.session.query(Plant.plant_name).group_by(Plant.plant_name).all()
-	species = db.session.query(Plant.plant_species).group_by(Plant.plant_species).all()
+	#species = db.session.query(Plant.plant_species).group_by(Plant.plant_species).all()
 
-	plants = names + species
+	plants = names #+ species
 
 	# go through each and pull out of tuples
 	plants_formatted = []
