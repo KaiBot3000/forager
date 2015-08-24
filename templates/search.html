@@ -41,8 +41,17 @@
 	</div>
 
 	<div id='reviewsDiv'>
-		Reviews for this plant!<br>
-		<button id='reviewBtn'>Review this plant</button>
+		{% if reviews %}
+			Reviews for this plant!<br>
+			<button id='reviewBtn'>Review this plant</button>
+		    <ul>
+		        {% for review_user, review_score in reviews  %}
+		            <li>
+		                <a href="/movies/{{ review_user }}">{{ review_user }}</a>: {{ review_score }}
+		            </li>
+		        {% endfor %}
+		    </ul>
+		{% endif %}
 	</div>
 
 
@@ -165,6 +174,7 @@
 		};
 
 		var marker;
+		var reviews = false;
 
 		// opens as soon as popup pops, passes info, saves as marker
 		map.on('popupopen', function(e) {
@@ -186,11 +196,20 @@
 		function seeNote(evt) {
 			//var marker = evt.target.feature.id; // doesn't work
 
-			// pass id to server, get data
+			// pass id to server, get details data
 			$.get('/plant-detail', {'marker': marker}, function (results) {
 				//display new html in detail div
 				$('#detailsDiv').html(results);
 			});
+
+			// pass id to server, get review data
+			$.get('/plant-reviews', {'marker': marker}, function (results) {
+				reviews = results;
+			});
+			// $.get('/plant-reviews', {'marker': marker}, function (results) {
+			// 	console.log(results);
+			// });
+
 		};
 
 		// Clears details when map clicked on blank space

@@ -101,22 +101,22 @@ class User(db.Model):
 		return '<User id:%s, username: %s>' % (self.user_id, self.username)
 
 
-class Rating(db.Model):
-	"""User Ratings for Plants"""
+class Reviews(db.Model):
+	"""User Reviewss for Plants"""
 
-	__tablename__ = 'ratings'
+	__tablename__ = 'reviews'
 
-	rating_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
-	rating_user = db.Column(db.Integer, db.ForeignKey('users.user_id'))
-	rating_plant = db.Column(db.Integer, db.ForeignKey('plants.plant_id'))
-	rating_score = db.Column(db.Integer, nullable=False)
+	review_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
+	review_user = db.Column(db.Integer, db.ForeignKey('users.user_id'))
+	review_plant = db.Column(db.Integer, db.ForeignKey('plants.plant_id'))
+	review_score = db.Column(db.Integer, nullable=False)
 
 	def __repr__(self):
-		"""What to show when rating printed"""
+		"""What to show when review printed"""
 
-		return '<%s rated plant %s a %s>' % (self.rating_user, 
-											self.rating_plant, 
-											self.rating_score)
+		return '<%s rated plant %s a %s>' % (self.review_user, 
+											self.review_plant, 
+											self.review_score)
 
 
 # converts plant objects into geoJSON string for marker

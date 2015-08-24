@@ -202,6 +202,35 @@ def plant_details():
 	return detail_html	
 
 
+@app.route('/plant-reviews')
+def plant_reviews():
+	'''Gets marker/plant id from js, returns html with reveiw buttom and plant reviews.'''
+
+	plant_id = request.args.get('marker')
+	print plant_id
+	plant = Plant.query.get(plant_id)
+
+	# Get ratings for that plant
+	reviews = Rating.query.filter_by(rating_plant=plant_id)
+
+	# # Make series of if functions for attributes, appending new html onto string for each existing attr.
+	# detail_html = '<div class="header"><b> %s <i> (%s)</i></b></div> <br> <p><b>Address:</b> %s <p class="description"> <b> Description:</b> %s </p> <p><b>Category:</b> %s' % (plant.plant_name, 
+	# 	plant.plant_species, 
+	# 	plant.plant_address, 
+	# 	plant.plant_description, 
+	# 	plant.plant_category)
+
+	# display header and button to add review
+	# For rating in ratings
+		# display stars
+		# display user
+		# display description
+	# can't really pass all that as html. Better to pass objects and process w/ jinja
+
+	# return ratings	
+	return 'hello from reviews!'
+
+
 @app.route('/add', methods=['GET', 'POST'])
 def add():
 	'''Gets form information, adds plant to db'''
