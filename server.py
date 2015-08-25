@@ -1,6 +1,6 @@
 from flask import Flask, render_template, flash, request, redirect, jsonify, flash, session, url_for
 from flask_debugtoolbar import DebugToolbarExtension
-from model import connect_to_db, db, Plant, User, Review, Marker
+from model import connect_to_db, db, Plant, User, Review #, Marker
 from jinja2 import StrictUndefined
 import json
 import geojson
@@ -172,7 +172,8 @@ def search():
 						.filter(Plant.plant_winter.in_(winter))
 
 	for plant in plant_objects:
-		marker = Marker(plant.plant_lat, plant.plant_lon, plant.plant_id, plant.plant_name, plant.plant_description, 'park2')
+		# marker = Marker(plant.plant_lat, plant.plant_lon, plant.plant_id, plant.plant_name, plant.plant_description, 'park2')
+		marker = plant.make_marker()
 		marker_list.append(marker)
 
 	marker_collection = geojson.FeatureCollection(marker_list)

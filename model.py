@@ -123,22 +123,22 @@ class Review(db.Model):
 
 
 # converts plant objects into geoJSON string for marker
-class Marker():
+# class Marker():
 
-	def __init__(self, lat, lon, plant_id, title, description, symbol):
-		self.lat = lat
-		self.lon = lon
-		self.plant_id = plant_id
-		self.title = title
-		self.description = description
-		self.symbol = symbol
+# 	def __init__(self, lat, lon, plant_id, title, description, symbol):
+# 		self.lat = lat
+# 		self.lon = lon
+# 		self.plant_id = plant_id
+# 		self.title = title
+# 		self.description = description
+# 		self.symbol = symbol
 
-	@property
-	def __geo_interface__(self):
+# 	@property
+# 	def __geo_interface__(self):
 		
-		return {'type': 'Feature', 'geometry': {'type': 'Point', 'coordinates': \
-				[self.lon, self.lat]}, 'id': self.plant_id, 'properties': {'title': self.title, 'description': \
-				self.description, 'marker-size': 'small', 'marker-symbol': self.symbol}}
+# 		return {'type': 'Feature', 'geometry': {'type': 'Point', 'coordinates': \
+# 				[self.lon, self.lat]}, 'id': self.plant_id, 'properties': {'title': self.title, 'description': \
+# 				self.description, 'marker-size': 'small', 'marker-symbol': self.symbol}}
  
 
 def connect_to_db(app):
