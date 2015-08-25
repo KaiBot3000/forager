@@ -39,18 +39,18 @@ class Plant(db.Model):
 															self.plant_lat,
 															self.plant_lon)
 
-	# def __init__(self, name, species, description, category, 
-	# 			spring, summer, fall, winter, lat, lon):
-	# 	self.plant_name = name
-	# 	self.plant_species = species
-	# 	self.plant_description = description
-	# 	self.plant_category = category
-	# 	self.plant_spring = spring
-	# 	self.plant_summer = summer
-	# 	self.plant_fall = fall
-	# 	self.plant_winter = winter
-	# 	self.plant_lat = lat
-	# 	self.plant_lon = lon
+	def __init__(self, name, species, description, category, 
+				spring, summer, fall, winter, lat, lon):
+		self.plant_name = name
+		self.plant_species = species
+		self.plant_description = description
+		self.plant_category = category
+		self.plant_spring = spring
+		self.plant_summer = summer
+		self.plant_fall = fall
+		self.plant_winter = winter
+		self.plant_lat = lat
+		self.plant_lon = lon
 
 	def make_marker(self):
 		
