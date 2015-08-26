@@ -221,11 +221,15 @@ def plant_reviews():
 	reviews = Review.query.filter_by(review_plant=plant_id).all()
 
 	print reviews
-	print json.dumps(reviews)
 	print '\n\n\n'
 
-	return json.dumps(reviews)	
-	# return 'hello from reviews!'
+	review_html = ''
+	for review in reviews:
+		review_html += '<br>User %s scored this a %s<br>%s<br>' % (review.review_user, review.review_score, review.review_description)
+
+
+	#return json.dumps(reviews)	
+	return review_html
 
 @app.route('/add-review', methods=['POST'])
 def add_review():

@@ -53,19 +53,20 @@
 				<input type='hidden' name='marker' id='reviewMarker'>
 			<input type='submit' id='reviewBtn' value='Submit Review'>
 		</form>
-		{% if reviews %}
+		<div id='reviewsDisplayDiv'></div>
+<!-- 		{% if reviews %}
 			<b>Reviews for this plant!</b><br>
 			<button id='reviewBtn'>Review this plant</button>
 		    <ul>
 		        {% for review_user, review_score in reviews  %}
 		            <li>
-		                <!-- <a href="/movies/{{ review_user }}">{{ review_user }}</a>: {{ review_score }} -->
+		                <a href="/movies/{{ review_user }}">{{ review_user }}</a>: {{ review_score }}
 		            	Score: {{ review_score }}<br>
 		            	Review: {{ review_description }}
 		            </li>
 		        {% endfor %}
 		    </ul>
-		{% endif %}
+		{% endif %} -->
 	</div>
 
 
@@ -218,7 +219,8 @@
 
 			// pass id to server, get review data
 			$.get('/plant-reviews', {'marker': marker}, function (results) {
-				reviews = results;
+				//reviews = results;
+				$('#reviewsDisplayDiv').html(results);
 			});
 			// $.get('/plant-reviews', {'marker': marker}, function (results) {
 			// 	console.log(results);
