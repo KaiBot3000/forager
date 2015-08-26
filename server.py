@@ -78,6 +78,8 @@ def sign_up():
 		db.session.add(new_user)
 		db.session.commit()
 
+    	session['user_id'] = user.user_id
+
 		flash('Welcome to Forager, %s!' % username)
 
 		return redirect(url_for('search', plant='all'))
@@ -205,7 +207,7 @@ def plant_details():
 
 @app.route('/plant-reviews')
 def plant_reviews():
-	'''Gets marker/plant id from js, returns html with reveiw buttom and plant reviews.'''
+	'''Gets marker/plant id from js, returns html with review buttom and plant reviews.'''
 
 	plant_id = request.args.get('marker')
 	print plant_id
@@ -230,6 +232,25 @@ def plant_reviews():
 
 	# return ratings	
 	return 'hello from reviews!'
+
+@app.route('/add-review', methods=['POST'])
+def add_review():
+
+	score = request.form['score']
+	review = request.form['review']
+
+	# user, plant, score, description
+	new_review = Review(review_user=, review_plant=, review_score=score, review_description=review)
+
+
+	# 	new_user = User(username=username, user_password=password1)
+	# 	db.session.add(new_user)
+	# 	db.session.commit()
+
+	# 	flash('Welcome to Forager, %s!' % username)
+
+	# 	return redirect(url_for('search', plant='all'))
+
 
 
 @app.route('/add', methods=['GET', 'POST'])
