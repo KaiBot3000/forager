@@ -254,7 +254,7 @@ def add_review():
 
 	flash('Thanks for reviewing plant %s', % plant_id)
 	# I don't want this to change the page, but I would like the reviews to reload to show the new one.
-
+	# would need to re-run query for ratings for that plant, pass review objects
 	# return 
 
 
