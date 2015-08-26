@@ -205,51 +205,57 @@ def plant_details():
 	return detail_html	
 
 
-@app.route('/plant-reviews')
-def plant_reviews():
-	'''Gets marker/plant id from js, returns html with review buttom and plant reviews.'''
+# @app.route('/plant-reviews')
+# def plant_reviews():
+# 	'''Gets marker/plant id from js, returns html with review buttom and plant reviews.'''
 
-	plant_id = request.args.get('marker')
-	print plant_id
-	plant = Plant.query.get(plant_id)
+# 	plant_id = request.args.get('marker')
+# 	print plant_id
+# 	plant = Plant.query.get(plant_id)
 
-	# Get ratings for that plant
-	reviews = Rating.query.filter_by(rating_plant=plant_id)
+# 	# Get ratings for that plant
+# 	reviews = Rating.query.filter_by(rating_plant=plant_id)
 
-	# # Make series of if functions for attributes, appending new html onto string for each existing attr.
-	# detail_html = '<div class="header"><b> %s <i> (%s)</i></b></div> <br> <p><b>Address:</b> %s <p class="description"> <b> Description:</b> %s </p> <p><b>Category:</b> %s' % (plant.plant_name, 
-	# 	plant.plant_species, 
-	# 	plant.plant_address, 
-	# 	plant.plant_description, 
-	# 	plant.plant_category)
+# 	# # Make series of if functions for attributes, appending new html onto string for each existing attr.
+# 	# detail_html = '<div class="header"><b> %s <i> (%s)</i></b></div> <br> <p><b>Address:</b> %s <p class="description"> <b> Description:</b> %s </p> <p><b>Category:</b> %s' % (plant.plant_name, 
+# 	# 	plant.plant_species, 
+# 	# 	plant.plant_address, 
+# 	# 	plant.plant_description, 
+# 	# 	plant.plant_category)
 
-	# display header and button to add review
-	# For rating in ratings
-		# display stars
-		# display user
-		# display description
-	# can't really pass all that as html. Better to pass objects and process w/ jinja
+# 	# display header and button to add review
+# 	# For rating in ratings
+# 		# display stars
+# 		# display user
+# 		# display description
+# 	# can't really pass all that as html. Better to pass objects and process w/ jinja
 
-	# return ratings	
-	return 'hello from reviews!'
+# 	# return ratings	
+# 	return 'hello from reviews!'
 
 @app.route('/add-review', methods=['POST'])
 def add_review():
 
 	score = request.form['score']
 	review = request.form['review']
+	plant_id = request.form['marker']
+	user_id = session['user_id']
+
 
 	# user, plant, score, description
-	new_review = Review(review_user=, review_plant=, review_score=score, review_description=review)
+	new_review = Review(review_user=user_id, 
+						review_plant=plant_id, 
+						review_score=score, 
+						review_description=review)
 
 
-	# 	new_user = User(username=username, user_password=password1)
-	# 	db.session.add(new_user)
+	# 	db.session.add(new_review)
 	# 	db.session.commit()
 
-	# 	flash('Welcome to Forager, %s!' % username)
+	flash('Thanks for reviewing plant %s', % plant_id)
+	# I don't want this to change the page, but I would like the reviews to reload to show the new one.
 
-	# 	return redirect(url_for('search', plant='all'))
+	# return 
 
 
 

@@ -50,6 +50,7 @@
 				<input type='radio' name='score' value='4' required>4</input>
 			<legend>Review the plant:</legend>
 				<input type='text' name='review' maxlength='250' required>
+				<input type='hidden' name='marker' id='reviewMarker'>
 			<input type='submit' id='reviewBtn' value='Submit Review'>
 		</form>
 	</div>
@@ -194,6 +195,8 @@
 		map.on('popupopen', function(e) {
 			clearDetails();
 			marker = e.popup._source.feature.id;
+			// make the review btn reference this marker
+			document.getElementById('reviewMarker').value = marker;
 			console.log(marker);
 		});	
 
