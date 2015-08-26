@@ -193,13 +193,6 @@
 			console.log(marker);
 		});	
 
-		// Why doesn't this work when the above does?
-		// $('#map').on('popupopen', function(e) {
-		//   var marker = e.popup._source.feature.id;
-		//   console.log('works!');
-		//   console.log(marker);
-		// });
-
 		// When clicked, use marker
 		$('#map').on('click', '.detailsBtn', seeNote);
 
@@ -209,14 +202,6 @@
 				//display new html in detail div
 				$('#detailsDiv').html(results);
 			});
-
-			// pass id to server, get review data
-
-			// HTML way
-			// $.get('/plant-reviews', {'marker': marker}, function (results) {
-			// 	//reviews = results;
-			// 	$('#reviewBoxDiv').html(results);
-			// });
 
 			// Object way (gets back list of dictionaries, parses into js objects)
 			$.get('/plant-reviews', {'marker': marker}, function (results) {
@@ -255,16 +240,13 @@
 		function addReview(evt) {
 			evt.preventDefault();
 
-			// get form data, serialize it into a url
-				// this works for .get, not .post
-			//var url = '/add-review?' + $('addReviewForm').serialize();
 			review_score = addReviewForm.elements['score'].value;
 			review_description = addReviewForm.elements['review'].value;
 			console.log(review_description);
 
-			// use that url to get info (how to do this the POST way?)
+			// use that url to get info
 			$.post('/add-review', {'score': review_score, 'review': review_description, 'marker': marker}, function (results) {
-				//seeNote();
+				seeNote();
 				console.log(results);
 			});
 			alert('Reviewed!');
