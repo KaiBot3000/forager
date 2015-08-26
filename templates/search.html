@@ -157,8 +157,8 @@
 
 	<script>
 		// javascript zone
-		var marker, review_score, review_description;
-		var reviews = false;
+		var marker;
+		// var reviews = false;
 
 		// ########## set up search drop-down
 		dropList = []
@@ -180,6 +180,7 @@
 
 		function clearInfo() {
 			$('#detailsDiv').html('Plant Details!');
+			$('#reviewList').empty();
 			// reviews = false;
 		};
 
