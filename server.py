@@ -78,7 +78,7 @@ def sign_up():
 		db.session.add(new_user)
 		db.session.commit()
 
-    	session['user_id'] = user.user_id
+		session['user_id'] = user.user_id
 
 		flash('Welcome to Forager, %s!' % username)
 
@@ -205,33 +205,27 @@ def plant_details():
 	return detail_html	
 
 
-# @app.route('/plant-reviews')
-# def plant_reviews():
-# 	'''Gets marker/plant id from js, returns html with review buttom and plant reviews.'''
+@app.route('/plant-reviews')
+def plant_reviews():
+	'''Gets marker/plant id from js, returns html with review buttom and plant reviews.'''
 
-# 	plant_id = request.args.get('marker')
-# 	print plant_id
-# 	plant = Plant.query.get(plant_id)
+	plant_id = request.args.get('marker')
+	print '\n\n\n'
+	print plant_id
 
-# 	# Get ratings for that plant
-# 	reviews = Rating.query.filter_by(rating_plant=plant_id)
+	# plant = Plant.query.get(plant_id)
 
-# 	# # Make series of if functions for attributes, appending new html onto string for each existing attr.
-# 	# detail_html = '<div class="header"><b> %s <i> (%s)</i></b></div> <br> <p><b>Address:</b> %s <p class="description"> <b> Description:</b> %s </p> <p><b>Category:</b> %s' % (plant.plant_name, 
-# 	# 	plant.plant_species, 
-# 	# 	plant.plant_address, 
-# 	# 	plant.plant_description, 
-# 	# 	plant.plant_category)
+	# print plant
 
-# 	# display header and button to add review
-# 	# For rating in ratings
-# 		# display stars
-# 		# display user
-# 		# display description
-# 	# can't really pass all that as html. Better to pass objects and process w/ jinja
+	# Get ratings for that plant
+	reviews = Review.query.filter_by(review_plant=plant_id).all()
 
-# 	# return ratings	
-# 	return 'hello from reviews!'
+	print reviews
+	print json.dumps(reviews)
+	print '\n\n\n'
+
+	return json.dumps(reviews)	
+	# return 'hello from reviews!'
 
 @app.route('/add-review', methods=['POST'])
 def add_review():
@@ -249,16 +243,16 @@ def add_review():
 						review_description=review)
 
 
-	# 	db.session.add(new_review)
-	# 	db.session.commit()
-
-	flash('Thanks for reviewing plant %s', % plant_id)
+	db.session.add(new_review)
+	db.session.commit()
+	flash('Thanks for reviewing plant %s' % plant_id)
 	# I don't want this to change the page, but I would like the reviews to reload to show the new one.
 	# would need to re-run query for ratings for that plant, pass review objects
-	# return 
+	# return  updated review objects, not back to general search. Don't want the search to reload.
+	return redirect(url_for('search', plant='all'))
 
 
-
+# TODO this should be add-plant, to avoid confusion
 @app.route('/add', methods=['GET', 'POST'])
 def add():
 	'''Gets form information, adds plant to db'''

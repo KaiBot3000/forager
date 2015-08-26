@@ -114,12 +114,12 @@ class Review(db.Model):
 	review_score = db.Column(db.Integer, nullable=False)
 	review_description = db.Column(db.String(250))
 
-	def __repr__(self):
-		"""What to show when review printed"""
+	# def __repr__(self):
+	# 	"""What to show when review printed"""
 
-		return '<%s rated plant %s a %s>' % (self.review_user, 
-											self.review_plant, 
-											self.review_score)
+	# 	return '<%s rated plant %s a %s>' % (self.review_user, 
+	# 										self.review_plant, 
+	# 										self.review_score)
 
 
 # converts plant objects into geoJSON string for marker

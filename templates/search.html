@@ -53,20 +53,19 @@
 				<input type='hidden' name='marker' id='reviewMarker'>
 			<input type='submit' id='reviewBtn' value='Submit Review'>
 		</form>
-	</div>
-
-
-<!-- 		{% if reviews %}
-			Reviews for this plant!<br>
+		{% if reviews %}
+			<b>Reviews for this plant!</b><br>
 			<button id='reviewBtn'>Review this plant</button>
 		    <ul>
 		        {% for review_user, review_score in reviews  %}
 		            <li>
-		                <a href="/movies/{{ review_user }}">{{ review_user }}</a>: {{ review_score }}
+		                <!-- <a href="/movies/{{ review_user }}">{{ review_user }}</a>: {{ review_score }} -->
+		            	Score: {{ review_score }}<br>
+		            	Review: {{ review_description }}
 		            </li>
 		        {% endfor %}
 		    </ul>
-		{% endif %} -->
+		{% endif %}
 	</div>
 
 
@@ -165,6 +164,8 @@
 
 	<script>
 		// javascript zone
+		var marker;
+		var reviews = false;
 
 		// ########## set up search drop-down
 		dropList = []
@@ -184,16 +185,14 @@
 
 		// ########## set up event listeners to show/hide details
 
-		function clearDetails() {
+		function clearInfo() {
 			$('#detailsDiv').html('Plant Details!');
+			reviews = false;
 		};
-
-		var marker;
-		var reviews = false;
 
 		// opens as soon as popup pops, passes info, saves as marker
 		map.on('popupopen', function(e) {
-			clearDetails();
+			clearInfo();
 			marker = e.popup._source.feature.id;
 			// make the review btn reference this marker
 			document.getElementById('reviewMarker').value = marker;
@@ -211,37 +210,35 @@
 		$('#map').on('click', '.detailsBtn', seeNote);
 
 		function seeNote(evt) {
-			//var marker = evt.target.feature.id; // doesn't work
-
 			// pass id to server, get details data
 			$.get('/plant-detail', {'marker': marker}, function (results) {
 				//display new html in detail div
 				$('#detailsDiv').html(results);
 			});
 
-			// // pass id to server, get review data
+			// pass id to server, get review data
+			$.get('/plant-reviews', {'marker': marker}, function (results) {
+				reviews = results;
+			});
 			// $.get('/plant-reviews', {'marker': marker}, function (results) {
-			// 	reviews = results;
+			// 	console.log(results);
 			// });
-			// // $.get('/plant-reviews', {'marker': marker}, function (results) {
-			// // 	console.log(results);
-			// // });
 
 		};
 
 		// Clears details when map clicked on blank space
 		map.on('click', function(e) {	
-			clearDetails();
+			clearInfo();
 		});
 
 		// ########## Reviews zone
 
-		$('#reviewBtn').on('click', review);
+		// $('#reviewBtn').on('click', review);
 
-		function review(evt) {
-			evt.preventDefault();
-			alert('Reviewed!');
-		};
+		// function review(evt) {
+		// 	evt.preventDefault();
+		// 	alert('Reviewed!');
+		// };
 
 		// ########## reload map on click! (mostly to test before making AJAX)	
 		$('#bang').on('click', function () {
