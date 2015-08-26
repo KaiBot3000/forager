@@ -41,7 +41,21 @@
 	</div>
 
 	<div id='reviewsDiv'>
-		{% if reviews %}
+		<h2>Add a review for this plant</h2>
+		<form action='/addReview' method='POST'>
+			<legend>Rate from 1-4:</legend>
+				<input type='radio' name='rating' value='1' required>1</input>
+				<input type='radio' name='rating' value='2' required>2</input>
+				<input type='radio' name='rating' value='3' required>3</input>
+				<input type='radio' name='rating' value='4' required>4</input>
+			<legend>Review the plant:</legend>
+				<input type='text' name='review' maxlength='250' required>
+			<input type='submit' value='Submit Review'>
+		</form>
+	</div>
+
+
+<!-- 		{% if reviews %}
 			Reviews for this plant!<br>
 			<button id='reviewBtn'>Review this plant</button>
 		    <ul>
@@ -51,7 +65,7 @@
 		            </li>
 		        {% endfor %}
 		    </ul>
-		{% endif %}
+		{% endif %} -->
 	</div>
 
 
@@ -202,13 +216,13 @@
 				$('#detailsDiv').html(results);
 			});
 
-			// pass id to server, get review data
-			$.get('/plant-reviews', {'marker': marker}, function (results) {
-				reviews = results;
-			});
+			// // pass id to server, get review data
 			// $.get('/plant-reviews', {'marker': marker}, function (results) {
-			// 	console.log(results);
+			// 	reviews = results;
 			// });
+			// // $.get('/plant-reviews', {'marker': marker}, function (results) {
+			// // 	console.log(results);
+			// // });
 
 		};
 
