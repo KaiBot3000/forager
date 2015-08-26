@@ -223,15 +223,27 @@ def plant_reviews():
 	print reviews
 	print '\n\n\n'
 
-	review_html = ''
+	# # html way :(
+	# review_html = '<h2>User Reviews</h2>'
+	# for review in reviews:
+	# 	review_html += 'User %s scored this a %s<br>%s<br><br>' % (review.review_user, review.review_score, review.review_description)
+	
+	reviews_list = []
 	for review in reviews:
-		review_html += '<br>User %s scored this a %s<br>%s<br>' % (review.review_user, review.review_score, review.review_description)
+		review_dict = {}
+		user = User.query.filter_by(user_id=review.review_user).first()
+		review_dict['username'] = user.username
+		review_dict['score'] = review.review_score
+		review_dict['description'] = review.review_description
 
+		reviews_list.append(review_dict)
 
-	#return json.dumps(reviews)	
-	return review_html
+	print reviews_list
 
-@app.route('/add-review', methods=['POST'])
+	return json.dumps(reviews_list)	
+	# return review_html
+
+@app.route('/add-review', methods=['POST']) #
 def add_review():
 
 	score = request.form['score']
@@ -252,8 +264,8 @@ def add_review():
 	flash('Thanks for reviewing plant %s' % plant_id)
 	# I don't want this to change the page, but I would like the reviews to reload to show the new one.
 	# would need to re-run query for ratings for that plant, pass review objects
-	# return  updated review objects, not back to general search. Don't want the search to reload.
-	return redirect(url_for('search', plant='all'))
+	# return  updated review objects, not back to general search. Need to ajax the add form.
+	return 'review added!' #redirect(url_for('search', plant='all'))
 
 
 # TODO this should be add-plant, to avoid confusion

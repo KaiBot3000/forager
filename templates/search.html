@@ -42,7 +42,7 @@
 
 	<div id='reviewsDiv'>
 		<h2>Add a review for this plant</h2>
-		<form action='/add-review' method='POST'>
+		<form action='/add-review' id='addReviewForm' method='POST'>
 			<legend>Rate from 1-4:</legend>
 				<input type='radio' name='score' value='1' required>1</input>
 				<input type='radio' name='score' value='2' required>2</input>
@@ -54,19 +54,8 @@
 			<input type='submit' id='reviewBtn' value='Submit Review'>
 		</form>
 		<div id='reviewsDisplayDiv'></div>
-<!-- 		{% if reviews %}
-			<b>Reviews for this plant!</b><br>
-			<button id='reviewBtn'>Review this plant</button>
-		    <ul>
-		        {% for review_user, review_score in reviews  %}
-		            <li>
-		                <a href="/movies/{{ review_user }}">{{ review_user }}</a>: {{ review_score }}
-		            	Score: {{ review_score }}<br>
-		            	Review: {{ review_description }}
-		            </li>
-		        {% endfor %}
-		    </ul>
-		{% endif %} -->
+
+
 	</div>
 
 
@@ -165,7 +154,7 @@
 
 	<script>
 		// javascript zone
-		var marker;
+		var marker, review_score, review_description;
 		var reviews = false;
 
 		// ########## set up search drop-down
@@ -210,7 +199,7 @@
 		// When clicked, use marker
 		$('#map').on('click', '.detailsBtn', seeNote);
 
-		function seeNote(evt) {
+		function seeNote() {
 			// pass id to server, get details data
 			$.get('/plant-detail', {'marker': marker}, function (results) {
 				//display new html in detail div
@@ -218,13 +207,21 @@
 			});
 
 			// pass id to server, get review data
-			$.get('/plant-reviews', {'marker': marker}, function (results) {
-				//reviews = results;
-				$('#reviewsDisplayDiv').html(results);
-			});
+
+			// HTML way
 			// $.get('/plant-reviews', {'marker': marker}, function (results) {
-			// 	console.log(results);
+			// 	//reviews = results;
+			// 	$('#reviewsDisplayDiv').html(results);
 			// });
+
+			// Object way (gets back list of dictionaries, parses into js objects)
+			$.get('/plant-reviews', {'marker': marker}, function (results) {
+				console.log(results);
+				reviews = JSON.parse(results);
+				console.log(reviews);
+				// for review in reviews, make html 
+				// add html to reviewdisplay div
+			});
 
 		};
 
@@ -235,12 +232,25 @@
 
 		// ########## Reviews zone
 
-		// $('#reviewBtn').on('click', review);
+		$('#reviewBtn').on('click', review);
 
-		// function review(evt) {
-		// 	evt.preventDefault();
-		// 	alert('Reviewed!');
-		// };
+		function review(evt) {
+			evt.preventDefault();
+
+			// get form data, serialize it into a url
+				// this works for .get, not .post
+			//var url = '/add-review?' + $('addReviewForm').serialize();
+			review_score = addReviewForm.elements['score'].value;
+			review_description = addReviewForm.elements['review'].value;
+			console.log(review_description);
+
+			// use that url to get info (how to do this the POST way?)
+			$.post('/add-review', {'score': review_score, 'review': review_description, 'marker': marker}, function (results) {
+				//seeNote();
+				console.log(results);
+			});
+			alert('Reviewed!');
+		};
 
 		// ########## reload map on click! (mostly to test before making AJAX)	
 		$('#bang').on('click', function () {
@@ -252,24 +262,6 @@
 
 {% endblock %}
 
-
-
-<!-- 
-{"features": [{
-	"id": "832",
-	"geometry": {
-		"coordinates": [37.72058451344048, -122.40085125402247], 
-		"type": "Point"
-		}, 
-	"properties": {
-		"description": null, 
-		"marker-size": "small", 
-		"marker-symbol": "park2", 
-		"title": "Anna apple"
-		}, 
-	"type": "Feature"}], 
-"type": "FeatureCollection"
-} -->
 
 
 
