@@ -54,7 +54,7 @@ def sign_in():
 
 	flash('Welcome back, %s!' % username)
 
-	return redirect(url_for('search', plant='all'))
+	return redirect('/search')
 
 
 @app.route('/signup', methods=['POST'])
@@ -88,7 +88,7 @@ def sign_up():
 
 		flash('Welcome to Forager, %s!' % username)
 
-		return redirect(url_for('search', plant='all'))
+		return redirect('/search')
 
 
 @app.route('/signout')

@@ -8,7 +8,7 @@
 
 	<div id='map'> Hay, I'm loading a map </div>
 
-	<div id='search'>Search for things! <br><br>
+	<div id='search'>
 		<form action='/search-plants' id='searchForm'>
 			<fieldset>
 				<legend>Search by Name</legend>
@@ -36,6 +36,9 @@
 	</div>
 
 	<div id='detailsDiv'>
+	</div>
+
+	<div id='modal-div'>
 		<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
 		  <div class="modal-dialog" role="document">
 		    <div class="modal-content">
@@ -52,7 +55,7 @@
 							<input type='radio' name='score' value='4' required>4</input>
 						<legend>Review the plant:</legend>
 							<input type='text' name='review' maxlength='250' required>
-						<input type='submit' id='reviewBtn' value='Submit Review'>
+						<!-- <input type='submit' id='reviewBtn' value='Submit Review'> -->
 					</form>
 		      </div>
 		      <div class="modal-footer">
@@ -62,10 +65,8 @@
 		    </div>
 		  </div>
 		</div>
-
-
 	</div>
-		
+
 	<div id='reviewDiv'>
 		<button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">
   			Add a Review
