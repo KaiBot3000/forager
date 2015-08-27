@@ -96,24 +96,37 @@
 			.addLayer(L.mapbox.tileLayer('riselikethemoon.4b711c00'))
             .fitBounds(bounds);
 
-		function makeMap(mapLocation, markerCollection) { // used to take zoom, but I'm using fitbounds now.
-			// clear old map
-			map.remove();
-			// draw new map	
+
+
+		//function makeMap(mapLocation, markerCollection) { // used to take zoom, but I'm using fitbounds now.
+			// // clear old map
+			// map.remove();
+			// // draw new map	
+
+			// clear feature layers instead
+			// markerLayer.clearLayers(); <-- this doesn't work with this map
 
 			var maxClusterZoom = 16; // When I want clustering to end
 
-			map = L.mapbox.map('map', 'riselikethemoon.4b711c00', {maxBounds: bounds, minZoom: mapZoom})
-				.setView(mapLocation, mapZoom) 
-				.addLayer(L.mapbox.tileLayer('riselikethemoon.4b711c00'))
-            	.fitBounds(bounds);
+			// map = L.mapbox.map('map', 'riselikethemoon.4b711c00', {maxBounds: bounds, minZoom: mapZoom})
+			// 	.setView(mapLocation, mapZoom) 
+			// 	.addLayer(L.mapbox.tileLayer('riselikethemoon.4b711c00'))
+   //          	.fitBounds(bounds);
 
 	    		var markers = new L.MarkerClusterGroup({
 	    			disableClusteringAtZoom: maxClusterZoom
 	    		});
 
 	    		//var markerCollection = {{ marker_collection | safe }};
+		
+		function makeMap(mapLocation, markerCollection) {
 
+				// if layers already exist, remove them
+				if (markerLayer) {
+					markerLayer.clearLayers();
+				};
+
+				// make new marker layer
 	    		var markerLayer = L.geoJson(markerCollection);
 
 	    		// for each marker (layer) in the cluster, add custom popup and change icon
@@ -158,7 +171,6 @@
 	<script>
 		// javascript zone
 		var marker;
-		// var reviews = false;
 
 		// ########## set up search drop-down
 		dropList = []
@@ -196,6 +208,8 @@
 
 		// opens as soon as popup pops, passes info, saves as marker
 		map.on('popupopen', function(e) {
+		//$('#map').on('popupopen', function (evt) {
+			console.log('pop!');
 			clearInfo();
 			marker = e.popup._source.feature.id;
 			// make the review btn reference this marker
