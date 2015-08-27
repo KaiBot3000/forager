@@ -36,12 +36,43 @@
 	</div>
 
 	<div id='detailsDiv'>
+		<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+		  <div class="modal-dialog" role="document">
+		    <div class="modal-content">
+		      <div class="modal-header">
+		        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+		        <h4 class="modal-title" id="myModalLabel">Add a review for this plant</h4>
+		      </div>
+		      <div class="modal-body">
+					<form action='/add-review' id='addReviewForm' method='POST'>
+						<legend>Rate from 1-4:</legend>
+							<input type='radio' name='score' value='1' required>1</input>
+							<input type='radio' name='score' value='2' required>2</input>
+							<input type='radio' name='score' value='3' required>3</input>
+							<input type='radio' name='score' value='4' required>4</input>
+						<legend>Review the plant:</legend>
+							<input type='text' name='review' maxlength='250' required>
+						<input type='submit' id='reviewBtn' value='Submit Review'>
+					</form>
+		      </div>
+		      <div class="modal-footer">
+		        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+		        <button type="button" class="btn btn-primary" id='reviewBtn'>Save Review</button>
+		      </div>
+		    </div>
+		  </div>
+		</div>
+
+
 	</div>
-
-
-
-
-
+		
+	<div id='reviewDiv'>
+		<button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">
+  			Add a Review
+		</button>
+		<ul id='reviewList'>
+		</ul>
+	</div>
 
 
 	<meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
@@ -62,8 +93,16 @@
 		// javascript zone
 		var marker;
 
-		// hide review zone until plant clicked
-		$('#reviewsDiv').hide();
+		// hide details until plant clicked
+		function setStartState() {
+			// wont's let me hide div or delete all the html ...?
+			$('#detailsDiv').html(' ');
+			// $('#detailsdiv').hide();
+			$('#reviewDiv').hide();
+			$('#reviewList').empty();
+		}
+		
+		setStartState();
 
 		// ########## set up search drop-down
 		dropList = []
@@ -89,37 +128,28 @@
 				markerCollection = results;
 				makeMap(mapLocation, markerCollection);
 			})	
-		});
+		});	
 
-		// ########## set up event listeners to show/hide details
-
-		function clearInfo() {
-			$('#detailsDiv').html('Plant Details!');
-			$('#reviewList').empty();
-			$('#reviewsDiv').hide();
-		};	
+		// ########## Showing Plant info
 
 		// When clicked, use marker (need to id from map because button doesn't exist onload)
 		$('#map').on('click', '.detailsBtn', seeNote);
 
 		function seeNote() {
-			// pass id to server, get details data
+			// Get and show details
 			$.get('/plant-detail', {'marker': marker}, function (results) {
 				//display new html in detail div
 				$('#detailsDiv').html(results);
+				//make div visible
+				$('#detailsDiv').show();
 			});
 
-			// show reviews div, including add review
-			$('#reviewsDiv').show();
-
-			// get reviews as a dictionary, make into html list items
+			// get and show reviews
 			$.get('/plant-reviews', {'marker': marker}, function (results) {
-				console.log(results);
 				reviews = JSON.parse(results);
-				console.log(reviews);
 
 				// Grab elements
-				var reviewBox = document.getElementById('reviewBoxDiv');
+				var reviewBox = document.getElementById('reviewDiv');
 				var reviewUL = document.getElementById('reviewList');
 
 				// cycle through reviews in list
@@ -133,6 +163,8 @@
 					// add the review to the html list
 					reviewUL.appendChild(reviewSpot);
 				}
+				// show reviews div
+				$('#reviewDiv').show();
 			});
 		};
 
@@ -145,6 +177,7 @@
 
 			review_score = addReviewForm.elements['score'].value;
 			review_description = addReviewForm.elements['review'].value;
+
 			console.log(review_description);
 
 			// use that url to get info
@@ -187,15 +220,15 @@
 				.setView(mapLocation, mapZoom) 
 				.addLayer(L.mapbox.tileLayer('riselikethemoon.4b711c00'))
    			 	.fitBounds(bounds)
-   			 	.on('click', clearInfo);
+   			 	.on('click', setStartState);
 
     		var markers = new L.MarkerClusterGroup({
     			disableClusteringAtZoom: maxClusterZoom})
     			.on('popupopen', function (evt) {
-					clearInfo();
+					setStartState();
 					marker = evt.popup._source.feature.id;
 					// make the review btn reference this marker
-					document.getElementById('reviewMarker').value = marker;
+					//document.getElementById('reviewMarker').value = marker;
 					console.log(marker);
 				});	
 

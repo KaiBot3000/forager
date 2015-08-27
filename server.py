@@ -20,6 +20,12 @@ def index_page():
 	return render_template('home.html')
 
 
+@app.route('/modal')
+def modal():
+
+	return render_template('modal.html')
+
+
 @app.route('/sign', methods=['GET'])
 def sign():
 	'''Show sign in/up form'''
