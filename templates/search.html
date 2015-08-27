@@ -36,8 +36,6 @@
 	</div>
 
 	<div id='detailsDiv'>
-		Plant Details!<br>
-		<button id='bang'>Bang!</button>
 	</div>
 
 	<div id='reviewsDiv'>
@@ -80,6 +78,9 @@
 		// javascript zone
 		var marker;
 
+		// hide review zone until plant clicked
+		$('#reviewsDiv').hide();
+
 		// ########## set up search drop-down
 		dropList = []
 
@@ -111,6 +112,7 @@
 		function clearInfo() {
 			$('#detailsDiv').html('Plant Details!');
 			$('#reviewList').empty();
+			$('#reviewsDiv').hide();
 		};	
 
 		// When clicked, use marker (need to id from map because button doesn't exist onload)
@@ -123,7 +125,10 @@
 				$('#detailsDiv').html(results);
 			});
 
-			// Object way (gets back list of dictionaries, parses into js objects)
+			// show reviews div, including add review
+			$('#reviewsDiv').show();
+
+			// get reviews as a dictionary, make into html list items
 			$.get('/plant-reviews', {'marker': marker}, function (results) {
 				console.log(results);
 				reviews = JSON.parse(results);
