@@ -138,7 +138,7 @@ def search_display():
 	return render_template('search.html', marker_collection=marker_collection)
 
 
-@app.route('/search-plants')
+@app.route('/search-plants.json')
 def search_plants():
 	'''Takes search parameters, returns list of matching plants in geoJSON.'''
 
@@ -203,7 +203,7 @@ def search_plants():
 	marker_collection = geojson.FeatureCollection(marker_list)
 	print marker_collection
 	# return render_template('search.html', marker_collection=marker_collection)
-	return marker_collection
+	return jsonify(marker_collection)
 
 @app.route('/plant-detail')
 def plant_details():
