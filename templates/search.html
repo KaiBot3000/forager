@@ -102,18 +102,12 @@
 			// // clear old map
 			map.remove();
 			// // draw new map	
-						// if layers already exist, remove them
-			// if (map.markers) {
-			// 	map.markers.clearLayers();
-			// 	console.log('I cleared the layers!');
-			// }; // isn't true
-			//map.markers.markerLayer.remove();
-			// map.clearLayers(); // not a function
 
 			map = L.mapbox.map('map', 'riselikethemoon.4b711c00', {maxBounds: bounds, minZoom: mapZoom})
 				.setView(mapLocation, mapZoom) 
 				.addLayer(L.mapbox.tileLayer('riselikethemoon.4b711c00'))
-   			 .fitBounds(bounds);
+   			 	.fitBounds(bounds)
+   			 	.on('click', clearInfo);
 
     		var markers = new L.MarkerClusterGroup({
     			disableClusteringAtZoom: maxClusterZoom})
@@ -125,9 +119,6 @@
 					document.getElementById('reviewMarker').value = marker;
 					console.log(marker);
 				});	
-
-			// map.removeLayer(markers); // doesn't remove any markers
-			// markerLayer.clearLayers(); //markers don't reload
 
 			// make new marker layer
     		var markerLayer = L.geoJson(markerCollection);
@@ -205,18 +196,17 @@
 		function clearInfo() {
 			$('#detailsDiv').html('Plant Details!');
 			$('#reviewList').empty();
-			// reviews = false;
 		};
 
 		// opens as soon as popup pops, passes info, saves as marker
-		map.on('popupopen', function(e) {
-			console.log('pop!');
-			clearInfo();
-			marker = e.popup._source.feature.id;
-			// make the review btn reference this marker
-			document.getElementById('reviewMarker').value = marker;
-			console.log(marker);
-		});	
+		// map.on('popupopen', function(e) {
+		// 	console.log('pop!');
+		// 	clearInfo();
+		// 	marker = e.popup._source.feature.id;
+		// 	// make the review btn reference this marker
+		// 	document.getElementById('reviewMarker').value = marker;
+		// 	console.log(marker);
+		// });	
 
 		// When clicked, use marker
 		$('#map').on('click', '.detailsBtn', seeNote);
@@ -253,10 +243,10 @@
 
 		};
 
-		// Clears details when map clicked on blank space
-		map.on('click', function(e) {	
-			clearInfo();
-		});
+		// // Clears details when map clicked on blank space
+		// map.on('click', function(e) {	
+		// 	clearInfo();
+		// });
 
 		// ########## Add Reviews zone
 
@@ -276,12 +266,6 @@
 			});
 			alert('Reviewed!');
 		};
-
-		// ########## reload map on click! (mostly to test before making AJAX)	
-		$('#bang').on('click', function () {
-			makeMap(mapLocation, markerCollection);	
-			console.log('Bang bang! (the map reloaded.)');		
-		});
 
 	</script>
 
