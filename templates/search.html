@@ -74,91 +74,6 @@
 
 	<link href='https://api.mapbox.com/mapbox.js/plugins/leaflet-markercluster/v0.4.0/MarkerCluster.Default.css' rel='stylesheet' />
 
-	<script>
-
-		var centerLat = 37.75768707689704;
-		var centerLon = -122.44279861450195;
-		var mapLocation = [centerLat, centerLon]; 
-
-        var southWest = L.latLng(37.7, -122.541);
-        var northEast = L.latLng(37.815, -122.335);
-        var bounds = L.latLngBounds(southWest, northEast);
-
-		var markerCollection = {{ marker_collection | safe }};
-
-		var mapZoom = 12; //12 is ideal for showing SF, 15 shows markers for testing
-		var maxClusterZoom = 16; // When I want clustering to end
-
-		// this is public on purpose
-		L.mapbox.accessToken = 'pk.eyJ1IjoicmlzZWxpa2V0aGVtb29uIiwiYSI6IjI4MjczOTIwNzE5MTY1ODI4YmYxZGVlZGZmYjc4NmI0In0.fiUOgIDwB_ByzxT63VWP-g';
-
-		var map = L.mapbox.map('map', 'riselikethemoon.4b711c00', {maxBounds: bounds, minZoom: mapZoom})
-			.setView(mapLocation, mapZoom) 
-			.addLayer(L.mapbox.tileLayer('riselikethemoon.4b711c00'))
-            .fitBounds(bounds);
-
-
-		function makeMap(mapLocation, markerCollection) { // used to take zoom, but I'm using fitbounds now.
-			// // clear old map
-			map.remove();
-			// // draw new map	
-
-			map = L.mapbox.map('map', 'riselikethemoon.4b711c00', {maxBounds: bounds, minZoom: mapZoom})
-				.setView(mapLocation, mapZoom) 
-				.addLayer(L.mapbox.tileLayer('riselikethemoon.4b711c00'))
-   			 	.fitBounds(bounds)
-   			 	.on('click', clearInfo);
-
-    		var markers = new L.MarkerClusterGroup({
-    			disableClusteringAtZoom: maxClusterZoom})
-    			.on('popupopen', function(e) {
-					console.log('pop!');
-					clearInfo();
-					marker = e.popup._source.feature.id;
-					// make the review btn reference this marker
-					document.getElementById('reviewMarker').value = marker;
-					console.log(marker);
-				});	
-
-			// make new marker layer
-    		var markerLayer = L.geoJson(markerCollection);
-    		// for each marker (layer) in the cluster, add custom popup and change icon
-    		markerLayer.eachLayer(function(layer) {
-		        var popupContent = '<b>' + layer.feature.properties.title + "</b><br><button type='button' value='plants!' class='detailsBtn'> Details </button> ";
-
-		        // can modify based on properties of feature! Will use to handle undefined features?
-		        if (layer.feature.properties.title === 'Olive') {
-		        	popupContent ='<div class=detail><b>' + layer.feature.properties.title + '</b><br><button class="detailsBtn">Details</button><br>Surprise! An olive tree!!</div>';
-
-		        	// Changes olive trees to park icon :)
-		        	layer.setIcon(L.mapbox.marker.icon({
-		        		'marker-symbol': 'park2',
-		        		'marker-color': '#00CC00'
-		        	}));
-		        } else {
-		        	layer.setIcon(L.mapbox.marker.icon({
-		        		'marker-symbol': 'park',
-		        		'marker-color': '#00CC00'
-		        	}));
-		        };
-
-		    	layer.bindPopup(popupContent, 
-		    		className = 'markerPopup'); // can add other options
-		    });
-
-    		markers.addLayer(markerLayer);
-    		map.addLayer(markers);
-
-    		//map.animate;
-    		// centers and zooms the map around markers
-    		map.fitBounds(markerLayer.getBounds()); 
-    			// can add ', {padding: [25, 25]}' to pad results, but looks bad at low zoom. 
-	    };
-
-		// Initialize map with markers!
-	    makeMap(mapLocation, markerCollection);
-
-	</script>
 
 
 	<script>
@@ -196,19 +111,9 @@
 		function clearInfo() {
 			$('#detailsDiv').html('Plant Details!');
 			$('#reviewList').empty();
-		};
+		};	
 
-		// opens as soon as popup pops, passes info, saves as marker
-		// map.on('popupopen', function(e) {
-		// 	console.log('pop!');
-		// 	clearInfo();
-		// 	marker = e.popup._source.feature.id;
-		// 	// make the review btn reference this marker
-		// 	document.getElementById('reviewMarker').value = marker;
-		// 	console.log(marker);
-		// });	
-
-		// When clicked, use marker
+		// When clicked, use marker (need to id from map because button doesn't exist onload)
 		$('#map').on('click', '.detailsBtn', seeNote);
 
 		function seeNote() {
@@ -240,13 +145,7 @@
 					reviewUL.appendChild(reviewSpot);
 				}
 			});
-
 		};
-
-		// // Clears details when map clicked on blank space
-		// map.on('click', function(e) {	
-		// 	clearInfo();
-		// });
 
 		// ########## Add Reviews zone
 
@@ -262,10 +161,89 @@
 			// use that url to get info
 			$.post('/add-review', {'score': review_score, 'review': review_description, 'marker': marker}, function (results) {
 				seeNote();
-				console.log(results);
 			});
-			alert('Reviewed!');
 		};
+
+	</script>
+
+	<script>
+
+		var centerLat = 37.75768707689704;
+		var centerLon = -122.44279861450195;
+		var mapLocation = [centerLat, centerLon]; 
+
+        var southWest = L.latLng(37.7, -122.541);
+        var northEast = L.latLng(37.815, -122.335);
+        var bounds = L.latLngBounds(southWest, northEast);
+
+		var markerCollection = {{ marker_collection | safe }};
+
+		var mapZoom = 12; //12 is ideal for showing SF, 15 shows markers for testing
+		var maxClusterZoom = 16; // When I want clustering to end
+
+		// this is public on purpose
+		L.mapbox.accessToken = 'pk.eyJ1IjoicmlzZWxpa2V0aGVtb29uIiwiYSI6IjI4MjczOTIwNzE5MTY1ODI4YmYxZGVlZGZmYjc4NmI0In0.fiUOgIDwB_ByzxT63VWP-g';
+
+		var map = L.mapbox.map('map', 'riselikethemoon.4b711c00', {maxBounds: bounds, minZoom: mapZoom})
+			.setView(mapLocation, mapZoom) 
+			.addLayer(L.mapbox.tileLayer('riselikethemoon.4b711c00'))
+            .fitBounds(bounds)
+
+		function makeMap(mapLocation, markerCollection) {
+			// clear old map
+			map.remove();
+
+			// draw new map	
+			map = L.mapbox.map('map', 'riselikethemoon.4b711c00', {maxBounds: bounds, minZoom: mapZoom})
+				.setView(mapLocation, mapZoom) 
+				.addLayer(L.mapbox.tileLayer('riselikethemoon.4b711c00'))
+   			 	.fitBounds(bounds)
+   			 	.on('click', clearInfo);
+
+    		var markers = new L.MarkerClusterGroup({
+    			disableClusteringAtZoom: maxClusterZoom})
+    			.on('popupopen', function (evt) {
+					clearInfo();
+					marker = evt.popup._source.feature.id;
+					// make the review btn reference this marker
+					document.getElementById('reviewMarker').value = marker;
+					console.log(marker);
+				});	
+
+			// make new marker layer
+    		var markerLayer = L.geoJson(markerCollection);
+    		// for each marker (layer) in the cluster, add custom popup and change icon
+    		markerLayer.eachLayer(function(layer) {
+		        var popupContent = '<b>' + layer.feature.properties.title + "</b><br><button type='button' value='plants!' class='detailsBtn'> Details </button> ";
+
+		        // can modify based on properties of feature! Will use to handle undefined features?
+		        if (layer.feature.properties.title === 'Olive') {
+		        	layer.setIcon(L.mapbox.marker.icon({
+		        		'marker-symbol': 'park2',
+		        		'marker-color': '#00CC00'
+		        	}));
+		        } else {
+		        	layer.setIcon(L.mapbox.marker.icon({
+		        		'marker-symbol': 'park',
+		        		'marker-color': '#00CC00'
+		        	}));
+		        };
+
+		    	layer.bindPopup(popupContent, 
+		    		className = 'markerPopup'); // can add other options
+		    });
+
+    		markers.addLayer(markerLayer);
+    		map.addLayer(markers);
+
+    		//map.animate;
+    		// centers and zooms the map around markers
+    		map.fitBounds(markerLayer.getBounds()); 
+    			// can add ', {padding: [25, 25]}' to pad results, but looks bad at low zoom. 
+	    };
+
+		// Initialize map with markers!
+	    makeMap(mapLocation, markerCollection);
 
 	</script>
 
