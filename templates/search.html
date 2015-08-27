@@ -9,7 +9,7 @@
 	<div id='map'> Hay, I'm loading a map </div>
 
 	<div id='search'>Search for things! <br><br>
-		<form action='/search'>
+		<form action='/search-plants' id='searchForm'>
 			<fieldset>
 				<legend>Search by Name</legend>
 				<select id='plantDropdown' name='plant'>
@@ -30,7 +30,7 @@
 					<input type='checkbox' name='season' value='Fall'>Fall</input><br>
 					<input type='checkbox' name='season' value='Winter'>Winter</input><br>
 			</fieldset>
-				<input type='submit' value='Search'> 
+				<input type='submit' id='searchBtn' value='Search'> 
 				<input type='reset' value='Clear Search Options'>
 		</form>
 	</div>
@@ -96,7 +96,7 @@
 			.addLayer(L.mapbox.tileLayer('riselikethemoon.4b711c00'))
             .fitBounds(bounds);
 
-		function makeMap(mapLocation, markerCollection) { // used to take zoom, but I'm using fitbouds now.
+		function makeMap(mapLocation, markerCollection) { // used to take zoom, but I'm using fitbounds now.
 			// clear old map
 			map.remove();
 			// draw new map	
@@ -112,7 +112,7 @@
 	    			disableClusteringAtZoom: maxClusterZoom
 	    		});
 
-	    		var markerCollection = {{ marker_collection | safe }};
+	    		//var markerCollection = {{ marker_collection | safe }};
 
 	    		var markerLayer = L.geoJson(markerCollection);
 
@@ -150,7 +150,7 @@
 	    };
 
 		// Initialize map with markers!
-	    makeMap(mapLocation, mapZoom, markerCollection);
+	    makeMap(mapLocation, markerCollection);
 
 	</script>
 
@@ -175,6 +175,20 @@
 				}
 		});
 
+		// ########## Search without reloading the page
+
+		$('#searchBtn').on('click', function (evt){
+			evt.preventDefault();
+			var url = '/search-plants?' + $('#searchForm').serialize();
+			console.log(url);
+			$.get(url, function (results) {
+				console.log('checking out results');
+				console.log(results);
+				// markerCollection2 = results;
+				// makeMap(mapLocation, markerCollection2);
+				// console.log('called makeMap');
+			})	
+		});
 
 		// ########## set up event listeners to show/hide details
 

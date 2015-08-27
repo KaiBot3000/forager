@@ -122,7 +122,24 @@ def list_fields():
 
 
 @app.route('/search')
-def search():
+def search_display():
+	'''Displays initial search screen populated with markers'''
+	
+	marker_list = []
+
+	plant_objects = Plant.query.all()
+
+	for plant in plant_objects:
+		marker = plant.make_marker()
+		marker_list.append(marker)
+
+	marker_collection = geojson.FeatureCollection(marker_list)
+
+	return render_template('search.html', marker_collection=marker_collection)
+
+
+@app.route('/search-plants')
+def search_plants():
 	'''Takes search parameters, returns list of matching plants in geoJSON.'''
 
 	marker_list = []
@@ -131,6 +148,11 @@ def search():
 	plants = request.args.getlist('plant')
 	categories = request.args.getlist('category')
 	seasons = request.args.getlist('season')
+
+	# now there's the possibility that folks will click the button with nothing selected.
+	# should use form validation instead, though 
+	# if plants == None and categories == None and seasons == None:
+	# 	plants = ['all']
 
 	# if no options selected, replace with list of all options possible
 	if plants == ['all']:
@@ -179,9 +201,9 @@ def search():
 		marker_list.append(marker)
 
 	marker_collection = geojson.FeatureCollection(marker_list)
-
-	return render_template('search.html', marker_collection=marker_collection)
-
+	print marker_collection
+	# return render_template('search.html', marker_collection=marker_collection)
+	return marker_collection
 
 @app.route('/plant-detail')
 def plant_details():
