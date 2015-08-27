@@ -87,6 +87,7 @@
 		var markerCollection = {{ marker_collection | safe }};
 
 		var mapZoom = 12; //12 is ideal for showing SF, 15 shows markers for testing
+		var maxClusterZoom = 16; // When I want clustering to end
 
 		// this is public on purpose
 		L.mapbox.accessToken = 'pk.eyJ1IjoicmlzZWxpa2V0aGVtb29uIiwiYSI6IjI4MjczOTIwNzE5MTY1ODI4YmYxZGVlZGZmYjc4NmI0In0.fiUOgIDwB_ByzxT63VWP-g';
@@ -97,69 +98,70 @@
             .fitBounds(bounds);
 
 
-
-		//function makeMap(mapLocation, markerCollection) { // used to take zoom, but I'm using fitbounds now.
+		function makeMap(mapLocation, markerCollection) { // used to take zoom, but I'm using fitbounds now.
 			// // clear old map
-			// map.remove();
+			map.remove();
 			// // draw new map	
+						// if layers already exist, remove them
+			// if (map.markers) {
+			// 	map.markers.clearLayers();
+			// 	console.log('I cleared the layers!');
+			// }; // isn't true
+			//map.markers.markerLayer.remove();
+			// map.clearLayers(); // not a function
 
-			// clear feature layers instead
-			// markerLayer.clearLayers(); <-- this doesn't work with this map
+			map = L.mapbox.map('map', 'riselikethemoon.4b711c00', {maxBounds: bounds, minZoom: mapZoom})
+				.setView(mapLocation, mapZoom) 
+				.addLayer(L.mapbox.tileLayer('riselikethemoon.4b711c00'))
+   			 .fitBounds(bounds);
 
-			var maxClusterZoom = 16; // When I want clustering to end
+    		var markers = new L.MarkerClusterGroup({
+    			disableClusteringAtZoom: maxClusterZoom})
+    			.on('popupopen', function(e) {
+					console.log('pop!');
+					clearInfo();
+					marker = e.popup._source.feature.id;
+					// make the review btn reference this marker
+					document.getElementById('reviewMarker').value = marker;
+					console.log(marker);
+				});	
 
-			// map = L.mapbox.map('map', 'riselikethemoon.4b711c00', {maxBounds: bounds, minZoom: mapZoom})
-			// 	.setView(mapLocation, mapZoom) 
-			// 	.addLayer(L.mapbox.tileLayer('riselikethemoon.4b711c00'))
-   //          	.fitBounds(bounds);
+			// map.removeLayer(markers); // doesn't remove any markers
+			// markerLayer.clearLayers(); //markers don't reload
 
-	    		var markers = new L.MarkerClusterGroup({
-	    			disableClusteringAtZoom: maxClusterZoom
-	    		});
+			// make new marker layer
+    		var markerLayer = L.geoJson(markerCollection);
+    		// for each marker (layer) in the cluster, add custom popup and change icon
+    		markerLayer.eachLayer(function(layer) {
+		        var popupContent = '<b>' + layer.feature.properties.title + "</b><br><button type='button' value='plants!' class='detailsBtn'> Details </button> ";
 
-	    		//var markerCollection = {{ marker_collection | safe }};
-		
-		function makeMap(mapLocation, markerCollection) {
+		        // can modify based on properties of feature! Will use to handle undefined features?
+		        if (layer.feature.properties.title === 'Olive') {
+		        	popupContent ='<div class=detail><b>' + layer.feature.properties.title + '</b><br><button class="detailsBtn">Details</button><br>Surprise! An olive tree!!</div>';
 
-				// if layers already exist, remove them
-				if (markerLayer) {
-					markerLayer.clearLayers();
-				};
+		        	// Changes olive trees to park icon :)
+		        	layer.setIcon(L.mapbox.marker.icon({
+		        		'marker-symbol': 'park2',
+		        		'marker-color': '#00CC00'
+		        	}));
+		        } else {
+		        	layer.setIcon(L.mapbox.marker.icon({
+		        		'marker-symbol': 'park',
+		        		'marker-color': '#00CC00'
+		        	}));
+		        };
 
-				// make new marker layer
-	    		var markerLayer = L.geoJson(markerCollection);
+		    	layer.bindPopup(popupContent, 
+		    		className = 'markerPopup'); // can add other options
+		    });
 
-	    		// for each marker (layer) in the cluster, add custom popup and change icon
-	    		markerLayer.eachLayer(function(layer) {
-			        var popupContent = '<b>' + layer.feature.properties.title + "</b><br><button type='button' value='plants!' class='detailsBtn'> Details </button> ";
+    		markers.addLayer(markerLayer);
+    		map.addLayer(markers);
 
-			        // can modify based on properties of feature! Will use to handle undefined features?
-			        if (layer.feature.properties.title === 'Olive') {
-			        	popupContent ='<div class=detail><b>' + layer.feature.properties.title + '</b><br><button class="detailsBtn">Details</button><br>Surprise! An olive tree!!</div>';
-
-			        	// Changes olive trees to park icon :)
-			        	layer.setIcon(L.mapbox.marker.icon({
-			        		'marker-symbol': 'park2',
-			        		'marker-color': '#00CC00'
-			        	}));
-			        } else {
-			        	layer.setIcon(L.mapbox.marker.icon({
-			        		'marker-symbol': 'park',
-			        		'marker-color': '#00CC00'
-			        	}));
-			        };
-
-			    	layer.bindPopup(popupContent, 
-			    		className = 'markerPopup'); // can add other options
-			    });
-
-	    		markers.addLayer(markerLayer);
-	    		map.addLayer(markers);
-
-	    		//map.animate;
-	    		// centers and zooms the map around markers
-	    		map.fitBounds(markerLayer.getBounds()); 
-	    			// can add ', {padding: [25, 25]}' to pad results, but looks bad at low zoom. 
+    		//map.animate;
+    		// centers and zooms the map around markers
+    		map.fitBounds(markerLayer.getBounds()); 
+    			// can add ', {padding: [25, 25]}' to pad results, but looks bad at low zoom. 
 	    };
 
 		// Initialize map with markers!
@@ -208,7 +210,6 @@
 
 		// opens as soon as popup pops, passes info, saves as marker
 		map.on('popupopen', function(e) {
-		//$('#map').on('popupopen', function (evt) {
 			console.log('pop!');
 			clearInfo();
 			marker = e.popup._source.feature.id;
