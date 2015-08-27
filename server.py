@@ -149,11 +149,6 @@ def search_plants():
 	categories = request.args.getlist('category')
 	seasons = request.args.getlist('season')
 
-	# now there's the possibility that folks will click the button with nothing selected.
-	# should use form validation instead, though 
-	# if plants == None and categories == None and seasons == None:
-	# 	plants = ['all']
-
 	# if no options selected, replace with list of all options possible
 	if plants == ['all']:
 		names = db.session.query(Plant.plant_name).group_by(Plant.plant_name).all()
@@ -196,13 +191,10 @@ def search_plants():
 						.filter(Plant.plant_winter.in_(winter))
 
 	for plant in plant_objects:
-		# marker = Marker(plant.plant_lat, plant.plant_lon, plant.plant_id, plant.plant_name, plant.plant_description, 'park2')
 		marker = plant.make_marker()
 		marker_list.append(marker)
 
 	marker_collection = geojson.FeatureCollection(marker_list)
-	print marker_collection
-	# return render_template('search.html', marker_collection=marker_collection)
 	return jsonify(marker_collection)
 
 @app.route('/plant-detail')
@@ -232,24 +224,10 @@ def plant_reviews():
 	'''Gets marker/plant id from js, returns html with review buttom and plant reviews.'''
 
 	plant_id = request.args.get('marker')
-	print '\n\n\n'
-	print plant_id
-
-	# plant = Plant.query.get(plant_id)
-
-	# print plant
 
 	# Get ratings for that plant
 	reviews = Review.query.filter_by(review_plant=plant_id).all()
 
-	print reviews
-	print '\n\n\n'
-
-	# # html way :(
-	# review_html = '<h2>User Reviews</h2>'
-	# for review in reviews:
-	# 	review_html += 'User %s scored this a %s<br>%s<br><br>' % (review.review_user, review.review_score, review.review_description)
-	
 	reviews_list = []
 	for review in reviews:
 		review_dict = {}
@@ -260,10 +238,8 @@ def plant_reviews():
 
 		reviews_list.append(review_dict)
 
-	print reviews_list
-
 	return json.dumps(reviews_list)	
-	# return review_html
+
 
 @app.route('/add-review', methods=['POST']) #
 def add_review():
@@ -273,24 +249,20 @@ def add_review():
 	plant_id = request.form['marker']
 	user_id = session['user_id']
 
-
 	# user, plant, score, description
 	new_review = Review(review_user=user_id, 
 						review_plant=plant_id, 
 						review_score=score, 
 						review_description=review)
 
-
 	db.session.add(new_review)
 	db.session.commit()
 	flash('Thanks for reviewing plant %s' % plant_id)
-	# I don't want this to change the page, but I would like the reviews to reload to show the new one.
-	# would need to re-run query for ratings for that plant, pass review objects
-	# return  updated review objects, not back to general search. Need to ajax the add form.
-	return 'review added!' #redirect(url_for('search', plant='all'))
+
+	return 'review added!'
 
 
-# TODO this should be add-plant, to avoid confusion
+# TODO this should be add-plant, to avoid confusion wth reviews
 @app.route('/add', methods=['GET', 'POST'])
 def add():
 	'''Gets form information, adds plant to db'''
@@ -298,8 +270,6 @@ def add():
 	if request.method == 'GET':
 		return render_template('add.html')
 	else:
-		
-		# # new_plant
 		name = request.form['name']
 		species = request.form['species']
 		description = request.form['description']
@@ -334,7 +304,6 @@ def add():
 		else:
 			winter = False		
 
-
 		print '%s, %s, %s, %s, %s, %s, %s' % (name, species, description, category, spring, lat, lon)
 
 		new_plant = Plant(name=name,
@@ -351,8 +320,8 @@ def add():
 		print new_plant
 
 		if real:
-			# db.session.add(new_plant)
-			# db.session.commit()
+			db.session.add(new_plant)
+			db.session.commit()
 			flash('Thanks for adding a %s.' % name)
 		else:
 			flash('Thanks for adding a fake %s.' % name)
@@ -368,7 +337,4 @@ if __name__ == "__main__":
 
 	DebugToolbarExtension(app)
 
-
-
-### Graveyard ###
 
