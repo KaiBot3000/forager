@@ -93,6 +93,7 @@
 	<script>
 		// javascript zone
 		var marker;
+		var REVIEW_LEAF_SIZE = 32;
 
 		// hide details until plant clicked
 		function setStartState() {
@@ -158,13 +159,9 @@
 					var review = reviews[i];
 					var reviewSpot = document.createElement('li');
 
-					var score = review['score'];
-					console.log(score);
-
-					reviewSpot.innerHTML = '<span class="stars">' + score + '</span><br>' + review['description'] + '<br><br>';
-
-					// make a formatted list item for each review
-					// reviewSpot.innerHTML = review['score'] +' from ' + review['username'] + review['description'] + '<br><br>';
+					reviewSpot.innerHTML = '<b>From ' + review['username'] + ':</b><br><span class="stars">'
+											 + review['score'] + '</span>' + '<br>' 
+											 + review['description'] + '<br><br><br>';
 
 					// add the review to the html list
 					reviewUL.appendChild(reviewSpot);
@@ -184,10 +181,10 @@
 		// makes a new method for stars spans?!
 		$.fn.stars = function() {
 		    return $(this).each(function() {
-		        // Get the value
-		        var score = parseFloat($(this).html()) * 32;
+		        // Get the score, times width of one leaf
+		        var score = parseFloat($(this).html()) * REVIEW_LEAF_SIZE;
 		        // Create stars holder
-		        var $span = $('<span />').width(score).height(32);
+		        var $span = $('<span />').width(score).height(REVIEW_LEAF_SIZE);
 		        // Replace the numerical value with stars
 		        $(this).html($span);
 		    });
@@ -245,6 +242,16 @@
 				.addLayer(L.mapbox.tileLayer('riselikethemoon.4b711c00'))
    			 	.fitBounds(bounds)
    			 	.on('click', setStartState);
+   			var mapMarker = L.icon({
+			    iconUrl: 'marker.png',
+			    shadowUrl: 'marker.png',
+
+			    iconSize:     [38, 95], // size of the icon
+			    shadowSize:   [50, 64], // size of the shadow
+			    iconAnchor:   [22, 94], // point of the icon which will correspond to marker's location
+			    shadowAnchor: [4, 62],  // the same for the shadow
+			    popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor
+			});
 
     		var markers = new L.MarkerClusterGroup({
     			disableClusteringAtZoom: maxClusterZoom})
@@ -264,16 +271,16 @@
 
 		        // can modify based on properties of feature! Will use to handle undefined features?
 		        if (layer.feature.properties.category === 'fruit') {
-		        	layer.setIcon(L.mapbox.marker.icon({
-		        		'marker-symbol': 'park2',
-		        		'marker-color': '#00CC00'
-		        	}));
+		        	layer.setIcon(L.mapbox.marker.icon({'marker-color': '#BF9E5E'})); //#FFCC00
+		        } else if (layer.feature.properties.category === 'nut') {
+		        	layer.setIcon(L.mapbox.marker.icon({'marker-color': '#BF9E5E'})); //#7A5200
+		        } else if (layer.feature.properties.category === 'herb') {
+		        	layer.setIcon(L.mapbox.marker.icon({'marker-color': '#BF9E5E'})); //#669900
+		        } else if (layer.feature.properties.category === 'vegetable') {
+		        	layer.setIcon(L.mapbox.marker.icon({'marker-color': '#BF9E5E'})); //#751975
 		        } else {
-		        	layer.setIcon(L.mapbox.marker.icon({
-		        		'marker-symbol': 'park',
-		        		'marker-color': '#00CC00'
-		        	}));
-		        };
+		        	layer.setIcon(L.mapbox.marker.icon({'marker-color': '#999966'}));
+		        }
 
 		    	layer.bindPopup(popupContent, 
 		    		className = 'markerPopup'); // can add other options
