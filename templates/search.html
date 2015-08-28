@@ -97,7 +97,7 @@
 
 		// hide details until plant clicked
 		function setStartState() {
-			// wont's let me hide div or delete all the html ...?
+			// won't let me hide div or delete all the html ...?
 			$('#detailsDiv').html(' ');
 			// $('#detailsdiv').hide();
 			$('#reviewDiv').hide();
@@ -138,13 +138,6 @@
 		$('#map').on('click', '.detailsBtn', seeNote);
 
 		function seeNote() {
-			// Get and show details
-			// $.get('/plant-detail', {'marker': marker}, function (results) {
-			// 	//display new html in detail div
-			// 	$('#detailsDiv').html(results);
-			// 	//make div visible
-			// 	$('#detailsDiv').show();
-			// });
 
 			// get dict of plant details, reverse geocode for address
 			$.get('/plant-detail', {'marker': marker}, function (results) {
@@ -180,7 +173,7 @@
 			$.get('/plant-reviews', {'marker': marker}, function (results) {
 				// clear any leftover reviews
 				$('#reviewList').empty();
-				
+
 				reviews = JSON.parse(results);
 
 				// Grab elements
@@ -192,16 +185,16 @@
 					var review = reviews[i];
 					var reviewSpot = document.createElement('li');
 
-					reviewSpot.innerHTML = '<b>From ' + review['username'] + ':</b><br><span class="stars">'
+					reviewSpot.innerHTML = '<b>From ' + review['username'] + ':</b><br><span class="leaves">'
 											 + review['score'] + '</span>' + '<br>' 
 											 + review['description'] + '<br><br><br>';
 
 					// add the review to the html list
 					reviewUL.appendChild(reviewSpot);
 				}
-				// make stars/leaves happen
+				// make leaves to illustrate score
 				$(function() {
-				    $('span.stars').stars();
+				    $('span.leaves').leaves();
 				});
 
 				// show reviews div
@@ -211,13 +204,15 @@
 		};
 
 		// ########### display stars/leaves for reviews
-		// makes a new method for stars spans?!
-		$.fn.stars = function() {
+		// jQuery method to display leaves based on score in html
+		$.fn.leaves = function() {
 		    return $(this).each(function() {
-		        // Get the score, times width of one leaf
-		        var score = parseFloat($(this).html()) * REVIEW_LEAF_SIZE;
+		        // Get the score from the html
+		        var score = parseFloat($(this).html())
+		        // set width of displayed stars based on score and leaf width
+		        var leaves = score * REVIEW_LEAF_SIZE;
 		        // Create stars holder
-		        var $span = $('<span />').width(score).height(REVIEW_LEAF_SIZE);
+		        var $span = $('<span />').width(leaves).height(REVIEW_LEAF_SIZE);
 		        // Replace the numerical value with stars
 		        $(this).html($span);
 		    });
@@ -234,7 +229,6 @@
 
 			review_score = addReviewForm.elements['score'].value;
 			review_description = addReviewForm.elements['review'].value;
-			//console.log(review_description);
 
 			// use that url to get info
 			$.post('/add-review', {'score': review_score, 'review': review_description, 'marker': marker}, function (results) {
@@ -281,6 +275,8 @@
 				.addLayer(L.mapbox.tileLayer('riselikethemoon.4b711c00'))
    			 	.fitBounds(bounds)
    			 	.on('click', setStartState);
+
+   			// this part isn't working
    			var mapMarker = L.icon({
 			    iconUrl: 'marker.png',
 			    shadowUrl: 'marker.png',
@@ -328,7 +324,6 @@
     		markers.addLayer(markerLayer);
     		map.addLayer(markers);
 
-    		//map.animate;
     		// centers and zooms the map around markers
     		map.fitBounds(markerLayer.getBounds()); 
     			// can add ', {padding: [25, 25]}' to pad results, but looks bad at low zoom. 
