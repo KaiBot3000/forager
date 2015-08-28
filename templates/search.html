@@ -158,18 +158,42 @@
 					var review = reviews[i];
 					var reviewSpot = document.createElement('li');
 
+					var score = review['score'];
+					console.log(score);
+
+					reviewSpot.innerHTML = '<span class="stars">' + score + '</span><br>' + review['description'] + '<br><br>';
+
 					// make a formatted list item for each review
-					reviewSpot.innerHTML = '<h4>' + review['score'] +' from ' + review['username'] + '</h4>' + review['description'] + '<br><br>';
+					// reviewSpot.innerHTML = review['score'] +' from ' + review['username'] + review['description'] + '<br><br>';
 
 					// add the review to the html list
 					reviewUL.appendChild(reviewSpot);
 				}
+				// make stars/leaves happen
+				$(function() {
+				    $('span.stars').stars();
+				});
+
 				// show reviews div
 				$('#reviewDiv').show();
+
 			});
 		};
 
-		// ########## Add Reviews zone
+		// ########### display stars/leaves for reviews
+		// makes a new method for stars spans?!
+		$.fn.stars = function() {
+		    return $(this).each(function() {
+		        // Get the value
+		        var score = parseFloat($(this).html()) * 32;
+		        // Create stars holder
+		        var $span = $('<span />').width(score).height(32);
+		        // Replace the numerical value with stars
+		        $(this).html($span);
+		    });
+		}
+
+		// ########## Add Reviews
 
 		$('#reviewBtn').on('click', addReview);
 
@@ -178,8 +202,7 @@
 
 			review_score = addReviewForm.elements['score'].value;
 			review_description = addReviewForm.elements['review'].value;
-
-			console.log(review_description);
+			//console.log(review_description);
 
 			// use that url to get info
 			$.post('/add-review', {'score': review_score, 'review': review_description, 'marker': marker}, function (results) {
@@ -240,7 +263,7 @@
 		        var popupContent = '<b>' + layer.feature.properties.title + "</b><br><button type='button' value='plants!' class='detailsBtn'> Details </button> ";
 
 		        // can modify based on properties of feature! Will use to handle undefined features?
-		        if (layer.feature.properties.title === 'Olive') {
+		        if (layer.feature.properties.category === 'fruit') {
 		        	layer.setIcon(L.mapbox.marker.icon({
 		        		'marker-symbol': 'park2',
 		        		'marker-color': '#00CC00'

@@ -12,7 +12,7 @@ body { margin:0; padding:0; }
 		width: 50%;
 		float: left;
 	}
-	#reviewsDiv {
+	#reviewDiv {
 		width: 50%;
 		float: right;
 	}
@@ -22,4 +22,16 @@ body { margin:0; padding:0; }
 	}
 	#navbar {
 		display: inline;
+	}
+
+	/* Playing with ranking leaves */
+	span.stars, span.stars span {
+    display: block;
+    background: url(leaves.png) 0 -32px repeat-x;
+    width: 128px;
+    height: 32px;
+	}
+
+	span.stars span {
+	    background-position: 0 0;
 	}

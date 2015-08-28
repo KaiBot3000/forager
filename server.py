@@ -20,10 +20,10 @@ def index_page():
 	return render_template('home.html')
 
 
-@app.route('/modal')
-def modal():
+# @app.route('/modal')
+# def modal():
 
-	return render_template('modal.html')
+# 	return render_template('modal.html')
 
 
 @app.route('/sign', methods=['GET'])
@@ -247,7 +247,7 @@ def plant_reviews():
 	return json.dumps(reviews_list)	
 
 
-@app.route('/add-review', methods=['POST']) #
+@app.route('/add-review', methods=['POST'])
 def add_review():
 
 	score = request.form['score']
@@ -263,7 +263,7 @@ def add_review():
 
 	db.session.add(new_review)
 	db.session.commit()
-	flash('Thanks for reviewing plant %s' % plant_id)
+	# flash('Thanks for reviewing plant %s' % plant_id)
 
 	return 'review added!'
 

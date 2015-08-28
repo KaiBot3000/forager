@@ -55,7 +55,7 @@ class Plant(db.Model):
 	def make_marker(self):
 		
 		return {'type': 'Feature', 'geometry': {'type': 'Point', 'coordinates': \
-				[self.plant_lon, self.plant_lat]}, 'id': self.plant_id, 'properties': {'title': self.plant_name}}	
+				[self.plant_lon, self.plant_lat]}, 'id': self.plant_id, 'properties': {'title': self.plant_name, 'category': self.plant_category}}	
 
 
 	def wkt_to_lonlat(self):
