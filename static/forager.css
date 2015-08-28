@@ -1,41 +1,56 @@
+/*@font-face {
+    font-family: ELEGANT TYPEWRITER;
+    src: url('typewriter.ttf');
+}*/
+
+@font-face {
+	font-family:'Coming Soon', 'normal';
+}
+
 body { 
 	margin:0;
-	padding:0; 
-	font-family:'Coming Soon', 'normal';
-	}
-	#map { 
-		float: left;
-		width: 75%;
-		height: 400px;
-	}
-	#search { 
-		width: 25%;
-		float: right;
-	}
-	#detailsDiv {
-		width: 50%;
-		float: left;
-	}
-	#reviewDiv {
-		width: 50%;
-		float: right;
-	}
-	#addForm { 
-		width: 25%;
-		float: right;
-	}
-	#navbar {
-		display: inline;
-	}
+	padding:0;
+	font-family:'Coming Soon', 'normal'; 
+}
 
-	/* Playing with ranking leaves */
-	span.stars, span.stars span {
-    display: block;
-    background: url(leaves.png) 0 -32px repeat-x;
-    width: 128px;
-    height: 32px;
-	}
+#map { 
+	float: left;
+	width: 75%;
+	height: 400px;
+}
 
-	span.stars span {
-	    background-position: 0 0;
-	}
+#search { 
+	width: 25%;
+	float: right;
+}
+
+#detailsDiv {
+	width: 50%;
+	float: left;
+}
+
+#reviewDiv {
+	width: 50%;
+	float: right;
+}
+
+#addForm { 
+	width: 25%;
+	float: right;
+}
+
+#navbar {
+	display: inline;
+}
+
+/* Playing with ranking leaves */
+span.stars, span.stars span {
+display: block;
+background: url(leaves.png) 0 -32px repeat-x;
+width: 128px;
+height: 32px;
+}
+
+span.stars span {
+    background-position: 0 0;
+}

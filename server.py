@@ -17,6 +17,7 @@ app.secret_key = 'forage_the_things'
 @app.route('/')
 def index_page():
 
+
 	return render_template('home.html')
 
 
@@ -24,6 +25,17 @@ def index_page():
 # def modal():
 
 # 	return render_template('modal.html')
+
+def fun_test(a, b):
+	'''
+	>>> fun_test(2, 3)
+	5
+
+	>>> fun_test(-1, 0)
+	-1
+	'''
+	return (a + b)
+
 
 
 @app.route('/sign', methods=['GET'])
@@ -213,7 +225,7 @@ def plant_details():
 
 	# need to make desired plant attributes into dictionary, then JSONify dict and pass it.
 	# OR, pass completed html. Yes.
-	# Passing the object itself will result in errors because it came from SQLAlchemy and has methods attached.
+	# Passing the object itself will result in errors because it came from SQLAlchemy and has methods attached?
 
 	# Make series of if functions for attributes, appending new html onto string for each existing attr.
 	detail_html = '<div class="header"><b> %s <i> (%s)</i></b></div> <br> <p><b>Address:</b> %s <p class="description"> <b> Description:</b> %s </p> <p><b>Category:</b> %s' % (plant.plant_name, 
@@ -234,6 +246,7 @@ def plant_reviews():
 	# Get ratings for that plant
 	reviews = Review.query.filter_by(review_plant=plant_id).all()
 
+	########## Could be a seperate function
 	reviews_list = []
 	for review in reviews:
 		review_dict = {}
@@ -323,7 +336,7 @@ def add():
 						lat=lat,
 						lon=lon)
 
-		print new_plant
+		# print new_plant
 
 		if real:
 			db.session.add(new_plant)
