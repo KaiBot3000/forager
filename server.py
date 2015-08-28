@@ -308,45 +308,48 @@ def add():
 		lon = request.form['formLon']
 		real = request.form.get('real')
 
-		spring_string = 'spring'
-		summer_string = 'summer'
-		fall_string = 'fall'
-		winter_string = 'winter'
+		def make_plant_from_form(name, species, description, category, season_list, lat, lon):
+			spring_string = 'spring'
+			summer_string = 'summer'
+			fall_string = 'fall'
+			winter_string = 'winter'
 
-		if spring_string in season_list:
-			spring = True
-		else:
-			spring = False
+			if spring_string in season_list:
+				spring = True
+			else:
+				spring = False
 
-		if summer_string in season_list:
-			summer = True
-		else:
-			summer = False
-		
-		if fall_string in season_list:
-			fall = True
-		else:
-			fall = False
+			if summer_string in season_list:
+				summer = True
+			else:
+				summer = False
+			
+			if fall_string in season_list:
+				fall = True
+			else:
+				fall = False
 
-		if winter_string in season_list:
-			winter = True
-		else:
-			winter = False		
+			if winter_string in season_list:
+				winter = True
+			else:
+				winter = False		
 
-		print '%s, %s, %s, %s, %s, %s, %s' % (name, species, description, category, spring, lat, lon)
+			# print '%s, %s, %s, %s, %s, %s, %s' % (name, species, description, category, spring, lat, lon)
 
-		new_plant = Plant(name=name,
-						species=species,
-						description=description,
-						category=category,
-						spring=spring,
-						summer=summer,
-						fall=fall,
-						winter=winter,
-						lat=lat,
-						lon=lon)
+			new_plant = Plant(name=name,
+							species=species,
+							description=description,
+							category=category,
+							spring=spring,
+							summer=summer,
+							fall=fall,
+							winter=winter,
+							lat=lat,
+							lon=lon)
+			return new_plant
 
-		# print new_plant
+		new_plant = make_plant_from_form(name, species, description, category, season_list, lat, lon)
+		print new_plant
 
 		if real:
 			db.session.add(new_plant)
@@ -357,6 +360,23 @@ def add():
 
 		return render_template('add.html')
 
+import unittest
+import doctest
+import server
+
+# Also runs docTests in file
+# def load_tests(loader, tests, ignore):
+#     """Also run our doctests and file-based doctests."""
+
+#     tests.addTests(doctest.DocTestSuite(server))
+#     tests.addTests(doctest.DocFileSuite("tests.txt"))
+#     return tests
+
+class ForagerUnitTestCase(unittest.TestCase):
+
+    def test_fun_test(self):
+        self.assertEqual(fun_test(1, -1), 0)
+
 
 if __name__ == "__main__":
 
@@ -365,5 +385,7 @@ if __name__ == "__main__":
 	app.run(debug=True)
 
 	DebugToolbarExtension(app)
+
+	unittest.main()
 
 

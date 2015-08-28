@@ -178,6 +178,9 @@
 
 			// get and show reviews
 			$.get('/plant-reviews', {'marker': marker}, function (results) {
+				// clear any leftover reviews
+				$('#reviewList').empty();
+				
 				reviews = JSON.parse(results);
 
 				// Grab elements
