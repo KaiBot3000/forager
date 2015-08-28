@@ -1,13 +1,11 @@
 from flask import Flask, render_template, flash, request, redirect, jsonify, flash, session, url_for
 from flask_debugtoolbar import DebugToolbarExtension
-from model import connect_to_db, db, Plant, User, Review #, Marker
+from model import connect_to_db, db, Plant, User, Review 
 from jinja2 import StrictUndefined
 import json
 import geojson
 import pprint
 
-# import requests - makes it much easier to format requests for external api's
-# usaddress for getting addresses geocoded properly
 
 app=Flask(__name__)
 
@@ -20,11 +18,6 @@ def index_page():
 
 	return render_template('home.html')
 
-
-# @app.route('/modal')
-# def modal():
-
-# 	return render_template('modal.html')
 
 def fun_test(a, b):
 	'''
@@ -120,11 +113,10 @@ def signout():
 def list_fields():
 	'''Returns dictionary with list of possible fields for plant names and species.'''
 
-	# get possible names and species (returned as list of one-entry tuples)
+	# get possible names (returned as list of one-entry tuples)
 	names = db.session.query(Plant.plant_name).group_by(Plant.plant_name).all()
-	#species = db.session.query(Plant.plant_species).group_by(Plant.plant_species).all()
 
-	plants = names #+ species
+	plants = names
 
 	# go through each and pull out of tuples
 	plants_formatted = []
@@ -215,34 +207,16 @@ def search_plants():
 	marker_collection = geojson.FeatureCollection(marker_list)
 	return jsonify(marker_collection)
 
+
 @app.route('/plant-detail')
 def plant_details():
 	'''Gets marker/plant id from js, returns html with plant details.'''
 
 	plant_id = request.args.get('marker')
 	print plant_id
-	plant = Plant.query.get(plant_id)
+	plant = Plant.query.get(plant_id)	
 
-	# need to make desired plant attributes into dictionary, then JSONify dict and pass it.
-	# OR, pass completed html. Yes.
-	# Passing the object itself will result in errors because it came from SQLAlchemy and has methods attached?
-
-	# # Make series of if functions for attributes, appending new html onto string for each existing attr.
-	# detail_html = '<div class="header"><b> %s <i> (%s)</i></b></div> <br> <p><b>Address:</b> %s <p class="description"> <b> Description:</b> %s </p> <p><b>Category:</b> %s' % (plant.plant_name, 
-	# 	plant.plant_species, 
-	# 	plant.plant_address, 
-	# 	plant.plant_description, 
-	# 	plant.plant_category)
-
-	# return detail_html	
-
-	plant_dict = {}
-	plant_dict['name'] = plant.plant_name
-	plant_dict['species'] = plant.plant_species
-	plant_dict['category'] = plant.plant_category
-	plant_dict['description'] = plant.plant_description
-	plant_dict['lat'] = plant.plant_lat
-	plant_dict['lon'] = plant.plant_lon
+	plant_dict = make_plant_dict(plant)
 
 	return json.dumps(plant_dict)
 
@@ -256,16 +230,8 @@ def plant_reviews():
 	# Get ratings for that plant
 	reviews = Review.query.filter_by(review_plant=plant_id).all()
 
-	########## Could be a seperate function
-	reviews_list = []
-	for review in reviews:
-		review_dict = {}
-		user = User.query.filter_by(user_id=review.review_user).first()
-		review_dict['username'] = user.username
-		review_dict['score'] = review.review_score
-		review_dict['description'] = review.review_description
-
-		reviews_list.append(review_dict)
+	# Make them into dicionaries
+	reviews_list = make_review_dict(reviews)
 
 	return json.dumps(reviews_list)	
 
@@ -278,7 +244,6 @@ def add_review():
 	plant_id = request.form['marker']
 	user_id = session['user_id']
 
-	# user, plant, score, description
 	new_review = Review(review_user=user_id, 
 						review_plant=plant_id, 
 						review_score=score, 
@@ -308,47 +273,8 @@ def add():
 		lon = request.form['formLon']
 		real = request.form.get('real')
 
-		def make_plant_from_form(name, species, description, category, season_list, lat, lon):
-			spring_string = 'spring'
-			summer_string = 'summer'
-			fall_string = 'fall'
-			winter_string = 'winter'
+		new_plant = Plant(name, species, description, category, season_list, lat, lon)
 
-			if spring_string in season_list:
-				spring = True
-			else:
-				spring = False
-
-			if summer_string in season_list:
-				summer = True
-			else:
-				summer = False
-			
-			if fall_string in season_list:
-				fall = True
-			else:
-				fall = False
-
-			if winter_string in season_list:
-				winter = True
-			else:
-				winter = False		
-
-			# print '%s, %s, %s, %s, %s, %s, %s' % (name, species, description, category, spring, lat, lon)
-
-			new_plant = Plant(name=name,
-							species=species,
-							description=description,
-							category=category,
-							spring=spring,
-							summer=summer,
-							fall=fall,
-							winter=winter,
-							lat=lat,
-							lon=lon)
-			return new_plant
-
-		new_plant = make_plant_from_form(name, species, description, category, season_list, lat, lon)
 		print new_plant
 
 		if real:
@@ -360,28 +286,30 @@ def add():
 
 		return render_template('add.html')
 
-import unittest
-import doctest
-import server
 
-# Also runs docTests in file
-# def load_tests(loader, tests, ignore):
-#     """Also run our doctests and file-based doctests."""
+########## Helper functions
 
-#     tests.addTests(doctest.DocTestSuite(server))
-#     tests.addTests(doctest.DocFileSuite("tests.txt"))
-#     return tests
+def make_review_dict(reviews):
+	reviews_list = []
+	for review in reviews:
+		review_dict = {}
+		user = User.query.filter_by(user_id=review.review_user).first()
+		review_dict['username'] = user.username
+		review_dict['score'] = review.review_score
+		review_dict['description'] = review.review_description
 
-class ForagerUnitTestCase(unittest.TestCase):
+		reviews_list.append(review_dict)
+	return reviews_list
 
-    def test_fun_test(self):
-        self.assertEqual(fun_test(1, -1), 0)
-
-    def test_search_display(self):
-    	test_client = server.app.test_client()
-
-    	result = test_client.get('/search')
-    	self.assertIn("<div id='search'>", result.data)
+def make_plant_dict(plant):
+	plant_dict = {}
+	plant_dict['name'] = plant.plant_name
+	plant_dict['species'] = plant.plant_species
+	plant_dict['category'] = plant.plant_category
+	plant_dict['description'] = plant.plant_description
+	plant_dict['lat'] = plant.plant_lat
+	plant_dict['lon'] = plant.plant_lon
+	return plant_dict
 
 
 if __name__ == "__main__":
@@ -392,6 +320,8 @@ if __name__ == "__main__":
 
 	DebugToolbarExtension(app)
 
-	unittest.main()
+
+
+
 
 
