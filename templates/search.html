@@ -139,11 +139,41 @@
 
 		function seeNote() {
 			// Get and show details
+			// $.get('/plant-detail', {'marker': marker}, function (results) {
+			// 	//display new html in detail div
+			// 	$('#detailsDiv').html(results);
+			// 	//make div visible
+			// 	$('#detailsDiv').show();
+			// });
+
+			// get dict of plant details, reverse geocode for address
 			$.get('/plant-detail', {'marker': marker}, function (results) {
-				//display new html in detail div
-				$('#detailsDiv').html(results);
-				//make div visible
-				$('#detailsDiv').show();
+				var plant = JSON.parse(results); //dict, now object
+				var plantLat = plant['lat'];
+				var plantLon = plant['lon'];
+				var detailHtml;
+				var accessToken = 'pk.eyJ1IjoicmlzZWxpa2V0aGVtb29uIiwiYSI6IjI4MjczOTIwNzE5MTY1ODI4YmYxZGVlZGZmYjc4NmI0In0.fiUOgIDwB_ByzxT63VWP-g'
+
+				var geoUrl = 'https://api.mapbox.com/v4/geocode/mapbox.places/'+ plantLon + ',' + plantLat + '.json?access_token=' + accessToken;
+
+				// reverse geocode the address
+				$.get(geoUrl, function (results){
+					var geo = results;
+					address = geo['features'][0]['place_name'];
+					console.log(address);
+				
+					detailHtml = '<p id="plantName">' + plant['name'] + '</p>' + 
+									'<p id="plantSpecies">' + plant['species'] + '</p>' + 
+									'<p id="plantAddress">Nearest Address: ' + address + '</p>' +  
+									'<p id="plantCategory">' + plant['category'] + '</p>' + 
+									'<p id="plantDescription">' + plant['description'] + '</p>';
+
+	 				//display new html in detail div
+					$('#detailsDiv').html(detailHtml);
+
+					//make div visible
+					$('#detailsDiv').show();
+				});
 			});
 
 			// get and show reviews
@@ -211,7 +241,6 @@
 
 		function clearForm() {
 			$('#addReviewForm').trigger('reset');
-			console.log('cleared form!');
 		}
 
 	</script>

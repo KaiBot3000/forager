@@ -227,14 +227,24 @@ def plant_details():
 	# OR, pass completed html. Yes.
 	# Passing the object itself will result in errors because it came from SQLAlchemy and has methods attached?
 
-	# Make series of if functions for attributes, appending new html onto string for each existing attr.
-	detail_html = '<div class="header"><b> %s <i> (%s)</i></b></div> <br> <p><b>Address:</b> %s <p class="description"> <b> Description:</b> %s </p> <p><b>Category:</b> %s' % (plant.plant_name, 
-		plant.plant_species, 
-		plant.plant_address, 
-		plant.plant_description, 
-		plant.plant_category)
+	# # Make series of if functions for attributes, appending new html onto string for each existing attr.
+	# detail_html = '<div class="header"><b> %s <i> (%s)</i></b></div> <br> <p><b>Address:</b> %s <p class="description"> <b> Description:</b> %s </p> <p><b>Category:</b> %s' % (plant.plant_name, 
+	# 	plant.plant_species, 
+	# 	plant.plant_address, 
+	# 	plant.plant_description, 
+	# 	plant.plant_category)
 
-	return detail_html	
+	# return detail_html	
+
+	plant_dict = {}
+	plant_dict['name'] = plant.plant_name
+	plant_dict['species'] = plant.plant_species
+	plant_dict['category'] = plant.plant_category
+	plant_dict['description'] = plant.plant_description
+	plant_dict['lat'] = plant.plant_lat
+	plant_dict['lon'] = plant.plant_lon
+
+	return json.dumps(plant_dict)
 
 
 @app.route('/plant-reviews')
