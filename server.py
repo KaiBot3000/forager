@@ -116,19 +116,17 @@ def list_fields():
 	# get possible names (returned as list of one-entry tuples)
 	names = db.session.query(Plant.plant_name).group_by(Plant.plant_name).all()
 
-	plants = names
-
 	# go through each and pull out of tuples
-	plants_formatted = []
+	names_formatted = []
 
-	for plant in plants:
-		plants_formatted.append(plant[0])
+	for name in names:
+		names_formatted.append(name[0])
 
 	# sort alphabetically
-	sorted_plants = sorted(plants_formatted)
+	sorted_names = sorted(names_formatted)
 
 	# make into json string, pass back
-	return json.dumps(sorted_plants)
+	return json.dumps(sorted_names)
 
 
 @app.route('/search')
@@ -274,8 +272,6 @@ def add():
 		real = request.form.get('real')
 
 		new_plant = Plant(name, species, description, category, season_list, lat, lon)
-
-		print new_plant
 
 		if real:
 			db.session.add(new_plant)
