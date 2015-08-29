@@ -1,0 +1,5 @@
+>>> function_test(2, 3)
+5
+
+>>> function_test(-1, 0)
+-1

@@ -13,25 +13,25 @@ app.secret_key = 'forage_the_things'
 
 
 @app.route('/')
-def index_page():
+def index():
 
 
 	return render_template('home.html')
 
 
-def fun_test(a, b):
+def function_test(a, b):
 	'''
-	>>> fun_test(2, 3)
+	>>> function_test(2, 3)
 	5
 
-	>>> fun_test(-1, 0)
+	>>> function_test(-1, 0)
 	-1
 	'''
 	return (a + b)
 
 
 
-@app.route('/sign', methods=['GET'])
+@app.route('/sign')
 def sign():
 	'''Show sign in/up form'''
 

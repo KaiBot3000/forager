@@ -1,26 +1,48 @@
 import unittest
 import doctest
-from server import (fun_test, )
+import server
+from server import (function_test, )
+
 
 # Also runs docTests in file
-# def load_tests(loader, tests, ignore):
-#     """Also run our doctests and file-based doctests."""
+def load_tests(loader, tests, ignore):
+    '''Loads and runs doctests from seperate file'''
 
-#     tests.addTests(doctest.DocTestSuite(server))
-#     tests.addTests(doctest.DocFileSuite("tests.txt"))
-#     return tests
+    tests.addTests(doctest.DocTestSuite(server))
+    tests.addTests(doctest.DocFileSuite('tests.txt'))
+
+    return tests
 
 class ForagerUnitTestCase(unittest.TestCase):
 
-    def test_fun_test(self):
-        self.assertEqual(fun_test(1, -1), 0)
+	def setUp(self):
+		self.client = server.app.test_client()
+		# test_client = server.app.test_client()
 
-    def test_search_display(self):
-    	test_client = server.app.test_client()
+	def test_index(self):
+		result = self.client.get('/')
+		self.assertIn('<title>Forager</title>', result.data)
 
-    	result = test_client.get('/search')
-    	self.assertIn("<div id='search'>", result.data)
+	def test_sign(self):
+		result = self.client.get('/sign')
+		self.assertIn('<title>Sign In/Up</title>', result.data)
+
+	# def test_sign_in(self):
+	# 	result = self.client.post('/sign', data={'username': 'fakeuser', 'password': '123'})
+	# 	self.assertIn('<title>Sign In/Up</title>', result.data)
+
+	# def test_sign_in(self):
+	# 	result = self.client.post('/sign', date={'username': 'kai', 'password': '123'})
+	# 	self.assertIn('<div id="search">', result.data)
+
+	# def test_search_display(self):
+	# 	result = self.client.get('/search?plant=all')
+	# 	self.assertIn('<div id="search">', result.data)
+
+	# def test_list_fields(self):
+	# 	result = self.client.get('/list-fields')
+	# 	self.assertIn('Apple', result.data)
 
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     unittest.main()
