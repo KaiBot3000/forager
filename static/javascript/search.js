@@ -1,17 +1,9 @@
-var marker;
-var REVIEW_LEAF_SIZE = 32;
 
 
-// hide details until plant clicked
-function setStartState() {
-	// won't let me hide div or delete all the html ...?
-	$('#detailsDiv').html(' ');
-	// $('#detailsdiv').hide();
-	$('#reviewDiv').hide();
-	$('#reviewList').empty();
-}
 
-setStartState();
+
+
+
 
 // ########## set up search drop-down
 dropList = []
@@ -32,8 +24,9 @@ $.get('/list-fields', function (results) {
 
 $('#searchBtn').on('click', function (evt){
 	evt.preventDefault();
-	alert("A");
+	
 	var url = '/search-plants.json?' + $('#searchForm').serialize();
+
 	$.get(url, function (results) {
 		markerCollection = results;
 		makeMap(mapLocation, markerCollection);
@@ -42,12 +35,21 @@ $('#searchBtn').on('click', function (evt){
 
 // ########## Showing Plant info
 
+// hide details until plant clicked
+setStartState();
+
+function setStartState() {
+	$('#detailsDiv').html(' ');
+	$('#reviewDiv').hide();
+	$('#reviewList').empty();
+}
+
 // When clicked, use marker (need to id from map because button doesn't exist onload)
 $('#map').on('click', '.detailsBtn', seeNote);
 
 function seeNote() {
 
-	// get dict of plant details, reverse geocode for address
+	// get dict of plant details, reverse geocode for address for display
 	$.get('/plant-detail', {'marker': marker}, function (results) {
 		var plant = JSON.parse(results); //dict, now object
 		var plantLat = plant['lat'];
@@ -57,7 +59,7 @@ function seeNote() {
 
 		var geoUrl = 'https://api.mapbox.com/v4/geocode/mapbox.places/'+ plantLon + ',' + plantLat + '.json?access_token=' + accessToken;
 
-		// reverse geocode the address
+		// reverse geocode the address, make html
 		$.get(geoUrl, function (results){
 			var geo = results;
 			address = geo['features'][0]['place_name'];
@@ -69,7 +71,7 @@ function seeNote() {
 							'<p id="plantCategory">' + plant['category'] + '</p>' + 
 							'<p id="plantDescription">' + plant['description'] + '</p>';
 
-				//display new html in detail div
+			//display new html in detail div
 			$('#detailsDiv').html(detailHtml);
 
 			//make div visible
@@ -106,21 +108,25 @@ function seeNote() {
 		});
 
 		// show reviews div
-		reviewBox.show();
+		$('#reviewDiv').show();
 
 	});
 };
+
+
 
 // ########### display stars/leaves for reviews
 // jQuery method to display leaves based on score in html
 $.fn.leaves = function() {
     return $(this).each(function() {
+    	// use size of one leaf in pixels
+    	var reviewLeafSize = 32;
         // Get the score from the html
         var score = parseFloat($(this).html())
         // set width of displayed stars based on score and leaf width
-        var leaves = score * REVIEW_LEAF_SIZE;
+        var leaves = score * reviewLeafSize;
         // Create stars holder
-        var $span = $('<span />').width(leaves).height(REVIEW_LEAF_SIZE);
+        var $span = $('<span />').width(leaves).height(reviewLeafSize);
         // Replace the numerical value with stars
         $(this).html($span);
     });
@@ -132,6 +138,7 @@ $('#reviewBtn').on('click', addReview);
 
 $('#cancelBtn').on('click', clearForm);
 
+// when modal window submitted, submit form with ajax
 function addReview(evt) {
 	evt.preventDefault();
 
@@ -144,33 +151,16 @@ function addReview(evt) {
 	});
 };
 
+// When modal window cancelled, reset the form
 function clearForm() {
 	$('#addReviewForm').trigger('reset');
 }
 
 
 
+// ########## Map Function
 
-// var centerLat = 37.75768707689704;
-// var centerLon = -122.44279861450195;
-// var mapLocation = [centerLat, centerLon]; 
-
-// var southWest = L.latLng(37.7, -122.541);
-// var northEast = L.latLng(37.815, -122.335);
-// var bounds = L.latLngBounds(southWest, northEast);
-
-// var markerCollection = {{ marker_collection | safe }};
-
-// var mapZoom = 12; //12 is ideal for showing SF, 15 shows markers for testing
-// var maxClusterZoom = 16; // When I want clustering to end
-
-// // this is public on purpose
-// L.mapbox.accessToken = 'pk.eyJ1IjoicmlzZWxpa2V0aGVtb29uIiwiYSI6IjI4MjczOTIwNzE5MTY1ODI4YmYxZGVlZGZmYjc4NmI0In0.fiUOgIDwB_ByzxT63VWP-g';
-
-// var map = L.mapbox.map('map', 'riselikethemoon.4b711c00', {maxBounds: bounds, minZoom: mapZoom})
-// 	.setView(mapLocation, mapZoom) 
-// 	.addLayer(L.mapbox.tileLayer('riselikethemoon.4b711c00'))
-//     .fitBounds(bounds)
+var marker;
 
 function makeMap(mapLocation, markerCollection) {
 	// clear old map
@@ -236,5 +226,3 @@ function makeMap(mapLocation, markerCollection) {
 		// can add ', {padding: [25, 25]}' to pad results, but looks bad at low zoom. 
 };
 
-// Initialize map with markers!
-// makeMap(mapLocation, markerCollection);
