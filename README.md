@@ -26,7 +26,7 @@ Forager is seeded with data from the 2012 San Francisco tree census,  a project 
 
 Clone repo:
 ```sh
-$ git clone [git-repo-url] forager
+$ git clone https://github.com/KaiDalgleish/forager.git forager
 $ cd forager
 ```
 
