@@ -39,4 +39,4 @@ Run Forager server:
 ```sh
 $ python server.py
 ```
-
+View in your browser, probably at http://127.0.0.1:5000/ 
