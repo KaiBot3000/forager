@@ -1,3 +1,4 @@
+![image](/static/images/screenshot-map.png)
 # Forager
 
 Need a few sprigs of rosemary for your recipe? It doesn't get more local than just around the corner. Forager allows users to locate food plants growing in their area, fostering a sense of connection to their urban environment. Users can seach from thousands of plants pulled from a San Francisco plant census, and search by criteria such as harvest season. They can then...
