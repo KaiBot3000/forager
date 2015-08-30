@@ -15,12 +15,12 @@ Need a few sprigs of rosemary for your recipe? It doesn't get more local than ju
 * [jQuery] - Creates event handlers for user interation
 * [AJAX] - Gets information from server without reloading the page, allowing for more dynamic pages and faster loading times
 * [Leaflet/Mapbox API] - Uses geoJSON passed from the server to create dynamic plant maps, and reverse geocoding to translate coordinates to the nearest addresses.
-* [HTML] - Displays information
+* [HTML] - Displays information on the web
 * [CSS] - Styles webpages
 * [Twitter Bootstrap] - Frontend UI framework for quick styling
 
 ### The Data
-Forager is seeded with data from the 2012 San Francisco tree census,  a project led by Friends of the Urban Forest (http://www.fuf.net/) and the Davey Research Group.
+Forager is seeded with data from the 2012/2013 San Francisco tree census, a project led by Friends of the Urban Forest (http://www.fuf.net/) and the Davey Research Group.
 
 ### Installation
 
