@@ -66,11 +66,16 @@
 	</div>
 
 	<div id='reviewDiv'>
-		<button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">
-  			Add a Review
-		</button>
-		<ul id='reviewList'>
-		</ul>
+		{% if 'user_id' in session %}
+			<button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">
+	  			Add a Review
+			</button>
+		{% else %}
+			<p id='signInToReview'> Sign in to leave reviews </p>
+		{% endif %}
+
+		<ul id='reviewList'></ul>
+		
 	</div>
 
 

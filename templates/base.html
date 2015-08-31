@@ -28,19 +28,23 @@
 			<form action='/'>
 				<input type='SUBMIT' class='navBtn' value='Home'></input>
 			</form>
-			<form action='/sign'>
-				<input type='SUBMIT' class='navBtn' value='Sign In/Up'></input>
-			</form>
-			<form action='/signout'>
-				<input type='SUBMIT' class='navBtn' value='Sign Out'></input>
-			</form>
+
 			<form action='/search'>
 				<input type='hidden' name='plant' value='all'></input>
 				<input type='SUBMIT' class='navBtn' value='Search'></input>
 			</form>
-			<form action='/add' method='GET'>
-				<input type='SUBMIT' class='navBtn' value='Add'></input>
-			</form>
+			{% if 'user_id' in session %}
+				<form action='/add' method='GET'>
+					<input type='SUBMIT' class='navBtn' value='Add'></input>
+				</form>
+				<form action='/signout'>
+					<input type='SUBMIT' class='navBtn' value='Sign Out'></input>
+				</form>
+			{% else %}
+				<form action='/sign'>
+					<input type='SUBMIT' class='navBtn' value='Sign In/Up'></input>
+				</form>
+			{% endif %}
 
 		</div>
 
