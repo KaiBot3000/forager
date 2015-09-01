@@ -24,6 +24,7 @@
 
 
 
+
 body { 
 	margin:0;
 	padding:15%;
@@ -34,6 +35,14 @@ body {
     background-size: cover;
     background-width: fixed;
  
+}
+
+#navbar {
+	background-color: gray;
+}
+
+#navbar form {
+	display: inline;
 }
 
 

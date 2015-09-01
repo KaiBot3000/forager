@@ -23,49 +23,64 @@
 	</head>
 
 	<body>
+		<div class='container-fluid'>
+			<div class='row'>
+				<div class='col-md-12'>
+<!-- 					<div id='navBar'>
+						<form action='/'>
+							<input type='SUBMIT' class='navBtn' value='Home'></input>
+						</form>
 
-		<!-- navbar stuff will go here -->
-		<div id='navBar'>
-			<form action='/'>
-				<input type='SUBMIT' class='navBtn' value='Home'></input>
-			</form>
+						<form action='/search'>
+							<input type='hidden' name='plant' value='all'></input>
+							<input type='SUBMIT' class='navBtn' value='Search'></input>
+						</form>
+						{% if 'user_id' in session %}
+							<form action='/add' method='GET'>
+								<input type='SUBMIT' class='navBtn' value='Add'></input>
+							</form>
+							<form action='/signout'>
+								<input type='SUBMIT' class='navBtn' value='Sign Out'></input>
+							</form>
+						{% else %}
+							<form action='/sign'>
+								<input type='SUBMIT' class='navBtn' value='Sign In/Up'></input>
+							</form>
+						{% endif %}
 
-			<form action='/search'>
-				<input type='hidden' name='plant' value='all'></input>
-				<input type='SUBMIT' class='navBtn' value='Search'></input>
-			</form>
-			{% if 'user_id' in session %}
-				<form action='/add' method='GET'>
-					<input type='SUBMIT' class='navBtn' value='Add'></input>
-				</form>
-				<form action='/signout'>
-					<input type='SUBMIT' class='navBtn' value='Sign Out'></input>
-				</form>
-			{% else %}
-				<form action='/sign'>
-					<input type='SUBMIT' class='navBtn' value='Sign In/Up'></input>
-				</form>
-			{% endif %}
+					</div navbar> -->
+					<div id='navbar'>
+						<ul>
+							<li><a href=''>Home</a></li>
+							<li><a href='/search?plants=all'>Search</a></li>
+							<li><a href=''>Home</a></li>
+						{% if 'user_id' in session %}
+							<li><a href='/add'>Add</a></li>
+							<li><a href='/signout'>Sign Out</a></li>
+						{% else %}
+							<li><a href='/sign'>Sign In</a></li>
+						{% endif %}
+					</div nav>
+				</div column>
+			</div row>
 
-		</div>
+			<div id="extending">
 
-		<div id="extending">
+				{% with messages = get_flashed_messages() %}
+				  {% if messages %}
+				    <ul class=flashes>
+				    {% for message in messages %}
+				      <li>{{ message }}</li>
+				    {% endfor %}
+				    </ul>
+				  {% endif %}
+				{% endwith %}
 
-			{% with messages = get_flashed_messages() %}
-			  {% if messages %}
-			    <ul class=flashes>
-			    {% for message in messages %}
-			      <li>{{ message }}</li>
-			    {% endfor %}
-			    </ul>
-			  {% endif %}
-			{% endwith %}
+				{% block content %}
+					Content!
+				{% endblock %}
 
-			{% block content %}
-				Content!
-			{% endblock %}
-
-		</div>
-	
+			</div>
+		</div container>
 	</body>
 </html>
