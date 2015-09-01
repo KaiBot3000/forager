@@ -10,6 +10,7 @@
 Map {
   background-color:@land;
   background-image:url(img/noise.png);
+  font-directory: url("fonts/");
 }
 
 

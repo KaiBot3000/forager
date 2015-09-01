@@ -1,10 +1,4 @@
 
-
-
-
-
-
-
 // ########## set up search drop-down
 dropList = []
 
@@ -14,6 +8,7 @@ $.get('/list-fields', function (results) {
 
 		for(var i = 0; i < dropList.length; i++) {
 			var opt = document.createElement('option');
+			opt.className = "dropItem";
 			opt.innerHTML = dropList[i];
 			opt.value = dropList[i];
 			dropdown.appendChild(opt);
@@ -65,11 +60,19 @@ function seeNote() {
 			address = geo['features'][0]['place_name'];
 			console.log(address);
 		
-			detailHtml = '<p id="plantName">' + plant['name'] + '</p>' + 
-							'<p id="plantSpecies">' + plant['species'] + '</p>' + 
-							'<p id="plantAddress">Nearest Address: ' + address + '</p>' +  
-							'<p id="plantCategory">' + plant['category'] + '</p>' + 
-							'<p id="plantDescription">' + plant['description'] + '</p>';
+			// detailHtml = '<p id="plantName">' + plant['name'] + '</p>' + 
+			// 				'<p id="plantSpecies">' + plant['species'] + '</p>' + 
+			// 				'<p id="plantAddress"><span class="plantLabel">Nearest Address:</span> ' + address + '</p>' +  
+			// 				// '<p id="plantCategory">' + plant['category'] + '</p>' + 
+			// 				'<br><br><span class="plantLabel">Description:</span>' + plant['description'] + '</p>';
+
+			detailHtml ='<span class="title">' + plant['name'] + '<br></span>' + 
+						'<span class="plantLabel">Species:</span>' +
+						'<span class="plantBody">' + plant['species'] + '<br><br></span>' + 
+						'<span class="plantLabel">Nearest Address:</span>' +
+						'<span class="plantBody">' + address + '<br><br></span>' + 
+						'<span class="plantLabel">Description:</span>' +
+						'<span class="plantBody">' + plant['description'] + '</span>'
 
 			//display new html in detail div
 			$('#detailsDiv').html(detailHtml);
@@ -95,8 +98,7 @@ function seeNote() {
 			var review = reviews[i];
 			var reviewSpot = document.createElement('li');
 
-			reviewSpot.innerHTML = '<b>From ' + review['username'] + ':</b><br><span class="leaves">'
-									 + review['score'] + '</span>' + '<br>' 
+			reviewSpot.innerHTML = '<span class="leaves">' + review['score'] + '</span>From: ' + review['username'] + '<br><br>' 
 									 + review['description'] + '<br><br><br>';
 
 			// add the review to the html list

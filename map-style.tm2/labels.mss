@@ -1,3 +1,5 @@
+@type: 'Loose Typewriter Regular';
+
 #country_label[zoom>=3] {
   text-name: @name_arrr;
   text-face-name: 'Elementa Rough Pro Regular';

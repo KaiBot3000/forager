@@ -9,9 +9,9 @@ bounds:
   - 180
   - 85.0511
 center: 
-  - -122.4221
-  - 37.7651
-  - 15
+  - -122.4289
+  - 37.7532
+  - 12
 description: Map template for forager data
 format: "png8:m=h"
 interactivity_layer: ''

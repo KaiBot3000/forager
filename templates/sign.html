@@ -4,33 +4,44 @@
 
 {% block content %}
 
-    <div>
-    <h1>Sign In</h1>
-            
-    <form action='/signin' method='POST'>
-        <label>Username:
-            <input type='text' name='username' maxlength='20' required>
-        </label><br><br>
-        <label>Password:
-            <input type='password' name='password' maxlength='20' required>
-        </label><br><br>
-        <input type='submit' value='Sign In'>
-    </form>
+<div class='container-fluid'>
+    <br><br><br>
+    <div class='row'>
+        <div class='col-md-12'>
+            <h1>Sign In</h1>
+            <form action='/signin' method='POST'>
+                <span>
+                    <label class='h2'>Username:
+                    <input type='text' name='username' maxlength='20' required>
+                    </label>
+                </span><br><br>
+                <span>
+                    <label class='h2'>Password:
+                    <input type='password' name='password' maxlength='20' required>
+                    </label>
+                </span>
+                <br><br>
+                <input type='submit' value='Sign In'>
+            </form><br><br><br>
+        </div col>
 
-    <h1> Sign Up </h1>
-
-    <form action='/signup' method='POST'>
-        <label> Username:
-            <input type='text' name='username' maxlength='20' required>
-        </label><br><br>
-        <label> Password:
-            <input type='password' name='password1' maxlength='20' required>
-        </label><br><br>
-        <label> Confirm Password:
-            <input type='password' name='password2' maxlength='20' required>
-        </label><br><br>
-        <input type='submit' value='Sign Up'>
-    </form>
+        <div class='col-md-12'>
+            <h1>Sign Up</h1>
+            <form action='/signup' method='POST'>
+                <label class='h2'> Username:
+                    <input type='text' name='username' maxlength='20' required>
+                </label><br><br>
+                <label class='h2'> Password:
+                    <input type='password' name='password1' maxlength='20' required>
+                </label><br><br>
+                <label class='h2'> Confirm Password:
+                    <input type='password' name='password2' maxlength='20' required>
+                </label><br><br>
+                <input type='submit' value='Sign Up'>
+            </form>
+        </div col>
+    </div row>
+</div container>
 
 {% endblock %}
 

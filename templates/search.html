@@ -3,80 +3,95 @@
 {% block title %}Search{% endblock %}
 
 {% block content %}
+<div class='container-fluid'>
+	<div class='row'>
+		<div class='col-md-8'>
+			<div id='map'> Hay, I'm loading a map </div>
+		</div class='column'>
 
-	<div id='map'> Hay, I'm loading a map </div>
+		<div class='col-md-4'>
+			<div id='search'>
+				<form action='/search-plants' id='searchForm'>
+					<fieldset>
+						<span class='h3'>Search by Name</span>
+						<select id='plantDropdown' name='plant'>
+							<option value='all'>All</option>
+						</select>
+					</fieldset>
 
-	<div id='search'>
-		<form action='/search-plants' id='searchForm'>
-			<fieldset>
-				<legend>Search by Name</legend>
-				<select id='plantDropdown' name='plant'>
-					<option value='all'>All</option>
-				</select>
-			</fieldset>
+					<fieldset>
+					<span class='heading'>Search by Characteristics</span>
+						<br><b><p class='h4'>Select Categories</p></b>
+							<input type='checkbox' name='category' value='fruit'> Fruit</input><br>
+							<input type='checkbox' name='category' value='nut'> Nut</input><br>
+							<input type='checkbox' name='category' value='herb'> Herb</input><br>
+							<input type='checkbox' name='category' value='vegetable'> Vegetable</input><br>
+						<br><b><p class='h4'>Select Seasons</p></b>
+							<input type='checkbox' name='season' value='Spring'> Spring</input><br>
+							<input type='checkbox' name='season' value='Summer'> Summer</input><br>
+							<input type='checkbox' name='season' value='Fall'> Fall</input><br>
+							<input type='checkbox' name='season' value='Winter'> Winter</input><br>
+					</fieldset>
+						<input type='reset' class='btn' value='Clear Options'>
+						<input type='submit' class='btn' id='searchBtn' value='Search'> 
+				</form>
+			</div>
+		</div class='column'>
 
-			<fieldset>
-			<legend>Search by Characteristics</legend>
-				<br><b><legend>Select Categories</legend></b>
-					<input type='checkbox' name='category' value='fruit'>Fruit</input><br>
-					<input type='checkbox' name='category' value='nut'>Nut</input><br>
-					<input type='checkbox' name='category' value='herb'>Herb</input><br>
-					<input type='checkbox' name='category' value='vegetable'>Vegetable</input><br>
-				<br><b><legend>Select Seasons</legend></b>
-					<input type='checkbox' name='season' value='Spring'>Spring</input><br>
-					<input type='checkbox' name='season' value='Summer'>Summer</input><br>
-					<input type='checkbox' name='season' value='Fall'>Fall</input><br>
-					<input type='checkbox' name='season' value='Winter'>Winter</input><br>
-			</fieldset>
-				<input type='submit' id='searchBtn' value='Search'> 
-				<input type='reset' value='Clear Search Options'>
-		</form>
-	</div>
+	</div class='row'>
 
-	<div id='detailsDiv'>
-	</div>
-
-	<div id='modal-div'>
-		<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-		  <div class="modal-dialog" role="document">
-		    <div class="modal-content">
-		      <div class="modal-header">
-		        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-		        <h4 class="modal-title" id="myModalLabel">Add a review for this plant</h4>
-		      </div>
-		      <div class="modal-body">
-					<form action='/add-review' id='addReviewForm' method='POST'>
-						<legend>Rate from 1-4:</legend>
-							<input type='radio' name='score' value='1' required>1</input>
-							<input type='radio' name='score' value='2' required>2</input>
-							<input type='radio' name='score' value='3' required>3</input>
-							<input type='radio' name='score' value='4' required>4</input>
-						<legend>Review the plant:</legend>
-							<input type='text' name='review' maxlength='250' required>
-						<!-- <input type='submit' id='reviewBtn' value='Submit Review'> -->
-					</form>
-		      </div>
-		      <div class="modal-footer">
-		        <button type="button" class="btn btn-default" data-dismiss="modal" id='cancelBtn'>Cancel</button>
-		        <button type="button" class="btn btn-primary" data-dismiss="modal" id='reviewBtn'>Save Review</button>
-		      </div>
-		    </div>
-		  </div>
+	<div class='row'>
+		<div id='detailsDiv' class='col-md-12'>
 		</div>
-	</div>
+	</div class='row'>
 
-	<div id='reviewDiv'>
-		{% if 'user_id' in session %}
-			<button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">
-	  			Add a Review
-			</button>
-		{% else %}
-			<p id='signInToReview'> Sign in to leave reviews </p>
-		{% endif %}
+	<div class='row'>
+		<div class='col-md-12'>
+			<div id='modal-div'>
+				<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+				  <div class="modal-dialog" role="document">
+				    <div class="modal-content">
+				      <div class="modal-header">
+				        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				        <h4 class="modal-title" id="myModalLabel">Add a review for this plant</h4>
+				      </div>
+				      <div class="modal-body">
+							<form action='/add-review' id='addReviewForm' method='POST'>
+								<legend>Rate from 1-4:</legend>
+									<input type='radio' name='score' value='1' required>1</input>
+									<input type='radio' name='score' value='2' required>2</input>
+									<input type='radio' name='score' value='3' required>3</input>
+									<input type='radio' name='score' value='4' required>4</input>
+								<legend>Review the plant:</legend>
+									<input type='text' name='review' maxlength='250' required>
+								<!-- <input type='submit' id='reviewBtn' value='Submit Review'> -->
+							</form>
+				      </div>
+				      <div class="modal-footer">
+				        <button type="button" class="btn btn-default" data-dismiss="modal" id='cancelBtn'>Cancel</button>
+				        <button type="button" class="btn btn-primary" data-dismiss="modal" id='reviewBtn'>Save Review</button>
+				      </div>
+				    </div>
+				  </div>
+				</div>
+			</div>
 
-		<ul id='reviewList'></ul>
-		
-	</div>
+			<div id='reviewDiv'>
+				{% if 'user_id' in session %}
+					<button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">
+			  			Add a Review
+					</button>
+				{% else %}
+					<p class='h2' id='signInToReview'> Sign in to leave reviews </p>
+				{% endif %}
+
+				<ul id='reviewList'></ul>
+			</div>
+		</div>
+	</div class='row'>
+
+
+
 
 
 	<meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
