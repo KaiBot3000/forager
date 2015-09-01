@@ -49,14 +49,14 @@
 						{% endif %}
 
 					</div navbar> -->
-					
+
 					<nav class='navbar navbar-nav '> <!-- navbar-fixed-top -->
 						<ul class='nav nav-pills'>
 							<li><a href='/' class='navBtn homeBtn'></a></li>
 							<li><a href='/search?plants=all' class='navBtn searchBtn' title='Search'></a></li>
 						{% if 'user_id' in session %}
 							<li><a href='/add' class='navBtn addBtn'></a></li>
-							<li><a href='/signout' class='navBtn signoutBtn'></a></li>
+							<li><a href='/signout' class='navBtn signOutBtn'></a></li>
 						{% else %}
 							<li><a href='/sign' class='navBtn signBtn'></a></li>
 						{% endif %}

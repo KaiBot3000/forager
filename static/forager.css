@@ -39,153 +39,224 @@ body {
  
 }
 
-
-.navbar {
-	background-color: white;
-	height: 125px
+#extending {
+	padding-top: 75px;
 }
 
-.navBtn {
-	margin-bottom: 10px;
-	width: 150px;
-	height: 120px;
-	display:block;
-	background-size: 100%;
-}
+/* Nav Bar */
+	.navbar {
+		background-color: white;
+		height: 125px
+	}
 
-.homeBtn {
-	background:transparent url('../static/images/btns/home.png') center top no-repeat;
-	background-size: 100%;
-}
+	.navBtn {
+		margin-bottom: 10px;
+		width: 150px;
+		height: 120px;
+		display:block;
+		background-size: 100%;
+	}
 
-.homeBtn:hover {
-   background:transparent url('../static/images/btns/homeHover.png') center top no-repeat;
-   background-size: 100%;
-}
+	.navBtn:hover {
+		background-color: white !important;
+	}
 
-.searchBtn {
-	background:transparent url('../static/images/btns/search.png') center top no-repeat;
-	background-size: 100%;
-}
+		.homeBtn {
+			background:transparent url('../static/images/btns/home.png') center top no-repeat;
+			background-size: 100%;
+		}
 
-.searchBtn:hover {
-   background-image: url('../static/images/btns/searchHover.png');
-   background-size: 100%;
-}
+		.homeBtn:hover {
+		   background:transparent url('../static/images/btns/homeHover.png') center top no-repeat;
+		   background-size: 100%;
+		}
 
-.addBtn {
-	background:transparent url('../static/images/btns/addPlant.png') center top no-repeat;
-	background-size: 100%;
-}
+		.searchBtn {
+			background:transparent url('../static/images/btns/search.png') center top no-repeat;
+			background-size: 100%;
+		}
 
-.addBtn:hover {
-   background-image: url('../static/images/btns/addPlantHover.png');
-   background-size: 100%;
-}
+		.searchBtn:hover {
+		   background-image: url('../static/images/btns/searchHover.png');
+		   background-size: 100%;
+		}
 
-.signOutBtn {
-	background:transparent url('../static/images/btns/signOut.png') center top no-repeat;
-	background-size: 100%;
-}
+		.addBtn {
+			background:transparent url('../static/images/btns/addPlant.png') center top no-repeat;
+			background-size: 100%;
+		}
 
-.signOutBtn:hover {
-   background-image: url('../static/images/btns/signOutHover.png');
-   background-size: 100%;
-}
+		.addBtn:hover {
+		   background-image: url('../static/images/btns/addPlantHover.png');
+		   background-size: 100%;
+		}
 
-.signBtn {
-	background:transparent url('../static/images/btns/signIn.png') center top no-repeat;
-	background-size: 100%;
-}
+		.signOutBtn {
+			background:transparent url('../static/images/btns/signOut.png') center top no-repeat;
+			background-size: 100%;
+		}
 
-.signBtn:hover {
-   background-image: url('../static/images/btns/signInHover.png');
-   background-size: 100%;
-}
+		.signOutBtn:hover {
+		   background-image: url('../static/images/btns/signOutHover.png');
+		   background-size: 100%;
+		}
 
-#flashMsg {
-	font-size: 500%;
-	font-family: 'Loose Typewriter';
-	text-align: center;
-}
+		.signBtn {
+			background:transparent url('../static/images/btns/signIn.png') center top no-repeat;
+			background-size: 100%;
+		}
 
-#map { 
-	/*float: left;*/
-	height: 500px;
-}
+		.signBtn:hover {
+		   background-image: url('../static/images/btns/signInHover.png');
+		   background-size: 100%;
+		}
 
-#search { 
-	/*float: right;*/
-	border: 2px solid black;
-	border-radius: 5px;
-	padding: 5%;
-}
 
-fieldset {
-	border: 2px dashed gray;
-	border-radius: 5px;
-	padding: 5%;
-	margin: 5px;
+/* Basics */
+	#flashMsg {
+		font-size: 500%;
+		font-family: 'Loose Typewriter';
+		text-align: center;
+	}
 
-}
+	.flashImg {
 
-h1 {
-	font-size: 500%;
-	font-family: 'Loose Typewriter';
-	text-align: center;
-}
+	}
 
-h2 {
-	font-size: 200%;
-	font-family: 'Splendid Normal';
-	text-align: center;
-}
+	h1 {
+		font-size: 500%;
+		font-family: 'Loose Typewriter';
+		text-align: center;
+	}
 
-.h2 {
-	font-size: 200%;
-	font-family: 'Splendid Normal';
-	text-align: center;
-}
+	h2 {
+		font-size: 200%;
+		font-family: 'Splendid Normal';
+		text-align: center;
+	}
 
-.h3 {
-	font-size: 150%;
-	font-family: 'Splendid Normal';
-	text-align: center;
-	color: green;
-}
+	.h2 {
+		font-size: 200%;
+		font-family: 'Splendid Normal';
+		text-align: center;
+	}
 
-.h4 {
-	font-size: 110%;
-	/*color: blue;*/
-}
+	.h3 {
+		font-size: 150%;
+		font-family: 'Splendid Normal';
+		text-align: center;
+		color: green;
+	}
 
-.dropItem {
-	font-family: 'Splendid Normal';
-	color: green;	
-}
+	.h4 {
+		font-size: 110%;
+		/*color: blue;*/
+	}
 
-#detailsDiv {
-	float: left;
-}
+	.dropItem {
+		font-family: 'Splendid Normal';
+		color: green;	
+	}
 
-#reviewDiv {
-	margin: 25px;
+	fieldset {
+		border: 2px dashed gray;
+		border-radius: 5px;
+		padding: 5%;
+		margin: 5px;
+	}
 
-}
+	.btn {
+		/*border: 3px solid;*/
+		width: 150px;
+		height: 120px;
+	}
 
-#addForm { 
-	width: 25%;
-	float: right;
-}
+	#map { 
+		/*float: left;*/
+		height: 500px;
+	}
+
+/* Search Page */
+
+	#search { 
+		/*float: right;*/
+		border: 2px solid black;
+		border-radius: 5px;
+		padding: 5%;
+	}
+	#addForm { 
+		width: 25%;
+		float: right;
+	}
+
+
+	/* Plant Details */
+		#detailsDiv {
+			float: left;
+		}
+
+		.plantLabel {
+			font-size: 200%;
+			font-family: 'Splendid Bold';
+		}
+
+		.plantBody {
+			font-size: 125%;
+			font-family: 'Loose Typewriter';
+		}
+
+		#foragerTitle {
+			font-size: 1000%;
+			font-family: 'Loose Typewriter';
+			text-align: center;
+		}
+
+		#reviewDiv {
+			margin: 25px;
+
+		}
+		/* Leaves for reviews */
+			span.leaves, span.leaves span {
+				display: block;
+				background: url(leaves.png) 0 -32px repeat-x;
+				width: 128px;
+				height: 32px;
+			}
+
+			span.leaves span {
+			    background-position: 0 0;
+			}
+
+/* Sign Page */
+
+	.signUpBtn {
+		/*src:url('../static/images/btns/signUp.png');*/
+		background: url('../static/images/btns/signUp.png') center top no-repeat;
+		background-size: 100%;
+	}
+
+	.signUpBtn:hover {
+	   background-image: url('../static/images/btns/signUpHover.png');
+	   background-size: 100%;
+	}
+
+
+
+
+
+
+
+
+/*
 
 #navbar {
 	display: inline;
 }
-
+*/
 /* want to use images for buttons. 
 change cursor: pointer so folks know to click;
 */
-.btn {
+/*.btn {
 	border: 2px solid gray;
 	background-color: white;
 	color: black;
@@ -196,37 +267,8 @@ change cursor: pointer so folks know to click;
 
 .btn:hover {
 	/* images for buttons */
-	border: 2px solid black;
+	/*border: 2px solid black;
 	background-color: white;
 	color: black;
-}
+}*/
 
-/* Plant Details */
-
-.plantLabel {
-	font-size: 200%;
-	font-family: 'Splendid Bold';
-}
-
-.plantBody {
-	font-size: 125%;
-	font-family: 'Loose Typewriter';
-}
-
-#foragerTitle {
-	font-size: 1000%;
-	font-family: 'Loose Typewriter';
-	text-align: center;
-}
-
-/* Leaves for reviews */
-span.leaves, span.leaves span {
-display: block;
-background: url(leaves.png) 0 -32px repeat-x;
-width: 128px;
-height: 32px;
-}
-
-span.leaves span {
-    background-position: 0 0;
-}
