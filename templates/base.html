@@ -49,16 +49,16 @@
 						{% endif %}
 
 					</div navbar> -->
-					<nav class='navbar navbar-nav navbar-fixed-top'>
+					
+					<nav class='navbar navbar-nav '> <!-- navbar-fixed-top -->
 						<ul class='nav nav-pills'>
-							<li><a href='/'><img src='../static/images/circle.png' width='50px'></a></li>
-							<li><a href='/search?plants=all' class='searchBtn' title='Search'></a></li>
-							<li><a href=''>Home</a></li>
+							<li><a href='/' class='navBtn homeBtn'></a></li>
+							<li><a href='/search?plants=all' class='navBtn searchBtn' title='Search'></a></li>
 						{% if 'user_id' in session %}
-							<li><a href='/add'>Add</a></li>
-							<li><a href='/signout'>Sign Out</a></li>
+							<li><a href='/add' class='navBtn addBtn'></a></li>
+							<li><a href='/signout' class='navBtn signoutBtn'></a></li>
 						{% else %}
-							<li><a href='/sign'>Sign In</a></li>
+							<li><a href='/sign' class='navBtn signBtn'></a></li>
 						{% endif %}
 					</nav>
 				</div column>
@@ -68,9 +68,9 @@
 
 				{% with messages = get_flashed_messages() %}
 				  {% if messages %}
-				    <ul class=flashes>
+				    <ul class='flashMsg'>
 				    {% for message in messages %}
-				      <li>{{ message }}</li>
+				      <li class='flashMsg'>{{ message }}</li>
 				    {% endfor %}
 				    </ul>
 				  {% endif %}

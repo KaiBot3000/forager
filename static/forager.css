@@ -28,7 +28,8 @@
 body { 
 	margin:0;
 	padding:15%;
-	/*padding-top: 500px;*/
+	padding-top: 20px;
+	/*padding-top: 20%;*/
 	/*font-family:'Coming Soon', 'normal';*/
 	font-family: 'Splendid Normal';
     background-image: url('images/notebookBlank.jpg');
@@ -38,20 +39,74 @@ body {
  
 }
 
+
 .navbar {
 	background-color: white;
+	height: 125px
+}
+
+.navBtn {
+	margin-bottom: 10px;
+	width: 150px;
+	height: 120px;
+	display:block;
+	background-size: 100%;
+}
+
+.homeBtn {
+	background:transparent url('../static/images/btns/home.png') center top no-repeat;
+	background-size: 100%;
+}
+
+.homeBtn:hover {
+   background:transparent url('../static/images/btns/homeHover.png') center top no-repeat;
+   background-size: 100%;
 }
 
 .searchBtn {
- margin-bottom: 10px;
- width: 50px;
- height: 50px;
- display:block;
- background:transparent url('../static/images/circle.png') center top no-repeat;
+	background:transparent url('../static/images/btns/search.png') center top no-repeat;
+	background-size: 100%;
 }
 
 .searchBtn:hover {
-   background-image: url('../static/leaves.png');
+   background-image: url('../static/images/btns/searchHover.png');
+   background-size: 100%;
+}
+
+.addBtn {
+	background:transparent url('../static/images/btns/addPlant.png') center top no-repeat;
+	background-size: 100%;
+}
+
+.addBtn:hover {
+   background-image: url('../static/images/btns/addPlantHover.png');
+   background-size: 100%;
+}
+
+.signOutBtn {
+	background:transparent url('../static/images/btns/signOut.png') center top no-repeat;
+	background-size: 100%;
+}
+
+.signOutBtn:hover {
+   background-image: url('../static/images/btns/signOutHover.png');
+   background-size: 100%;
+}
+
+.signBtn {
+	background:transparent url('../static/images/btns/signIn.png') center top no-repeat;
+	background-size: 100%;
+}
+
+.signBtn:hover {
+   background-image: url('../static/images/btns/signInHover.png');
+   background-size: 100%;
+}
+
+#flashMsg {
+	font-size: 500%;
+	font-family: 'Loose Typewriter';
+	text-align: center;
 }
 
 #map { 
