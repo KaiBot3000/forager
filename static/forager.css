@@ -276,6 +276,16 @@ body {
 
 		}
 
+		.reviewUser {
+			font-size: 150%;
+			font-family: 'Splendid Bold';
+		}
+
+		.reviewText {
+			font-size: 100%;
+			font-family: 'Loose Typewriter';
+		}
+
 		/* Review Modal */
 			.addReviewBtn {
 				background: url('../static/images/btns/addReview.png') center top no-repeat;

@@ -98,8 +98,10 @@ function seeNote() {
 			var review = reviews[i];
 			var reviewSpot = document.createElement('li');
 
-			reviewSpot.innerHTML = '<span class="leaves">' + review['score'] + '</span>From: ' + review['username'] + '<br><br>' 
-									 + review['description'] + '<br><br><br>';
+			reviewSpot.innerHTML = '<span class="leaves">' + review['score'] + 
+									'</span><span class="reviewUser">From: ' 
+									+ review['username'] + '</span><br><span class=reviewText>' 
+									 + review['description'] + '</span><br><br><br>';
 
 			// add the review to the html list
 			reviewUL.appendChild(reviewSpot);
