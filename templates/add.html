@@ -4,47 +4,47 @@
 
 {% block content %}
 
-    <div>
-    <h1>Add a Plant</h1>
-    <div id='addForm'>    
-        <form action='/add' method='POST'>
-            <label><b>Plant Name:</b>
-                <input type='text' name='name' maxlength='75' required>
-            </label><br><br>
-            <label><b>Plant species:</b>
-                <input type='text' name='species' maxlength='75' name='species'>
-            </label><br><br>
-            <label><b>Plant Description:</b>
-                <input type='text' name='description' maxlength='250' required>
-            </label><br><br>
-            <label><b>Select A Category:</b><br>
-                <input type='radio' name='category' value='fruit' required>Fruit</input><br>
-                <input type='radio' name='category' value='nut' required>Nut</input><br>
-                <input type='radio' name='category' value='herb' required>Herb</input><br>
-                <input type='radio' name='category' value='hegetable' required>Vegetable</input><br><br>
-            <label><b>Select Season the Plant is Ripe:</b><br>
-                <input type='checkbox' name='seasons' value='spring'>Spring</input><br>
-                <input type='checkbox' name='seasons' value='summer'>Summer</input><br>
-                <input type='checkbox' name='seasons' value='fall'>Fall</input><br>
-                <input type='checkbox' name='seasons' value='winter'>Winter</input><br><br>
-            <label>Is this a real plant?<br>
-                <input type='checkbox' name='real' value='real'>Yes</input><br><br>
-            <input type='hidden' name='formLat' id='formLat'</input>
-            <input type='hidden' name='formLon' id='formLon'</input>
+    <h1>Add a Plant</h1><br><br>
+    <div class='row'>
+        <div class='col-md-6'>
+            <div id='map'> Hay, I'm loading a map </div>
+            <div id='dragText'>(Drag the marker to your plant)</div>
 
-<!--             <label><b>Test Autocomplete</b><br>
-            <input type='text' id='testText' list='autoList'>
-            <br>
-            <datalist id='autolist'>
-              <option value='apple'>
-            </datalist> -->
-            <input type='submit' id='addBtn' value='Add'>
-        </form>
+        </div>
+        <div id='addForm' class='col-md-5 addBox'>    
+            <form action='/add' method='POST'>
+                <label><h3>Plant Name:</h3>
+                    <input type='text' name='name' maxlength='75' required>
+                </label><br>
+                <label><h3>Plant species:</h3>
+                    <input type='text' name='species' maxlength='75' name='species'>
+                </label><br>
+                <label><h3>Plant Description:</h3>
+                    <input type='text' name='description' maxlength='250' required>
+                </label><br>
+                <label><h3>Select A Category:</h3>
+                    <input type='radio' name='category' value='fruit' required> Fruit</input>
+                    <input type='radio' name='category' value='nut' required> Nut</input>
+                    <input type='radio' name='category' value='herb' required> Herb</input>
+                    <input type='radio' name='category' value='hegetable' required> Vegetable</input><br>
+                <label><h3>Select Season the Plant is Ripe:</h3>
+                    <input type='checkbox' name='seasons' value='spring'> Spring</input>
+                    <input type='checkbox' name='seasons' value='summer'> Summer</input>
+                    <input type='checkbox' name='seasons' value='fall'> Fall</input>
+                    <input type='checkbox' name='seasons' value='winter'> Winter</input><br>
+                <label>Is this a real plant?<br>
+                    <input type='checkbox' name='real' value='real'> Yes</input><br><br>
+                <input type='hidden' name='formLat' id='formLat'</input>
+                <input type='hidden' name='formLon' id='formLon'</input>
+                <button type='submit' class='btn addPlantBtn'>
+            </form>
+        </div>
     </div>
+  
 
 
 
-    <div id='map'> Hay, I'm loading a map </div>
+
 
 
 

@@ -28,7 +28,7 @@
 body { 
 	margin:0;
 	padding:15%;
-	padding-top: 20px;
+	padding-top: 30px;
 	/*padding-top: 20%;*/
 	/*font-family:'Coming Soon', 'normal';*/
 	font-family: 'Splendid Normal';
@@ -36,7 +36,7 @@ body {
     background-repeat: no-repeat;
     background-size: cover;
     background-width: fixed;
- 
+
 }
 
 #extending {
@@ -51,8 +51,8 @@ body {
 
 	.navBtn {
 		margin-bottom: 10px;
-		width: 150px;
-		height: 120px;
+		width: 200px;
+		height: 150px;
 		display:block;
 		background-size: 100%;
 	}
@@ -149,7 +149,8 @@ body {
 	}
 
 	.h4 {
-		font-size: 110%;
+		font-size: 100%;
+		font-family: 'Splendid Bold';
 		/*color: blue;*/
 	}
 
@@ -188,9 +189,8 @@ body {
 
 /* Search Page */
 
-	#search { 
-		/*float: right;*/
-		border: 2px solid black;
+	.box { 
+		/*border: 2px solid black;*/
 		border-radius: 5px;
 		padding: 5%;
 	}
@@ -201,7 +201,6 @@ body {
 	}
 
 	.clearBtn {
-		/*src:url('../static/images/btns/signUp.png');*/
 		background: url('../static/images/btns/clear.png') center top no-repeat;
 		background-size: 100%;
 	}
@@ -212,7 +211,6 @@ body {
 	}
 
 	.searchBtn {
-		/*src:url('../static/images/btns/signUp.png');*/
 		background: url('../static/images/btns/search.png') center top no-repeat;
 		background-size: 100%;
 	}
@@ -237,7 +235,6 @@ body {
 		}
 
 		.detailsBtn {
-			/*src:url('../static/images/btns/signUp.png');*/
 			background: url('../static/images/btns/detail.png') center top no-repeat;
 			background-size: 100%;
 		}
@@ -277,7 +274,6 @@ body {
 
 		/* Review Modal */
 			.addReviewBtn {
-				/*src:url('../static/images/btns/signUp.png');*/
 				background: url('../static/images/btns/addReview.png') center top no-repeat;
 				background-size: 100%;
 			}
@@ -296,7 +292,6 @@ body {
 				font-family: 'Splendid Bold';
 			}
 			.cancelBtn {
-				/*src:url('../static/images/btns/signUp.png');*/
 				background: url('../static/images/btns/cancel.png') center top no-repeat;
 				background-size: 100%;
 			}
@@ -306,7 +301,6 @@ body {
 			}
 
 			.submitBtn {
-				/*src:url('../static/images/btns/signUp.png');*/
 				background: url('../static/images/btns/submit.png') center top no-repeat;
 				background-size: 100%;
 			}
@@ -331,7 +325,6 @@ body {
 
 /* Sign Page */
 	.signInBtn {
-		/*src:url('../static/images/btns/signUp.png');*/
 		background: url('../static/images/btns/signIn.png') center top no-repeat;
 		background-size: 100%;
 	}
@@ -342,7 +335,6 @@ body {
 	}
 
 	.signUpBtn {
-		/*src:url('../static/images/btns/signUp.png');*/
 		background: url('../static/images/btns/signUp.png') center top no-repeat;
 		background-size: 100%;
 	}
@@ -353,12 +345,32 @@ body {
 	}
 
 /* Add */
-	#addForm { 
-		width: 25%;
-		float: right;
+	#dragText {
+		font-size: 300%;
+		font-family: 'Splendid Normal';
+		text-align: center;
 	}
 
+	#addForm { 
+		/*width: 25%;*/
+	}
 
+	.addBox { 
+		float: right;
+/*		border: 2px solid black;
+		border-radius: 5px;*/
+		margin: 5px;
+	}
+
+	.addPlantBtn {
+		background: url('../static/images/btns/addPlant.png') center top no-repeat;
+		background-size: 100%;
+	}
+
+	.addPlantBtn:hover {
+	   background-image: url('../static/images/btns/addPlantHover.png');
+	   background-size: 100%;
+	}
 
 
 
