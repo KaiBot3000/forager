@@ -113,14 +113,18 @@ body {
 
 
 /* Basics */
-	#flashMsg {
-		font-size: 500%;
+	.flashMsg {
+		font-size: 125%;
 		font-family: 'Loose Typewriter';
 		text-align: center;
 	}
 
 	.flashImg {
 
+	}
+
+	li {
+		list-style-type: none;
 	}
 
 	h1 {
