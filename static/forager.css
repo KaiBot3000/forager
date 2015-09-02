@@ -179,9 +179,11 @@ body {
 		outline: none;
 	}
 
-	#map { 
-		/*float: left;*/
-		height: 500px;
+/* Home Page */
+	#foragerTitle {
+		font-size: 1000%;
+		font-family: 'Loose Typewriter';
+		text-align: center;
 	}
 
 /* Search Page */
@@ -220,11 +222,42 @@ body {
 	   background-size: 100%;
 	}
 
+	/* Map */
+		#map { 
+			/*float: left;*/
+			height: 500px;
+		}
+
+		.markerPopup {
+		}
+
+		.popupText {
+			font-size: 150%;
+			font-family: 'Splendid Normal';
+		}
+
+		.detailsBtn {
+			/*src:url('../static/images/btns/signUp.png');*/
+			background: url('../static/images/btns/detail.png') center top no-repeat;
+			background-size: 100%;
+		}
+
+		.detailsBtn:hover {
+		   background-image: url('../static/images/btns/detailHover.png');
+		   background-size: 100%;
+		}
+
 
 
 	/* Plant Details */
 		#detailsDiv {
 			float: left;
+		}
+
+		.plantTitle {
+			font-size: 300%;
+			font-family: 'Splendid Bold';
+			text-align: center;
 		}
 
 		.plantLabel {
@@ -237,16 +270,53 @@ body {
 			font-family: 'Loose Typewriter';
 		}
 
-		#foragerTitle {
-			font-size: 1000%;
-			font-family: 'Loose Typewriter';
-			text-align: center;
-		}
-
 		#reviewDiv {
-			margin: 25px;
+			/*margin: 25px;*/
 
 		}
+
+		/* Review Modal */
+			.addReviewBtn {
+				/*src:url('../static/images/btns/signUp.png');*/
+				background: url('../static/images/btns/addReview.png') center top no-repeat;
+				background-size: 100%;
+			}
+
+			.addReviewBtn:hover {
+			   background-image: url('../static/images/btns/addReviewHover.png');
+			   background-size: 100%;
+			}
+			#modalTitle {
+				font-size: 400%;
+				font-family: 'Splendid Bold';
+			}
+
+			.modalLabel {
+				font-size: 200%;
+				font-family: 'Splendid Bold';
+			}
+			.cancelBtn {
+				/*src:url('../static/images/btns/signUp.png');*/
+				background: url('../static/images/btns/cancel.png') center top no-repeat;
+				background-size: 100%;
+			}
+			.cancelBtn:hover {
+			   background-image: url('../static/images/btns/cancelHover.png');
+			   background-size: 100%;
+			}
+
+			.submitBtn {
+				/*src:url('../static/images/btns/signUp.png');*/
+				background: url('../static/images/btns/submit.png') center top no-repeat;
+				background-size: 100%;
+			}
+
+			.submitBtn:hover {
+			   background-image: url('../static/images/btns/submitHover.png');
+			   background-size: 100%;
+			}
+
+
 		/* Leaves for reviews */
 			span.leaves, span.leaves span {
 				display: block;

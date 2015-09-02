@@ -66,11 +66,11 @@ function seeNote() {
 			// 				// '<p id="plantCategory">' + plant['category'] + '</p>' + 
 			// 				'<br><br><span class="plantLabel">Description:</span>' + plant['description'] + '</p>';
 
-			detailHtml ='<span class="title">' + plant['name'] + '<br></span>' + 
+			detailHtml ='<span class="plantTitle">' + plant['name'] + '</span><br>' + 
 						'<span class="plantLabel">Species:</span>' +
-						'<span class="plantBody">' + plant['species'] + '<br><br></span>' + 
+						'<span class="plantBody">' + plant['species'] + '<br></span>' + 
 						'<span class="plantLabel">Nearest Address:</span>' +
-						'<span class="plantBody">' + address + '<br><br></span>' + 
+						'<span class="plantBody">' + address + '<br></span>' + 
 						'<span class="plantLabel">Description:</span>' +
 						'<span class="plantBody">' + plant['description'] + '</span>'
 
@@ -201,7 +201,8 @@ function makeMap(mapLocation, markerCollection) {
 	var markerLayer = L.geoJson(markerCollection);
 	// for each marker (layer) in the cluster, add custom popup and change icon
 	markerLayer.eachLayer(function(layer) {
-        var popupContent = '<b>' + layer.feature.properties.title + "</b><br><button type='button' value='plants!' class='detailsBtn'> Details </button> ";
+        var popupContent = '<span class="popupText">' + layer.feature.properties.title 
+        	+ "</span><br><button type='button' value='plants!' class='btn smallBtn detailsBtn'>";
 
         // can modify based on properties of feature! Will use to handle undefined features?
         if (layer.feature.properties.category === 'fruit') {
