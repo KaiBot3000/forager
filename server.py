@@ -314,7 +314,7 @@ if __name__ == "__main__":
 
 	app.run(debug=True)
 
-	DebugToolbarExtension(app)
+	# DebugToolbarExtension(app)
 
 
 

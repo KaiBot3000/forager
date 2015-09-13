@@ -3,3 +3,14 @@ secrets.sh
 data/server.pyc
 model.pyc
 server.pyc
+static/images/btns/blueHover.psd
+static/images/btns/brownHover.psd
+static/images/btns/grayHover.psd
+static/images/btns/greenHover.psd
+static/images/btns/reg1.psd
+static/images/btns/reg2.psd
+static/images/btns/reg3.psd
+static/images/btns/reg4.psd
+static/images/btns/reg5.psd
+static/images/btns/tealHover.psd
+.coverage
