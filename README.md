@@ -12,7 +12,7 @@ Need a few sprigs of rosemary for your recipe? It doesn't get more local than ju
 * [Python] - Backend code that manipulates incoming data, controls access to the database, and serves data to the webpage through a framework.
 * [Flask] - Lightweight web framework which also provides support for jinja templating and unittests
 * [Javascript] - Frontend code which allows for dynamic webpages
-* [jQuery] - A Javascript library that simplifies DOM manipulation, including creating event handlers for user interation
+* [jQuery] - A Javascript library that simplifies DOM manipulation, including creating event handlers for user interaction
 * [AJAX] - Gets information from server without reloading the page, allowing for more dynamic pages and faster loading times
 * [Leaflet/Mapbox API] - Uses geoJSON passed from the server to create dynamic plant maps, and reverse geocoding to translate coordinates to the nearest addresses.
 * [HTML] - Displays information on the web
