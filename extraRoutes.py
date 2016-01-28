@@ -101,12 +101,3 @@ def categorize():
 	db.session.commit()
 
 	return redirect(url_for('search', plant='all'))
-
-
-
-
-
-
-
-
-
