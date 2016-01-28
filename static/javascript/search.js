@@ -60,12 +60,6 @@ function seeNote() {
 			address = geo['features'][0]['place_name'];
 			console.log(address);
 		
-			// detailHtml = '<p id="plantName">' + plant['name'] + '</p>' + 
-			// 				'<p id="plantSpecies">' + plant['species'] + '</p>' + 
-			// 				'<p id="plantAddress"><span class="plantLabel">Nearest Address:</span> ' + address + '</p>' +  
-			// 				// '<p id="plantCategory">' + plant['category'] + '</p>' + 
-			// 				'<br><br><span class="plantLabel">Description:</span>' + plant['description'] + '</p>';
-
 			detailHtml ='<span class="plantTitle">' + plant['name'] + '</span><br>' + 
 						'<span class="plantLabel">Species:</span>' +
 						'<span class="plantBody">' + plant['species'] + '<br></span>' + 
