@@ -3,7 +3,6 @@
 import geojson
 from flask_sqlalchemy import SQLAlchemy
 
-# use sqla to access db
 db = SQLAlchemy()
 
 class Plant(db.Model):
@@ -78,6 +77,7 @@ class Plant(db.Model):
 
 
 	def make_marker(self):
+		"""Converts plant object into jsonify-able datastructure"""
 		
 		return {'type': 'Feature', 'geometry': {'type': 'Point', 'coordinates': \
 				[self.plant_lon, self.plant_lat]}, 'id': self.plant_id, 'properties': \
@@ -85,10 +85,10 @@ class Plant(db.Model):
 
 
 	def wkt_to_lonlat(self):
-		'''Converts wkt format coordinates to a latitude and longitude
+		"""Converts wkt format coordinates to a latitude and longitude
 			Takes plant object, reads its wkt, converts, and adds that to lat and lon fields. 
 			Updates plant. 
-		'''
+		"""
 
 		wkt = self.plant_location
 
@@ -109,7 +109,7 @@ class Plant(db.Model):
 
 
 	def address_to_latlon(address):
-		'''Converts latitude and longitude to nearest address via api call'''
+		"""Converts latitude and longitude to nearest address via api call"""
 		# I'll need this if users want to add a plant by address
 		pass
 
@@ -147,10 +147,7 @@ class Review(db.Model):
 											self.review_plant, 
 											self.review_score)
 
-
-				self.description, 'marker-size': 'small', 'marker-symbol': self.symbol}}
  
-
 def connect_to_db(app):
 	"""Connects the db to flask app"""
 
