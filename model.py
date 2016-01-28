@@ -39,6 +39,8 @@ class Plant(db.Model):
 
 
 	def __init__(self, name, species, description, category, season_list, lat, lon):
+		"""Make a plant object"""
+		
 		spring_string = 'spring'
 		summer_string = 'summer'
 		fall_string = 'fall'
