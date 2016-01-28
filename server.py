@@ -15,20 +15,7 @@ app.secret_key = 'forage_the_things'
 @app.route('/')
 def index():
 
-
 	return render_template('home.html')
-
-
-def function_test(a, b):
-	'''
-	>>> function_test(2, 3)
-	5
-
-	>>> function_test(-1, 0)
-	-1
-	'''
-	return (a + b)
-
 
 
 @app.route('/sign')
@@ -115,17 +102,13 @@ def list_fields():
 
 	# get possible names (returned as list of one-entry tuples)
 	names = db.session.query(Plant.plant_name).group_by(Plant.plant_name).all()
-
-	# go through each and pull out of tuples
 	names_formatted = []
 
 	for name in names:
 		names_formatted.append(name[0])
 
-	# sort alphabetically
 	sorted_names = sorted(names_formatted)
 
-	# make into json string, pass back
 	return json.dumps(sorted_names)
 
 
