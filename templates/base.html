@@ -6,17 +6,12 @@
 		<link rel="shortcut icon" href="../static/images/favicon.png">
 
 		<link href='https://fonts.googleapis.com/css?family=Coming+Soon' rel='stylesheet' type='text/css'>	
-
 		<script src="https://code.jquery.com/jquery.js"> </script>
-		<!-- Latest compiled and minified CSS -->
 		<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
-
-		<!-- jQuery library -->
-		<!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script> -->
-
-		<!-- Latest compiled JavaScript -->
 		<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+
 		<link href="/static/forager.css" rel="stylesheet">
+		
 		{% block head %}
 		{% endblock %}
 	
@@ -26,30 +21,6 @@
 		<div class='container-fluid'>
 			<div class='row'>
 				<div class='col-md-12'>
-<!-- 					<div id='navBar'>
-						<form action='/'>
-							<input type='SUBMIT' class='navBtn' value='Home'></input>
-						</form>
-
-						<form action='/search'>
-							<input type='hidden' name='plant' value='all'></input>
-							<input type='SUBMIT' class='navBtn' value='Search'></input>
-						</form>
-						{% if 'user_id' in session %}
-							<form action='/add' method='GET'>
-								<input type='SUBMIT' class='navBtn' value='Add'></input>
-							</form>
-							<form action='/signout'>
-								<input type='SUBMIT' class='navBtn' value='Sign Out'></input>
-							</form>
-						{% else %}
-							<form action='/sign'>
-								<input type='SUBMIT' class='navBtn' value='Sign In/Up'></input>
-							</form>
-						{% endif %}
-
-					</div navbar> -->
-
 					<nav class='navbar navbar-nav '> <!-- navbar-fixed-top -->
 						<ul class='nav nav-pills'>
 							<li><a href='/' class='navBtn homeBtn'></a></li>
