@@ -1,7 +1,6 @@
 """Models and database functions for Forager"""
 
 import geojson
-
 from flask_sqlalchemy import SQLAlchemy
 
 # use sqla to access db
@@ -39,18 +38,6 @@ class Plant(db.Model):
 															self.plant_lat,
 															self.plant_lon)
 
-	# def __init__(self, name, species, description, category, 
-	# 			spring, summer, fall, winter, lat, lon):
-	# 	self.plant_name = name
-	# 	self.plant_species = species
-	# 	self.plant_description = description
-	# 	self.plant_category = category
-	# 	self.plant_spring = spring
-	# 	self.plant_summer = summer
-	# 	self.plant_fall = fall
-	# 	self.plant_winter = winter
-	# 	self.plant_lat = lat
-	# 	self.plant_lon = lon
 
 	def __init__(self, name, species, description, category, season_list, lat, lon):
 		spring_string = 'spring'
@@ -93,7 +80,8 @@ class Plant(db.Model):
 	def make_marker(self):
 		
 		return {'type': 'Feature', 'geometry': {'type': 'Point', 'coordinates': \
-				[self.plant_lon, self.plant_lat]}, 'id': self.plant_id, 'properties': {'title': self.plant_name, 'category': self.plant_category}}	
+				[self.plant_lon, self.plant_lat]}, 'id': self.plant_id, 'properties': \
+				{'title': self.plant_name, 'category': self.plant_category}}	
 
 
 	def wkt_to_lonlat(self):
@@ -119,11 +107,11 @@ class Plant(db.Model):
 		print "Longitude: %s" % lon
 		db.session.commit()
 
-		# return lonlat_list
 
 	def address_to_latlon(address):
 		'''Converts latitude and longitude to nearest address via api call'''
 		# I'll need this if users want to add a plant by address
+		pass
 
 
 class User(db.Model):
@@ -152,31 +140,15 @@ class Review(db.Model):
 	review_score = db.Column(db.Integer, nullable=False)
 	review_description = db.Column(db.String(250))
 
-	# def __repr__(self):
-	# 	"""What to show when review printed"""
+	def __repr__(self):
+		"""What to show when review printed"""
 
-	# 	return '<%s rated plant %s a %s>' % (self.review_user, 
-	# 										self.review_plant, 
-	# 										self.review_score)
+		return '<%s rated plant %s a %s>' % (self.review_user, 
+											self.review_plant, 
+											self.review_score)
 
 
-# converts plant objects into geoJSON string for marker
-# class Marker():
-
-# 	def __init__(self, lat, lon, plant_id, title, description, symbol):
-# 		self.lat = lat
-# 		self.lon = lon
-# 		self.plant_id = plant_id
-# 		self.title = title
-# 		self.description = description
-# 		self.symbol = symbol
-
-# 	@property
-# 	def __geo_interface__(self):
-		
-# 		return {'type': 'Feature', 'geometry': {'type': 'Point', 'coordinates': \
-# 				[self.lon, self.lat]}, 'id': self.plant_id, 'properties': {'title': self.title, 'description': \
-# 				self.description, 'marker-size': 'small', 'marker-symbol': self.symbol}}
+				self.description, 'marker-size': 'small', 'marker-symbol': self.symbol}}
  
 
 def connect_to_db(app):
