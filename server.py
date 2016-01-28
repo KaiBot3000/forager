@@ -146,7 +146,6 @@ def search_plants():
 		species = db.session.query(Plant.plant_species).group_by(Plant.plant_species).all()
 
 		plants_tuples = names + species
-
 		# go through each and pull out of tuples
 		plants = []
 
@@ -194,9 +193,8 @@ def plant_details():
 	'''Gets marker/plant id from js, returns html with plant details.'''
 
 	plant_id = request.args.get('marker')
-	print plant_id
-	plant = Plant.query.get(plant_id)	
-
+	# print plant_id
+	plant = Plant.query.get(plant_id)
 	plant_dict = make_plant_dict(plant)
 
 	return json.dumps(plant_dict)
@@ -207,11 +205,7 @@ def plant_reviews():
 	'''Gets marker/plant id from js, returns html with review buttom and plant reviews.'''
 
 	plant_id = request.args.get('marker')
-
-	# Get ratings for that plant
 	reviews = Review.query.filter_by(review_plant=plant_id).all()
-
-	# Make them into dicionaries
 	reviews_list = make_review_dict(reviews)
 
 	return json.dumps(reviews_list)	
@@ -256,6 +250,7 @@ def add():
 
 		new_plant = Plant(name, species, description, category, season_list, lat, lon)
 
+		# this allows for adding test/demo plants
 		if real:
 			db.session.add(new_plant)
 			db.session.commit()
@@ -269,6 +264,8 @@ def add():
 ########## Helper functions
 
 def make_review_dict(reviews):
+	'''Takes list of review objects, parses into list of review dictionaries'''
+	
 	reviews_list = []
 	for review in reviews:
 		review_dict = {}
@@ -276,8 +273,8 @@ def make_review_dict(reviews):
 		review_dict['username'] = user.username
 		review_dict['score'] = review.review_score
 		review_dict['description'] = review.review_description
-
 		reviews_list.append(review_dict)
+
 	return reviews_list
 
 def make_plant_dict(plant):
