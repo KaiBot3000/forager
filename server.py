@@ -76,7 +76,7 @@ def sign_up():
 		db.session.add(new_user)
 		db.session.commit()
 
-		session['user_id'] = user.user_id
+		session['user_id'] = new_user.user_id
 
 		flash('Welcome to Forager, %s!' % username)
 
