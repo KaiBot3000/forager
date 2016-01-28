@@ -112,9 +112,8 @@ function seeNote() {
 };
 
 
-
 // ########### display stars/leaves for reviews
-// jQuery method to display leaves based on score in html
+// custom jQuery method to display leaves based on score in html
 $.fn.leaves = function() {
     return $(this).each(function() {
     	// use size of one leaf in pixels
@@ -129,6 +128,7 @@ $.fn.leaves = function() {
         $(this).html($span);
     });
 }
+
 
 // ########## Handle Add Reviews Events
 
@@ -153,7 +153,6 @@ function addReview(evt) {
 function clearForm() {
 	$('#addReviewForm').trigger('reset');
 }
-
 
 
 // ########## Map Function
