@@ -265,7 +265,7 @@ def add():
 
 def make_review_dict(reviews):
 	'''Takes list of review objects, parses into list of review dictionaries'''
-	
+
 	reviews_list = []
 	for review in reviews:
 		review_dict = {}
@@ -278,6 +278,8 @@ def make_review_dict(reviews):
 	return reviews_list
 
 def make_plant_dict(plant):
+	'''Takes plant object, returns plant info in dictionary'''
+
 	plant_dict = {}
 	plant_dict['name'] = plant.plant_name
 	plant_dict['species'] = plant.plant_species
@@ -285,19 +287,12 @@ def make_plant_dict(plant):
 	plant_dict['description'] = plant.plant_description
 	plant_dict['lat'] = plant.plant_lat
 	plant_dict['lon'] = plant.plant_lon
+
 	return plant_dict
 
 
 if __name__ == "__main__":
 
 	connect_to_db(app)
-
 	app.run(debug=True)
-
 	# DebugToolbarExtension(app)
-
-
-
-
-
-
