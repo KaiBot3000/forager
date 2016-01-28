@@ -16,49 +16,46 @@
                 <label><h3>Plant Name:</h3>
                     <input type='text' name='name' maxlength='75' required>
                 </label><br>
+
                 <label><h3>Plant species:</h3>
                     <input type='text' name='species' maxlength='75' name='species'>
                 </label><br>
+
                 <label><h3>Plant Description:</h3>
                     <input type='text' name='description' maxlength='250' required>
                 </label><br>
+
                 <label><h3>Select A Category:</h3>
                     <input type='radio' name='category' value='fruit' required> Fruit</input>
                     <input type='radio' name='category' value='nut' required> Nut</input>
                     <input type='radio' name='category' value='herb' required> Herb</input>
                     <input type='radio' name='category' value='hegetable' required> Vegetable</input><br>
+
                 <label><h3>Select Season the Plant is Ripe:</h3>
                     <input type='checkbox' name='seasons' value='spring'> Spring</input>
                     <input type='checkbox' name='seasons' value='summer'> Summer</input>
                     <input type='checkbox' name='seasons' value='fall'> Fall</input>
                     <input type='checkbox' name='seasons' value='winter'> Winter</input><br>
+
                 <label>Is this a real plant?<br>
                     <input type='checkbox' name='real' value='real'> Yes</input><br><br>
+
                 <input type='hidden' name='formLat' id='formLat'</input>
                 <input type='hidden' name='formLon' id='formLon'</input>
+                
                 <button type='submit' class='btn addPlantBtn'>
             </form>
         </div>
     </div>
-  
-
-
-
-
-
-
 
 
     <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
     
     <script src='https://api.mapbox.com/mapbox.js/v2.2.1/mapbox.js'></script>
-    
     <link href='https://api.mapbox.com/mapbox.js/v2.2.1/mapbox.css' rel='stylesheet' />
 
     <script src='https://api.mapbox.com/mapbox.js/plugins/leaflet-markercluster/v0.4.0/leaflet.markercluster.js'></script>
-
     <link href='https://api.mapbox.com/mapbox.js/plugins/leaflet-markercluster/v0.4.0/MarkerCluster.css' rel='stylesheet' />
-
     <link href='https://api.mapbox.com/mapbox.js/plugins/leaflet-markercluster/v0.4.0/MarkerCluster.Default.css' rel='stylesheet' />
 
     <script src='/static/javascript/add.js'></script>
